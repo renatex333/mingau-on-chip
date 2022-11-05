@@ -30,7 +30,9 @@ Nome da marca:
 
 
 
-> - Apresentação da interface no LCD + vídeo de explicação
+> - Apresentação da interface no LCD + vídeo de explicação [Link](https://youtu.be/RlPm2haGQgU)
+
+[<img src="https://user-images.githubusercontent.com/15271557/200147332-04b57e7e-c50b-4d34-a533-f72f01113410.png" width="600">](https://youtu.be/RlPm2haGQgU)
 
 
 ### Proposta UX 2 - B
@@ -51,7 +53,7 @@ A fonte a ser utilizada vai ser o Prima Sans que é o mesmo usado nos equipament
 
 Detalhes da segunda iteração da proposta de interface:
 
-Conversamos com o Luís do Fablab para nos ajudar para ver as novas propostas de iteração da interface,
+Conversamos com o Luiz do Fablab para nos ajudar para ver as novas propostas de iteração da interface,
 segundo ele a solução proposta é viável e boa, o botão de trajetória deveria ficar na primeira página.
 
 Então foi proposta a seguinte iteração:
