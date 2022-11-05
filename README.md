@@ -10,48 +10,58 @@ Mais detalhes no site da disciplina:
 
 Integrantes:
 
-- Nome 
-- Nome
+- Matheus Barros
+- Renato Falcão
 
 Nome da marca:
 
-- Nome e logo?
+![image](https://user-images.githubusercontent.com/15271557/200141390-cd0b2601-97ae-4d4a-92b0-c8d4e66e154f.png)
 
 ## Interface
 
-### Proposta UX 1 - C
+### Proposta UX 1
 
-> - Mockup da interface:
->    - Satisfaz todos os requisitos do projeto
->    - Indica quais são os widgets do LVGL 
->    - Apresentar uma foto da interface sendo executada no LCD (imagem estática)
-> - Grava um vídeo explicando a interface
+> - Mockup da interface primeira iteração:
 
 
-Descricão da primeira proposta da interface:
+<img src="https://user-images.githubusercontent.com/15271557/200141427-d5c83171-4e81-46ea-a1fa-54a712ce06a7.png" width="400"/>
+<img src="https://user-images.githubusercontent.com/15271557/200141981-1ef58cd2-ad92-42e0-9dde-43d2ce5f8eb4.png" width="400"/>
+<img src="https://user-images.githubusercontent.com/15271557/200141863-ae777122-4aa2-46c7-acdf-9085d04e0661.png" width="400"/>
 
-- Imagem da proposta
-- Imagem da proposta no LCD
-- Vídeo explicando a interface
+
+
+> - Apresentação da interface no LCD + vídeo de explicação
+
 
 ### Proposta UX 2 - B
 
 > - Especifica e justifica quais vão ser as fontes (e tamanhos) a serem usadas na interface.
+
+A fonte a ser utilizada vai ser o Prima Sans que é o mesmo usado nos equipamentos da Garmin, talvez haja uma mudança para outro tipo de sans caso seja uma fonte licensiada.
+
 > - Pega feedback com o Luiz do Fablab e incorpora na interface
+
+
+
+
 >   - Grava em vídeo a entrevista
+
 > - Grava um vídeo atualizado explicando o que foi sugerido e o que fizeram para melhorar a interface
 > - Apresentar uma foto da interface sendo executada no LCD (imagem estática)
 
-Detalhes da segunda interação da proposta de interface:
+Detalhes da segunda iteração da proposta de interface:
 
-<!-- 
- Adicionar texto descrevendo a evolução 
- da interface
--->
+Conversamos com o Luís do Fablab para nos ajudar para ver as novas propostas de iteração da interface,
+segundo ele a solução proposta é viável e boa, o botão de trajetória deveria ficar na primeira página.
+
+Então foi proposta a seguinte iteração:
+
+<img src="https://user-images.githubusercontent.com/15271557/200144057-32e77fe8-571f-44be-9135-238ea481a0b8.png" width="300"/>
+
 
 - Imagem da proposta
 - Imagem da proposta no LCD
-- Vídeo
+- Vídeo no LCD
 
 ### Proposta UX 3 - A
 
