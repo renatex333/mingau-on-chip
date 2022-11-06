@@ -51,7 +51,10 @@ A fonte a ser utilizada vai ser o Prima Sans que é o mesmo usado nos equipament
 > - Grava um vídeo atualizado explicando o que foi sugerido e o que fizeram para melhorar a interface
 > - Apresentar uma foto da interface sendo executada no LCD (imagem estática)
 
-Detalhes da segunda iteração da proposta de interface:
+Detalhes da segunda iteração da proposta de interface:  [Link](https://youtu.be/BDjTYk73Tqw)
+
+[<img src="https://user-images.githubusercontent.com/15271557/200148410-76ad16e1-f939-4559-96ae-5768edee21b5.png" width="600">](https://youtu.be/BDjTYk73Tqw)
+
 
 Conversamos com o Luiz do Fablab para nos ajudar para ver as novas propostas de iteração da interface,
 segundo ele a solução proposta é viável e boa, o botão de trajetória deveria ficar na primeira página.
