@@ -27,8 +27,7 @@ Nome da marca:
 <img src="https://user-images.githubusercontent.com/15271557/200141981-1ef58cd2-ad92-42e0-9dde-43d2ce5f8eb4.png" width="400"/>
 <img src="https://user-images.githubusercontent.com/15271557/200141863-ae777122-4aa2-46c7-acdf-9085d04e0661.png" width="400"/>
 
-# Precisa ser mudado
-> - Apresentação da interface no LCD + vídeo de explicação [Link]()
+> - Apresentação da interface no LCD + vídeo de explicação [Link](https://youtu.be/LO3ccLeY09c)
 
 [`<img src="https://user-images.githubusercontent.com/15271557/200147332-04b57e7e-c50b-4d34-a533-f72f01113410.png" width="600">`](https://youtu.be/RlPm2haGQgU)
 
@@ -36,8 +35,9 @@ Nome da marca:
 
 > - Especifica e justifica quais vão ser as fontes (e tamanhos) a serem usadas na interface.
 
-# Precisa adicionar os detalhes e explicações aqui
-A fonte a ser utilizada vai ser o Prima Sans que é o mesmo usado nos equipamentos da Garmin, talvez haja uma mudança para outro tipo de sans caso seja uma fonte licenciada.
+A fonte a ser utilizada será a Prima Sans manter, ou no mínimo se aproximar ao máximo, da identidade visual de outros produtos semelhantes da Garmin. A ideia, além do padrão visual da marca, é também passar uma ideia minimalista, mais rígida e moderna. Desta forma, se mostra ideal para o conforto visual do usuário durante a busca por informações na tela.
+
+Já em relação às cores escolhidas, será utilizado um esquema complementar de cores, utilizando cores mais neutras para cores de fundo e botões, ao mesmo tempo que utlizaremos cores mais vibrantes de verde e vermelho, com alta saturação, para indicar a aceleração ou desaceleração da bicicleta.
 
 > - Pega feedback com o Luiz do Fablab e incorpora na interface
 
