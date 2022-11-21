@@ -37,6 +37,10 @@ LV_FONT_DECLARE(dseg70);
 LV_FONT_DECLARE(dseg50);
 LV_FONT_DECLARE(dseg30);
 
+// declarar a tela como global e estática
+static lv_obj_t * scr1;  // screen 1
+static lv_obj_t * scr2;  // screen 2
+static lv_obj_t * scr3;  // screen 2
 
 /*A static or global variable to store the buffers*/
 static lv_disp_draw_buf_t disp_buf;
@@ -168,7 +172,7 @@ void lv_termostato(void) {
 		
 		// Cria cada um dos botões
     lv_obj_t * labelBtn1;
-    lv_obj_t * btn1 = lv_btn_create(lv_scr_act());
+    lv_obj_t * btn1 = lv_btn_create(scr1);
     lv_obj_add_event_cb(btn1, event_handler1, LV_EVENT_ALL, NULL);
     lv_obj_align(btn1, LV_ALIGN_BOTTOM_LEFT, 5, -5);
     labelBtn1 = lv_label_create(btn1);
@@ -179,7 +183,7 @@ void lv_termostato(void) {
     lv_obj_center(labelBtn1);
 		
 		lv_obj_t * labelBtn2;
-		lv_obj_t * btn2 = lv_btn_create(lv_scr_act());
+		lv_obj_t * btn2 = lv_btn_create(scr1);
 		lv_obj_add_event_cb(btn2, event_handler1, LV_EVENT_ALL, NULL);
 		lv_obj_align_to(btn2, btn1, LV_ALIGN_RIGHT_MID, 40, -22);
 		labelBtn2 = lv_label_create(btn2);
@@ -190,7 +194,7 @@ void lv_termostato(void) {
 		lv_obj_center(labelBtn2);
 		
 		lv_obj_t * labelBtn3;
-		lv_obj_t * btn3 = lv_btn_create(lv_scr_act());
+		lv_obj_t * btn3 = lv_btn_create(scr1);
 		lv_obj_add_event_cb(btn3, event_handler1, LV_EVENT_ALL, NULL);
 		lv_obj_align_to(btn3, btn2, LV_ALIGN_RIGHT_MID, 40, -22);
 		labelBtn3 = lv_label_create(btn3);
@@ -201,7 +205,7 @@ void lv_termostato(void) {
 		lv_obj_center(labelBtn3);
 		
 		lv_obj_t * labelBtn4;
-		lv_obj_t * btn4 = lv_btn_create(lv_scr_act());
+		lv_obj_t * btn4 = lv_btn_create(scr1);
 		lv_obj_add_event_cb(btn4, down_handler, LV_EVENT_ALL, NULL);
 		lv_obj_align(btn4, LV_ALIGN_BOTTOM_RIGHT, -5, -5);
 		labelBtn4 = lv_label_create(btn4);
@@ -212,7 +216,7 @@ void lv_termostato(void) {
 		lv_obj_center(labelBtn4);
 		
 		lv_obj_t * labelBtn5;
-		lv_obj_t * btn5 = lv_btn_create(lv_scr_act());
+		lv_obj_t * btn5 = lv_btn_create(scr1);
 		lv_obj_add_event_cb(btn5, up_handler, LV_EVENT_ALL, NULL);
 		lv_obj_align_to(btn5, btn4, LV_ALIGN_LEFT_MID, -80, -22);
 		labelBtn5 = lv_label_create(btn5);
@@ -223,19 +227,19 @@ void lv_termostato(void) {
 		lv_obj_center(labelBtn5);
 		
 		// Cria labels do termostato
-		labelFloor = lv_label_create(lv_scr_act());
+		labelFloor = lv_label_create(scr1);
 		lv_obj_align(labelFloor, LV_ALIGN_LEFT_MID, 35 , -45);
 		lv_obj_set_style_text_font(labelFloor, &dseg70, LV_STATE_DEFAULT);
 		lv_obj_set_style_text_color(labelFloor, lv_color_white(), LV_STATE_DEFAULT);
 		lv_label_set_text_fmt(labelFloor, "%02d", 23);
 		
-		labelSetValue = lv_label_create(lv_scr_act());
+		labelSetValue = lv_label_create(scr1);
 		lv_obj_align(labelSetValue, LV_ALIGN_RIGHT_MID, -30 , -45);
 		lv_obj_set_style_text_font(labelSetValue, &dseg50, LV_STATE_DEFAULT);
 		lv_obj_set_style_text_color(labelSetValue, lv_color_white(), LV_STATE_DEFAULT);
 		lv_label_set_text_fmt(labelSetValue, "%02d", 22);
 		
-		labelClock = lv_label_create(lv_scr_act());
+		labelClock = lv_label_create(scr1);
 		lv_obj_align(labelClock, LV_ALIGN_TOP_RIGHT, -10 , 5);
 		lv_obj_set_style_text_font(labelClock, &dseg30, LV_STATE_DEFAULT);
 		lv_obj_set_style_text_color(labelClock, lv_color_white(), LV_STATE_DEFAULT);
@@ -246,9 +250,26 @@ void lv_termostato(void) {
 /* TASKS                                                                */
 /************************************************************************/
 
+static void task_update(void *pvParameters) {
+	for (;;)  {
+		lv_scr_load(scr1); // exibe tela 1
+		vTaskDelay(500);
+		//lv_scr_load(scr2); // exibe tela 2
+		//vTaskDelay(500);
+		//lv_scr_load(scr3); // exibe tela 3
+		//vTaskDelay(500);
+	}
+}
+
+
 static void task_lcd(void *pvParameters) {
 	int px, py;
-
+	
+	// Criando duas telas
+	scr1  = lv_obj_create(NULL);
+	scr2  = lv_obj_create(NULL);
+	scr3  = lv_obj_create(NULL);
+	
 	lv_termostato();
 
 	for (;;)  {
@@ -282,7 +303,7 @@ static void task_rtc(void *pvParameters) {
 			if (toggle_text) {
 				lv_label_set_text_fmt(labelClock, "%02d %02d", current_hour, current_min);
 				toggle_text = 0;
-			} else {
+				} else {
 				lv_label_set_text_fmt(labelClock, "%02d:%02d", current_hour, current_min);
 				toggle_text = 1;
 			}
@@ -412,6 +433,11 @@ int main(void) {
 	
 	// Inicializa semáforo RTC
 	xSemaphoreRTC = xSemaphoreCreateBinary();
+	
+	/* Create task to control lcd */
+	if (xTaskCreate(task_update, "TASK_UPDATE", TASK_LCD_STACK_SIZE, NULL, TASK_LCD_STACK_PRIORITY, NULL) != pdPASS) {
+		printf("Failed to create update task\r\n");
+	}
 
 	/* Create task to control lcd */
 	if (xTaskCreate(task_lcd, "TASK_LCD", TASK_LCD_STACK_SIZE, NULL, TASK_LCD_STACK_PRIORITY, NULL) != pdPASS) {
