@@ -50,6 +50,7 @@ static lv_color_t buf_1[LV_HOR_RES_MAX * LV_VER_RES_MAX];
 static lv_disp_drv_t disp_drv;          /*A variable to hold the drivers. Must be static or global.*/
 static lv_indev_drv_t indev_drv;
 
+static lv_obj_t * meter;
 static  lv_obj_t * labelBtn1;
 static  lv_obj_t * labelBtn2;
 static  lv_obj_t * labelBtn3;
@@ -129,37 +130,80 @@ void RTC_Handler(void) {
 /* lvgl                                                                 */
 /************************************************************************/
 
-static void event_handler1(lv_event_t * e) {
-	lv_event_code_t code = lv_event_get_code(e);
+// static void event_handler1(lv_event_t * e) {
+// 	lv_event_code_t code = lv_event_get_code(e);
 
-	if(code == LV_EVENT_CLICKED) {
-		LV_LOG_USER("Clicked");
-	}
-	else if(code == LV_EVENT_VALUE_CHANGED) {
-		LV_LOG_USER("Toggled");
-	}
+// 	if(code == LV_EVENT_CLICKED) {
+// 		LV_LOG_USER("Clicked");
+// 	}
+// 	else if(code == LV_EVENT_VALUE_CHANGED) {
+// 		LV_LOG_USER("Toggled");
+// 	}
+// }
+
+// static void up_handler(lv_event_t * e) {
+// 	lv_event_code_t code = lv_event_get_code(e);
+// 	char *c;
+// 	int temp;
+// 	if(code == LV_EVENT_CLICKED) {
+// 		c = lv_label_get_text(labelSetValue);
+// 		temp = atoi(c);
+// 		lv_label_set_text_fmt(labelSetValue, "%02d", temp + 1);
+// 	}
+// }
+
+// static void down_handler(lv_event_t * e) {
+// 	lv_event_code_t code = lv_event_get_code(e);
+// 	char *c;
+// 	int temp;
+// 	if(code == LV_EVENT_CLICKED) {
+// 		c = lv_label_get_text(labelSetValue);
+// 		temp = atoi(c);
+// 		lv_label_set_text_fmt(labelSetValue, "%02d", temp - 1);
+// 	}
+// }
+
+static void set_value(void * indic, int32_t v)
+{
+    lv_meter_set_indicator_end_value(meter, indic, v);
 }
 
-static void up_handler(lv_event_t * e) {
-	lv_event_code_t code = lv_event_get_code(e);
-	char *c;
-	int temp;
-	if(code == LV_EVENT_CLICKED) {
-		c = lv_label_get_text(labelSetValue);
-		temp = atoi(c);
-		lv_label_set_text_fmt(labelSetValue, "%02d", temp + 1);
-	}
-}
+/**
+ * A meter with multiple arcs
+ */
+void meter_widget(lv_obj_t * screen)
+{
+	meter = lv_meter_create(screen);
+	lv_obj_center(meter);
+	lv_obj_set_size(meter, 160, 160);
+	lv_obj_align(meter, LV_ALIGN_CENTER, 0, -35);
 
-static void down_handler(lv_event_t * e) {
-	lv_event_code_t code = lv_event_get_code(e);
-	char *c;
-	int temp;
-	if(code == LV_EVENT_CLICKED) {
-		c = lv_label_get_text(labelSetValue);
-		temp = atoi(c);
-		lv_label_set_text_fmt(labelSetValue, "%02d", temp - 1);
-	}
+	/*Remove the circle from the middle*/
+	lv_obj_remove_style(meter, NULL, LV_PART_INDICATOR);
+
+	/*Add a scale first*/
+	lv_meter_scale_t * scale = lv_meter_add_scale(meter);
+	
+	lv_meter_set_scale_ticks(meter, scale, 7, 3, 6, lv_palette_main(LV_PALETTE_GREY));
+	lv_meter_set_scale_major_ticks(meter, scale, 1, 4, 30, lv_color_hex3(0xeee), 10);
+	lv_meter_set_scale_range(meter, scale, 0, 60, 270, 90);
+
+	/*Add a three arc indicator*/
+	lv_meter_indicator_t * indic1 = lv_meter_add_arc(meter, scale, 20, lv_palette_main(LV_PALETTE_RED), 0);
+
+    /*Create an animation to set the value*/
+    lv_anim_t a;
+    lv_anim_init(&a);
+    lv_anim_set_exec_cb(&a, set_value);
+    lv_anim_set_values(&a, 0, 100);
+    lv_anim_set_repeat_delay(&a, 100);
+    lv_anim_set_playback_delay(&a, 100);
+    lv_anim_set_repeat_count(&a, LV_ANIM_REPEAT_INFINITE);
+
+    lv_anim_set_time(&a, 1000);
+    lv_anim_set_playback_time(&a, 2000);
+    lv_anim_set_var(&a, indic1);
+    lv_anim_start(&a);
 }
 
 
@@ -170,6 +214,12 @@ void home(lv_obj_t * screen) {
 		lv_style_init(&style);
 		lv_style_set_bg_color(&style, lv_color_make(248,246,240));
 		// lv_style_set_border_width(&style, 5);
+
+		meter_widget(screen);
+
+
+
+
 
 
 
