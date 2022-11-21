@@ -2,35 +2,35 @@ src/ASF/thirdparty/lvgl8/src/extra/libs/sjpg/tjpgd.d \
  src/ASF/thirdparty/lvgl8/src/extra/libs/sjpg/tjpgd.o: \
  ../src/ASF/thirdparty/lvgl8/src/extra/libs/sjpg/tjpgd.c \
  ../src/ASF/thirdparty/lvgl8/src/extra/libs/sjpg/tjpgd.h \
- c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\lv_conf_internal.h \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\lib\gcc\arm-none-eabi\6.3.1\include\stdint.h \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\stdint.h \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\machine\_default_types.h \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\features.h \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\_newlib_version.h \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\_intsup.h \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\_stdint.h \
- c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\lv_conf_kconfig.h \
+ ../src/ASF/thirdparty/lvgl8/src/extra/libs/sjpg/../../../lv_conf_internal.h \
+ d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\lib\gcc\arm-none-eabi\6.3.1\include\stdint.h \
+ d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\stdint.h \
+ d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\machine\_default_types.h \
+ d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\features.h \
+ d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\_newlib_version.h \
+ d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\_intsup.h \
+ d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\_stdint.h \
+ ../src/ASF/thirdparty/lvgl8/src/extra/libs/sjpg/../../../lv_conf_kconfig.h \
  ../src/config/lv_conf.h
 
 ../src/ASF/thirdparty/lvgl8/src/extra/libs/sjpg/tjpgd.h:
 
-c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\lv_conf_internal.h:
+../src/ASF/thirdparty/lvgl8/src/extra/libs/sjpg/../../../lv_conf_internal.h:
 
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\lib\gcc\arm-none-eabi\6.3.1\include\stdint.h:
+d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\lib\gcc\arm-none-eabi\6.3.1\include\stdint.h:
 
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\stdint.h:
+d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\stdint.h:
 
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\machine\_default_types.h:
+d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\machine\_default_types.h:
 
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\features.h:
+d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\features.h:
 
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\_newlib_version.h:
+d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\_newlib_version.h:
 
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\_intsup.h:
+d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\_intsup.h:
 
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\_stdint.h:
+d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\_stdint.h:
 
-c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\lv_conf_kconfig.h:
+../src/ASF/thirdparty/lvgl8/src/extra/libs/sjpg/../../../lv_conf_kconfig.h:
 
 ../src/config/lv_conf.h:

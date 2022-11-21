@@ -10,6 +10,7 @@
 #include "home.h"
 #include "trajeto.h"
 #include "aroroda.h"
+#include "routeantiga.h"
 
 /************************************************************************/
 /* LCD / LVGL                                                           */
@@ -106,8 +107,12 @@ static void task_lcd(void *pvParameters) {
 	//lv_img_set_src(img, &trajeto);
 	//lv_obj_align(img, LV_ALIGN_CENTER, 0, 0);
 	//
+	//lv_obj_t * img = lv_img_create(lv_scr_act());
+	//lv_img_set_src(img, &aroroda);
+	//lv_obj_align(img, LV_ALIGN_CENTER, 0, 0);
+	
 	lv_obj_t * img = lv_img_create(lv_scr_act());
-	lv_img_set_src(img, &aroroda);
+	lv_img_set_src(img, &routeantiga);
 	lv_obj_align(img, LV_ALIGN_CENTER, 0, 0);
 
 	for (;;)  {

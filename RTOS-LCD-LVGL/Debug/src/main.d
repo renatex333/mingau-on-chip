@@ -1,6 +1,6 @@
 src/main.d src/main.o: ../src/main.c ../src/asf.h \
  ../src/ASF/sam/drivers/afec/afec.h ../src/ASF/sam/utils/compiler.h \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\lib\gcc\arm-none-eabi\6.3.1\include\stddef.h \
+ d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\lib\gcc\arm-none-eabi\6.3.1\include\stddef.h \
  ../src/ASF/common/utils/parts.h \
  ../src/ASF/sam/utils/preprocessor/preprocessor.h \
  ../src/ASF/sam/utils/preprocessor/tpaste.h \
@@ -10,13 +10,13 @@ src/main.d src/main.o: ../src/main.c ../src/asf.h \
  ../src/ASF/sam/utils/header_files/io.h \
  ../src/ASF/sam/utils/cmsis/same70/include/same70.h \
  ../src/ASF/sam/utils/cmsis/same70/include/same70q21b.h \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\lib\gcc\arm-none-eabi\6.3.1\include\stdint.h \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\stdint.h \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\machine\_default_types.h \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\features.h \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\_newlib_version.h \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\_intsup.h \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\_stdint.h \
+ d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\lib\gcc\arm-none-eabi\6.3.1\include\stdint.h \
+ d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\stdint.h \
+ d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\machine\_default_types.h \
+ d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\features.h \
+ d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\_newlib_version.h \
+ d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\_intsup.h \
+ d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\_stdint.h \
  ../src/ASF/thirdparty/CMSIS/Include/core_cm7.h \
  ../src/ASF/thirdparty/CMSIS/Include/core_cmInstr.h \
  ../src/ASF/thirdparty/CMSIS/Include/core_cmFunc.h \
@@ -115,33 +115,33 @@ src/main.d src/main.o: ../src/main.c ../src/asf.h \
  ../src/ASF/sam/utils/cmsis/same70/include/instance/uart3.h \
  ../src/ASF/sam/utils/cmsis/same70/include/instance/uart4.h \
  ../src/ASF/sam/utils/cmsis/same70/include/pio/same70q21b.h \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\stdio.h \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\_ansi.h \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\newlib.h \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\config.h \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\machine\ieeefp.h \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\cdefs.h \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\lib\gcc\arm-none-eabi\6.3.1\include\stdarg.h \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\reent.h \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\_ansi.h \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\_types.h \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\machine\_types.h \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\lock.h \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\types.h \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\machine\endian.h \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\machine\_endian.h \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\select.h \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\_sigset.h \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\_timeval.h \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\timespec.h \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\_timespec.h \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\_pthreadtypes.h \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\machine\types.h \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\stdio.h \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\lib\gcc\arm-none-eabi\6.3.1\include\stdbool.h \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\stdlib.h \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\machine\stdlib.h \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\alloca.h \
+ d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\stdio.h \
+ d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\_ansi.h \
+ d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\newlib.h \
+ d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\config.h \
+ d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\machine\ieeefp.h \
+ d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\cdefs.h \
+ d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\lib\gcc\arm-none-eabi\6.3.1\include\stdarg.h \
+ d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\reent.h \
+ d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\_ansi.h \
+ d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\_types.h \
+ d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\machine\_types.h \
+ d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\lock.h \
+ d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\types.h \
+ d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\machine\endian.h \
+ d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\machine\_endian.h \
+ d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\select.h \
+ d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\_sigset.h \
+ d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\_timeval.h \
+ d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\timespec.h \
+ d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\_timespec.h \
+ d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\_pthreadtypes.h \
+ d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\machine\types.h \
+ d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\stdio.h \
+ d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\lib\gcc\arm-none-eabi\6.3.1\include\stdbool.h \
+ d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\stdlib.h \
+ d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\machine\stdlib.h \
+ d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\alloca.h \
  ../src/ASF/common/utils/interrupt.h \
  ../src/ASF/common/utils/interrupt/interrupt_sam_nvic.h \
  ../src/ASF/sam/utils/status_codes.h \
@@ -207,9 +207,9 @@ src/main.d src/main.o: ../src/main.c ../src/asf.h \
  ../src/ASF/common/services/twi/sam_twihs/twihs_master.h \
  ../src/ASF/common/services/twi/twihs_slave.h \
  ../src/ASF/sam/drivers/pio/pio_handler.h \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\string.h \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\xlocale.h \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\string.h \
+ d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\string.h \
+ d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\xlocale.h \
+ d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\string.h \
  ../src/ASF/sam/components/display/ili9341/ili9341.h \
  ../src/config/conf_ili9341.h ../src/ASF/thirdparty/lvgl8/lvgl.h \
  ../src/ASF/thirdparty/lvgl8/src/misc/lv_log.h \
@@ -230,7 +230,7 @@ src/main.d src/main.o: ../src/main.c ../src/asf.h \
  ../src/ASF/thirdparty/lvgl8/src/hal/lv_hal.h \
  ../src/ASF/thirdparty/lvgl8/src/hal/../draw/lv_img_buf.h \
  ../src/ASF/thirdparty/lvgl8/src/hal/../draw/../misc/lv_color.h \
- c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\lv_conf_internal.h \
+ ../src/ASF/thirdparty/lvgl8/src/hal/../draw/../misc/../lv_conf_internal.h \
  ../src/ASF/thirdparty/lvgl8/src/hal/../draw/../misc/lv_math.h \
  ../src/ASF/thirdparty/lvgl8/src/hal/../draw/../misc/lv_types.h \
  ../src/ASF/thirdparty/lvgl8/src/hal/../draw/../misc/lv_area.h \
@@ -245,16 +245,16 @@ src/main.d src/main.o: ../src/main.c ../src/asf.h \
  ../src/ASF/thirdparty/lvgl8/src/core/../lv_conf_internal.h \
  ../src/ASF/thirdparty/lvgl8/src/core/../misc/lv_style.h \
  ../src/ASF/thirdparty/lvgl8/src/core/../misc/../font/lv_font.h \
- c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\lv_conf_internal.h \
+ ../src/ASF/thirdparty/lvgl8/src/core/../misc/../font/../lv_conf_internal.h \
  ../src/ASF/thirdparty/lvgl8/src/core/../misc/../font/lv_symbol_def.h \
- c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\misc\lv_area.h \
+ ../src/ASF/thirdparty/lvgl8/src/core/../misc/../font/../misc/lv_area.h \
  ../src/ASF/thirdparty/lvgl8/src/core/../misc/lv_color.h \
  ../src/ASF/thirdparty/lvgl8/src/core/../misc/lv_area.h \
  ../src/ASF/thirdparty/lvgl8/src/core/../misc/lv_anim.h \
  ../src/ASF/thirdparty/lvgl8/src/core/../misc/lv_txt.h \
  ../src/ASF/thirdparty/lvgl8/src/core/../misc/../lv_conf_internal.h \
  ../src/ASF/thirdparty/lvgl8/src/core/../misc/lv_printf.h \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\inttypes.h \
+ d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\inttypes.h \
  ../src/ASF/thirdparty/lvgl8/src/core/../misc/lv_types.h \
  ../src/ASF/thirdparty/lvgl8/src/core/../misc/lv_assert.h \
  ../src/ASF/thirdparty/lvgl8/src/core/../misc/lv_bidi.h \
@@ -279,7 +279,7 @@ src/main.d src/main.o: ../src/main.c ../src/asf.h \
  ../src/ASF/thirdparty/lvgl8/src/core/../draw/lv_img_decoder.h \
  ../src/ASF/thirdparty/lvgl8/src/core/../draw/lv_img_buf.h \
  ../src/ASF/thirdparty/lvgl8/src/core/../draw/../misc/lv_fs.h \
- c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\lv_conf_internal.h \
+ ../src/ASF/thirdparty/lvgl8/src/core/../draw/../misc/../lv_conf_internal.h \
  ../src/ASF/thirdparty/lvgl8/src/core/../draw/../misc/lv_types.h \
  ../src/ASF/thirdparty/lvgl8/src/core/../draw/../misc/lv_area.h \
  ../src/ASF/thirdparty/lvgl8/src/core/../draw/lv_img_cache.h \
@@ -348,73 +348,73 @@ src/main.d src/main.o: ../src/main.c ../src/asf.h \
  ../src/ASF/thirdparty/lvgl8/src/extra/lv_extra.h \
  ../src/ASF/thirdparty/lvgl8/src/extra/widgets/lv_widgets.h \
  ../src/ASF/thirdparty/lvgl8/src/extra/widgets/animimg/lv_animimg.h \
- c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\lvgl.h \
- c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\lvgl.h \
+ ../src/ASF/thirdparty/lvgl8/src/extra/widgets/animimg/../../../lvgl.h \
+ ../src/ASF/thirdparty/lvgl8/src/extra/widgets/animimg/../../../../lvgl.h \
  ../src/ASF/thirdparty/lvgl8/src/extra/widgets/calendar/lv_calendar.h \
- c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\widgets\lv_btnmatrix.h \
+ ../src/ASF/thirdparty/lvgl8/src/extra/widgets/calendar/../../../widgets/lv_btnmatrix.h \
  ../src/ASF/thirdparty/lvgl8/src/extra/widgets/calendar/lv_calendar_header_arrow.h \
- c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\core\lv_obj.h \
+ ../src/ASF/thirdparty/lvgl8/src/extra/widgets/calendar/../../../core/lv_obj.h \
  ../src/ASF/thirdparty/lvgl8/src/extra/widgets/calendar/lv_calendar_header_dropdown.h \
  ../src/ASF/thirdparty/lvgl8/src/extra/widgets/chart/lv_chart.h \
- c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\lvgl.h \
+ ../src/ASF/thirdparty/lvgl8/src/extra/widgets/chart/../../../lvgl.h \
  ../src/ASF/thirdparty/lvgl8/src/extra/widgets/keyboard/lv_keyboard.h \
- c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\widgets\lv_btnmatrix.h \
+ ../src/ASF/thirdparty/lvgl8/src/extra/widgets/keyboard/../../../widgets/lv_btnmatrix.h \
  ../src/ASF/thirdparty/lvgl8/src/extra/widgets/list/lv_list.h \
- c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\core\lv_obj.h \
+ ../src/ASF/thirdparty/lvgl8/src/extra/widgets/list/../../../core/lv_obj.h \
  ../src/ASF/thirdparty/lvgl8/src/extra/widgets/list/../../layouts/flex/lv_flex.h \
- c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\core\lv_obj.h \
+ ../src/ASF/thirdparty/lvgl8/src/extra/widgets/list/../../layouts/flex/../../../core/lv_obj.h \
  ../src/ASF/thirdparty/lvgl8/src/extra/widgets/msgbox/lv_msgbox.h \
- c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\lvgl.h \
+ ../src/ASF/thirdparty/lvgl8/src/extra/widgets/msgbox/../../../lvgl.h \
  ../src/ASF/thirdparty/lvgl8/src/extra/widgets/meter/lv_meter.h \
- c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\lvgl.h \
+ ../src/ASF/thirdparty/lvgl8/src/extra/widgets/meter/../../../lvgl.h \
  ../src/ASF/thirdparty/lvgl8/src/extra/widgets/spinbox/lv_spinbox.h \
- c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\lvgl.h \
+ ../src/ASF/thirdparty/lvgl8/src/extra/widgets/spinbox/../../../lvgl.h \
  ../src/ASF/thirdparty/lvgl8/src/extra/widgets/spinner/lv_spinner.h \
- c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\lvgl.h \
+ ../src/ASF/thirdparty/lvgl8/src/extra/widgets/spinner/../../../lvgl.h \
  ../src/ASF/thirdparty/lvgl8/src/extra/widgets/tabview/lv_tabview.h \
- c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\lvgl.h \
+ ../src/ASF/thirdparty/lvgl8/src/extra/widgets/tabview/../../../lvgl.h \
  ../src/ASF/thirdparty/lvgl8/src/extra/widgets/tileview/lv_tileview.h \
- c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\core\lv_obj.h \
+ ../src/ASF/thirdparty/lvgl8/src/extra/widgets/tileview/../../../core/lv_obj.h \
  ../src/ASF/thirdparty/lvgl8/src/extra/widgets/win/lv_win.h \
- c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\lvgl.h \
+ ../src/ASF/thirdparty/lvgl8/src/extra/widgets/win/../../../lvgl.h \
  ../src/ASF/thirdparty/lvgl8/src/extra/widgets/colorwheel/lv_colorwheel.h \
- c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\lvgl.h \
+ ../src/ASF/thirdparty/lvgl8/src/extra/widgets/colorwheel/../../../lvgl.h \
  ../src/ASF/thirdparty/lvgl8/src/extra/widgets/led/lv_led.h \
- c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\lvgl.h \
+ ../src/ASF/thirdparty/lvgl8/src/extra/widgets/led/../../../lvgl.h \
  ../src/ASF/thirdparty/lvgl8/src/extra/widgets/imgbtn/lv_imgbtn.h \
- c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\lvgl.h \
+ ../src/ASF/thirdparty/lvgl8/src/extra/widgets/imgbtn/../../../lvgl.h \
  ../src/ASF/thirdparty/lvgl8/src/extra/widgets/span/lv_span.h \
- c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\lvgl.h \
+ ../src/ASF/thirdparty/lvgl8/src/extra/widgets/span/../../../lvgl.h \
  ../src/ASF/thirdparty/lvgl8/src/extra/layouts/lv_layouts.h \
  ../src/ASF/thirdparty/lvgl8/src/extra/layouts/flex/lv_flex.h \
  ../src/ASF/thirdparty/lvgl8/src/extra/layouts/grid/lv_grid.h \
- c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\core\lv_obj.h \
+ ../src/ASF/thirdparty/lvgl8/src/extra/layouts/grid/../../../core/lv_obj.h \
  ../src/ASF/thirdparty/lvgl8/src/extra/themes/lv_themes.h \
  ../src/ASF/thirdparty/lvgl8/src/extra/themes/default/lv_theme_default.h \
- c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\core\lv_obj.h \
+ ../src/ASF/thirdparty/lvgl8/src/extra/themes/default/../../../core/lv_obj.h \
  ../src/ASF/thirdparty/lvgl8/src/extra/themes/mono/lv_theme_mono.h \
- c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\core\lv_obj.h \
+ ../src/ASF/thirdparty/lvgl8/src/extra/themes/mono/../../../core/lv_obj.h \
  ../src/ASF/thirdparty/lvgl8/src/extra/themes/basic/lv_theme_basic.h \
- c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\core\lv_obj.h \
+ ../src/ASF/thirdparty/lvgl8/src/extra/themes/basic/../../../core/lv_obj.h \
  ../src/ASF/thirdparty/lvgl8/src/extra/others/lv_others.h \
  ../src/ASF/thirdparty/lvgl8/src/extra/others/snapshot/lv_snapshot.h \
- c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\lv_conf_internal.h \
- c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\core\lv_obj.h \
+ ../src/ASF/thirdparty/lvgl8/src/extra/others/snapshot/../../../lv_conf_internal.h \
+ ../src/ASF/thirdparty/lvgl8/src/extra/others/snapshot/../../../core/lv_obj.h \
  ../src/ASF/thirdparty/lvgl8/src/extra/libs/lv_libs.h \
  ../src/ASF/thirdparty/lvgl8/src/extra/libs/bmp/lv_bmp.h \
- c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\lv_conf_internal.h \
+ ../src/ASF/thirdparty/lvgl8/src/extra/libs/bmp/../../../lv_conf_internal.h \
  ../src/ASF/thirdparty/lvgl8/src/extra/libs/fsdrv/lv_fsdrv.h \
  ../src/ASF/thirdparty/lvgl8/src/extra/libs/png/lv_png.h \
- c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\lv_conf_internal.h \
+ ../src/ASF/thirdparty/lvgl8/src/extra/libs/png/../../../lv_conf_internal.h \
  ../src/ASF/thirdparty/lvgl8/src/extra/libs/gif/lv_gif.h \
- c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\lvgl.h \
+ ../src/ASF/thirdparty/lvgl8/src/extra/libs/gif/../../../lvgl.h \
  ../src/ASF/thirdparty/lvgl8/src/extra/libs/qrcode/lv_qrcode.h \
- c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\lvgl.h \
+ ../src/ASF/thirdparty/lvgl8/src/extra/libs/qrcode/../../../lvgl.h \
  ../src/ASF/thirdparty/lvgl8/src/extra/libs/sjpg/lv_sjpg.h \
  ../src/ASF/thirdparty/lvgl8/src/extra/libs/freetype/lv_freetype.h \
- c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\lvgl.h \
+ ../src/ASF/thirdparty/lvgl8/src/extra/libs/freetype/../../../lvgl.h \
  ../src/ASF/thirdparty/lvgl8/src/extra/libs/rlottie/lv_rlottie.h \
- c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\lvgl.h \
+ ../src/ASF/thirdparty/lvgl8/src/extra/libs/rlottie/../../../lvgl.h \
  ../src/touch/touch.h
 
 ../src/asf.h:
@@ -423,7 +423,7 @@ src/main.d src/main.o: ../src/main.c ../src/asf.h \
 
 ../src/ASF/sam/utils/compiler.h:
 
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\lib\gcc\arm-none-eabi\6.3.1\include\stddef.h:
+d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\lib\gcc\arm-none-eabi\6.3.1\include\stddef.h:
 
 ../src/ASF/common/utils/parts.h:
 
@@ -443,19 +443,19 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\lib\gc
 
 ../src/ASF/sam/utils/cmsis/same70/include/same70q21b.h:
 
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\lib\gcc\arm-none-eabi\6.3.1\include\stdint.h:
+d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\lib\gcc\arm-none-eabi\6.3.1\include\stdint.h:
 
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\stdint.h:
+d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\stdint.h:
 
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\machine\_default_types.h:
+d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\machine\_default_types.h:
 
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\features.h:
+d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\features.h:
 
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\_newlib_version.h:
+d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\_newlib_version.h:
 
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\_intsup.h:
+d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\_intsup.h:
 
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\_stdint.h:
+d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\_stdint.h:
 
 ../src/ASF/thirdparty/CMSIS/Include/core_cm7.h:
 
@@ -653,59 +653,59 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-no
 
 ../src/ASF/sam/utils/cmsis/same70/include/pio/same70q21b.h:
 
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\stdio.h:
+d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\stdio.h:
 
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\_ansi.h:
+d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\_ansi.h:
 
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\newlib.h:
+d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\newlib.h:
 
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\config.h:
+d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\config.h:
 
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\machine\ieeefp.h:
+d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\machine\ieeefp.h:
 
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\cdefs.h:
+d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\cdefs.h:
 
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\lib\gcc\arm-none-eabi\6.3.1\include\stdarg.h:
+d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\lib\gcc\arm-none-eabi\6.3.1\include\stdarg.h:
 
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\reent.h:
+d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\reent.h:
 
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\_ansi.h:
+d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\_ansi.h:
 
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\_types.h:
+d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\_types.h:
 
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\machine\_types.h:
+d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\machine\_types.h:
 
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\lock.h:
+d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\lock.h:
 
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\types.h:
+d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\types.h:
 
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\machine\endian.h:
+d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\machine\endian.h:
 
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\machine\_endian.h:
+d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\machine\_endian.h:
 
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\select.h:
+d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\select.h:
 
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\_sigset.h:
+d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\_sigset.h:
 
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\_timeval.h:
+d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\_timeval.h:
 
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\timespec.h:
+d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\timespec.h:
 
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\_timespec.h:
+d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\_timespec.h:
 
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\_pthreadtypes.h:
+d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\_pthreadtypes.h:
 
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\machine\types.h:
+d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\machine\types.h:
 
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\stdio.h:
+d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\stdio.h:
 
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\lib\gcc\arm-none-eabi\6.3.1\include\stdbool.h:
+d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\lib\gcc\arm-none-eabi\6.3.1\include\stdbool.h:
 
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\stdlib.h:
+d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\stdlib.h:
 
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\machine\stdlib.h:
+d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\machine\stdlib.h:
 
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\alloca.h:
+d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\alloca.h:
 
 ../src/ASF/common/utils/interrupt.h:
 
@@ -851,11 +851,11 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-no
 
 ../src/ASF/sam/drivers/pio/pio_handler.h:
 
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\string.h:
+d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\string.h:
 
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\xlocale.h:
+d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\xlocale.h:
 
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\string.h:
+d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\string.h:
 
 ../src/ASF/sam/components/display/ili9341/ili9341.h:
 
@@ -901,7 +901,7 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-no
 
 ../src/ASF/thirdparty/lvgl8/src/hal/../draw/../misc/lv_color.h:
 
-c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\lv_conf_internal.h:
+../src/ASF/thirdparty/lvgl8/src/hal/../draw/../misc/../lv_conf_internal.h:
 
 ../src/ASF/thirdparty/lvgl8/src/hal/../draw/../misc/lv_math.h:
 
@@ -931,11 +931,11 @@ c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\lv_conf_internal.h:
 
 ../src/ASF/thirdparty/lvgl8/src/core/../misc/../font/lv_font.h:
 
-c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\lv_conf_internal.h:
+../src/ASF/thirdparty/lvgl8/src/core/../misc/../font/../lv_conf_internal.h:
 
 ../src/ASF/thirdparty/lvgl8/src/core/../misc/../font/lv_symbol_def.h:
 
-c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\misc\lv_area.h:
+../src/ASF/thirdparty/lvgl8/src/core/../misc/../font/../misc/lv_area.h:
 
 ../src/ASF/thirdparty/lvgl8/src/core/../misc/lv_color.h:
 
@@ -949,7 +949,7 @@ c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\misc\lv_area.h:
 
 ../src/ASF/thirdparty/lvgl8/src/core/../misc/lv_printf.h:
 
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\inttypes.h:
+d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\inttypes.h:
 
 ../src/ASF/thirdparty/lvgl8/src/core/../misc/lv_types.h:
 
@@ -999,7 +999,7 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-no
 
 ../src/ASF/thirdparty/lvgl8/src/core/../draw/../misc/lv_fs.h:
 
-c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\lv_conf_internal.h:
+../src/ASF/thirdparty/lvgl8/src/core/../draw/../misc/../lv_conf_internal.h:
 
 ../src/ASF/thirdparty/lvgl8/src/core/../draw/../misc/lv_types.h:
 
@@ -1137,79 +1137,79 @@ c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\lv_conf_internal.h:
 
 ../src/ASF/thirdparty/lvgl8/src/extra/widgets/animimg/lv_animimg.h:
 
-c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\lvgl.h:
+../src/ASF/thirdparty/lvgl8/src/extra/widgets/animimg/../../../lvgl.h:
 
-c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\lvgl.h:
+../src/ASF/thirdparty/lvgl8/src/extra/widgets/animimg/../../../../lvgl.h:
 
 ../src/ASF/thirdparty/lvgl8/src/extra/widgets/calendar/lv_calendar.h:
 
-c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\widgets\lv_btnmatrix.h:
+../src/ASF/thirdparty/lvgl8/src/extra/widgets/calendar/../../../widgets/lv_btnmatrix.h:
 
 ../src/ASF/thirdparty/lvgl8/src/extra/widgets/calendar/lv_calendar_header_arrow.h:
 
-c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\core\lv_obj.h:
+../src/ASF/thirdparty/lvgl8/src/extra/widgets/calendar/../../../core/lv_obj.h:
 
 ../src/ASF/thirdparty/lvgl8/src/extra/widgets/calendar/lv_calendar_header_dropdown.h:
 
 ../src/ASF/thirdparty/lvgl8/src/extra/widgets/chart/lv_chart.h:
 
-c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\lvgl.h:
+../src/ASF/thirdparty/lvgl8/src/extra/widgets/chart/../../../lvgl.h:
 
 ../src/ASF/thirdparty/lvgl8/src/extra/widgets/keyboard/lv_keyboard.h:
 
-c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\widgets\lv_btnmatrix.h:
+../src/ASF/thirdparty/lvgl8/src/extra/widgets/keyboard/../../../widgets/lv_btnmatrix.h:
 
 ../src/ASF/thirdparty/lvgl8/src/extra/widgets/list/lv_list.h:
 
-c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\core\lv_obj.h:
+../src/ASF/thirdparty/lvgl8/src/extra/widgets/list/../../../core/lv_obj.h:
 
 ../src/ASF/thirdparty/lvgl8/src/extra/widgets/list/../../layouts/flex/lv_flex.h:
 
-c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\core\lv_obj.h:
+../src/ASF/thirdparty/lvgl8/src/extra/widgets/list/../../layouts/flex/../../../core/lv_obj.h:
 
 ../src/ASF/thirdparty/lvgl8/src/extra/widgets/msgbox/lv_msgbox.h:
 
-c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\lvgl.h:
+../src/ASF/thirdparty/lvgl8/src/extra/widgets/msgbox/../../../lvgl.h:
 
 ../src/ASF/thirdparty/lvgl8/src/extra/widgets/meter/lv_meter.h:
 
-c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\lvgl.h:
+../src/ASF/thirdparty/lvgl8/src/extra/widgets/meter/../../../lvgl.h:
 
 ../src/ASF/thirdparty/lvgl8/src/extra/widgets/spinbox/lv_spinbox.h:
 
-c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\lvgl.h:
+../src/ASF/thirdparty/lvgl8/src/extra/widgets/spinbox/../../../lvgl.h:
 
 ../src/ASF/thirdparty/lvgl8/src/extra/widgets/spinner/lv_spinner.h:
 
-c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\lvgl.h:
+../src/ASF/thirdparty/lvgl8/src/extra/widgets/spinner/../../../lvgl.h:
 
 ../src/ASF/thirdparty/lvgl8/src/extra/widgets/tabview/lv_tabview.h:
 
-c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\lvgl.h:
+../src/ASF/thirdparty/lvgl8/src/extra/widgets/tabview/../../../lvgl.h:
 
 ../src/ASF/thirdparty/lvgl8/src/extra/widgets/tileview/lv_tileview.h:
 
-c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\core\lv_obj.h:
+../src/ASF/thirdparty/lvgl8/src/extra/widgets/tileview/../../../core/lv_obj.h:
 
 ../src/ASF/thirdparty/lvgl8/src/extra/widgets/win/lv_win.h:
 
-c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\lvgl.h:
+../src/ASF/thirdparty/lvgl8/src/extra/widgets/win/../../../lvgl.h:
 
 ../src/ASF/thirdparty/lvgl8/src/extra/widgets/colorwheel/lv_colorwheel.h:
 
-c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\lvgl.h:
+../src/ASF/thirdparty/lvgl8/src/extra/widgets/colorwheel/../../../lvgl.h:
 
 ../src/ASF/thirdparty/lvgl8/src/extra/widgets/led/lv_led.h:
 
-c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\lvgl.h:
+../src/ASF/thirdparty/lvgl8/src/extra/widgets/led/../../../lvgl.h:
 
 ../src/ASF/thirdparty/lvgl8/src/extra/widgets/imgbtn/lv_imgbtn.h:
 
-c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\lvgl.h:
+../src/ASF/thirdparty/lvgl8/src/extra/widgets/imgbtn/../../../lvgl.h:
 
 ../src/ASF/thirdparty/lvgl8/src/extra/widgets/span/lv_span.h:
 
-c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\lvgl.h:
+../src/ASF/thirdparty/lvgl8/src/extra/widgets/span/../../../lvgl.h:
 
 ../src/ASF/thirdparty/lvgl8/src/extra/layouts/lv_layouts.h:
 
@@ -1217,58 +1217,58 @@ c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\lvgl.h:
 
 ../src/ASF/thirdparty/lvgl8/src/extra/layouts/grid/lv_grid.h:
 
-c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\core\lv_obj.h:
+../src/ASF/thirdparty/lvgl8/src/extra/layouts/grid/../../../core/lv_obj.h:
 
 ../src/ASF/thirdparty/lvgl8/src/extra/themes/lv_themes.h:
 
 ../src/ASF/thirdparty/lvgl8/src/extra/themes/default/lv_theme_default.h:
 
-c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\core\lv_obj.h:
+../src/ASF/thirdparty/lvgl8/src/extra/themes/default/../../../core/lv_obj.h:
 
 ../src/ASF/thirdparty/lvgl8/src/extra/themes/mono/lv_theme_mono.h:
 
-c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\core\lv_obj.h:
+../src/ASF/thirdparty/lvgl8/src/extra/themes/mono/../../../core/lv_obj.h:
 
 ../src/ASF/thirdparty/lvgl8/src/extra/themes/basic/lv_theme_basic.h:
 
-c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\core\lv_obj.h:
+../src/ASF/thirdparty/lvgl8/src/extra/themes/basic/../../../core/lv_obj.h:
 
 ../src/ASF/thirdparty/lvgl8/src/extra/others/lv_others.h:
 
 ../src/ASF/thirdparty/lvgl8/src/extra/others/snapshot/lv_snapshot.h:
 
-c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\lv_conf_internal.h:
+../src/ASF/thirdparty/lvgl8/src/extra/others/snapshot/../../../lv_conf_internal.h:
 
-c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\core\lv_obj.h:
+../src/ASF/thirdparty/lvgl8/src/extra/others/snapshot/../../../core/lv_obj.h:
 
 ../src/ASF/thirdparty/lvgl8/src/extra/libs/lv_libs.h:
 
 ../src/ASF/thirdparty/lvgl8/src/extra/libs/bmp/lv_bmp.h:
 
-c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\lv_conf_internal.h:
+../src/ASF/thirdparty/lvgl8/src/extra/libs/bmp/../../../lv_conf_internal.h:
 
 ../src/ASF/thirdparty/lvgl8/src/extra/libs/fsdrv/lv_fsdrv.h:
 
 ../src/ASF/thirdparty/lvgl8/src/extra/libs/png/lv_png.h:
 
-c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\lv_conf_internal.h:
+../src/ASF/thirdparty/lvgl8/src/extra/libs/png/../../../lv_conf_internal.h:
 
 ../src/ASF/thirdparty/lvgl8/src/extra/libs/gif/lv_gif.h:
 
-c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\lvgl.h:
+../src/ASF/thirdparty/lvgl8/src/extra/libs/gif/../../../lvgl.h:
 
 ../src/ASF/thirdparty/lvgl8/src/extra/libs/qrcode/lv_qrcode.h:
 
-c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\lvgl.h:
+../src/ASF/thirdparty/lvgl8/src/extra/libs/qrcode/../../../lvgl.h:
 
 ../src/ASF/thirdparty/lvgl8/src/extra/libs/sjpg/lv_sjpg.h:
 
 ../src/ASF/thirdparty/lvgl8/src/extra/libs/freetype/lv_freetype.h:
 
-c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\lvgl.h:
+../src/ASF/thirdparty/lvgl8/src/extra/libs/freetype/../../../lvgl.h:
 
 ../src/ASF/thirdparty/lvgl8/src/extra/libs/rlottie/lv_rlottie.h:
 
-c:\lab7-rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\lvgl.h:
+../src/ASF/thirdparty/lvgl8/src/extra/libs/rlottie/../../../lvgl.h:
 
 ../src/touch/touch.h:

@@ -411,7 +411,8 @@ src/main.d src/main.o: ../src/main.c ../src/asf.h \
  ../src/ASF/thirdparty/lvgl8/src/extra/libs/freetype/../../../lvgl.h \
  ../src/ASF/thirdparty/lvgl8/src/extra/libs/rlottie/lv_rlottie.h \
  ../src/ASF/thirdparty/lvgl8/src/extra/libs/rlottie/../../../lvgl.h \
- ../src/touch/touch.h ../src/home.h ../src/trajeto.h ../src/aroroda.h
+ ../src/touch/touch.h ../src/home.h ../src/trajeto.h ../src/aroroda.h \
+ ../src/routeantiga.h
 
 ../src/asf.h:
 
@@ -1264,3 +1265,5 @@ d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\a
 ../src/trajeto.h:
 
 ../src/aroroda.h:
+
+../src/routeantiga.h:
