@@ -7,6 +7,7 @@
 #include "ili9341.h"
 #include "lvgl.h"
 #include "touch/touch.h"
+#include "logo2.h"
 
 /************************************************************************/
 /* Define Struct para RTC                                               */
@@ -33,9 +34,13 @@ typedef struct  {
 #define LV_HOR_RES_MAX          (240)
 #define LV_VER_RES_MAX          (320)
 
-LV_FONT_DECLARE(dseg70);
-LV_FONT_DECLARE(dseg50);
-LV_FONT_DECLARE(dseg30);
+LV_FONT_DECLARE(primasans10);
+LV_FONT_DECLARE(primasansbold10);
+LV_FONT_DECLARE(primasans20);
+LV_FONT_DECLARE(primasansbold20);
+LV_FONT_DECLARE(primasans40);
+LV_FONT_DECLARE(primasansbold40);
+
 
 // declarar a tela como global e est�tica
 static lv_obj_t * scr1;  // screen 1
@@ -63,7 +68,7 @@ lv_obj_t * labelClock;
 /************************************************************************/
 /* VAR globais                                                          */
 /************************************************************************/
-volatile char flag_rtc_alarm = 0;
+
 
 /************************************************************************/
 /* PROTOTYPES                                                           */
@@ -251,13 +256,104 @@ void home(lv_obj_t * screen) {
 
 }
 
+void route(lv_obj_t * screen) {
+	// Style (geral)
+	static lv_style_t style;
+	//All channels are 0-255
+	lv_style_init(&style);
+	lv_style_set_bg_color(&style, lv_color_make(248,246,240));
+	
+	labelClock = lv_label_create(screen);
+	lv_obj_align(labelClock, LV_ALIGN_TOP_LEFT, 10 , 5);
+	lv_obj_set_style_text_font(labelClock, &primasansbold20, LV_STATE_DEFAULT);
+	lv_obj_set_style_text_color(labelClock, lv_color_make(123,125,131), LV_STATE_DEFAULT);
+	
+	lv_obj_t * img = lv_img_create(screen);
+	lv_img_set_src(img, &logo2);
+	lv_obj_align(img, LV_ALIGN_TOP_RIGHT, 0, 0);
+
+
+
+
+	
+	// 	// Cria cada um dos bot�es
+	// lv_obj_t * labelBtn1;
+	// lv_obj_t * btn1 = lv_btn_create(scr1);
+	// lv_obj_add_event_cb(btn1, event_handler1, LV_EVENT_ALL, NULL);
+	// lv_obj_align(btn1, LV_ALIGN_BOTTOM_LEFT, 5, -5);
+	// labelBtn1 = lv_label_create(btn1);
+	// lv_label_set_text(labelBtn1, "[  " LV_SYMBOL_POWER);
+	// 	lv_obj_add_style(btn1, &style, 0);
+	// 	lv_obj_set_width(btn1, 60);
+	// 	lv_obj_set_height(btn1, 60);
+	// lv_obj_center(labelBtn1);
+	
+	// 	lv_obj_t * labelBtn2;
+	// 	lv_obj_t * btn2 = lv_btn_create(scr1);
+	// 	lv_obj_add_event_cb(btn2, event_handler1, LV_EVENT_ALL, NULL);
+	// 	lv_obj_align_to(btn2, btn1, LV_ALIGN_RIGHT_MID, 40, -22);
+	// 	labelBtn2 = lv_label_create(btn2);
+	// 	lv_label_set_text(labelBtn2, "|  M ");
+	// 	lv_obj_add_style(btn2, &style, 0);
+	// 	lv_obj_set_width(btn2, 60);
+	// 	lv_obj_set_height(btn2, 60);
+	// 	lv_obj_center(labelBtn2);
+	
+	// 	lv_obj_t * labelBtn3;
+	// 	lv_obj_t * btn3 = lv_btn_create(scr1);
+	// 	lv_obj_add_event_cb(btn3, event_handler1, LV_EVENT_ALL, NULL);
+	// 	lv_obj_align_to(btn3, btn2, LV_ALIGN_RIGHT_MID, 40, -22);
+	// 	labelBtn3 = lv_label_create(btn3);
+	// 	lv_label_set_text(labelBtn3, "|  " LV_SYMBOL_SETTINGS "  ]");
+	// 	lv_obj_add_style(btn3, &style, 0);
+	// 	lv_obj_set_width(btn3, 60);
+	// 	lv_obj_set_height(btn3, 60);
+	// 	lv_obj_center(labelBtn3);
+	
+	// 	lv_obj_t * labelBtn4;
+	// 	lv_obj_t * btn4 = lv_btn_create(scr1);
+	// 	lv_obj_add_event_cb(btn4, down_handler, LV_EVENT_ALL, NULL);
+	// 	lv_obj_align(btn4, LV_ALIGN_BOTTOM_RIGHT, -5, -5);
+	// 	labelBtn4 = lv_label_create(btn4);
+	// 	lv_label_set_text(labelBtn4, LV_SYMBOL_DOWN "  ]");
+	// 	lv_obj_add_style(btn4, &style, 0);
+	// 	lv_obj_set_width(btn4, 60);
+	// 	lv_obj_set_height(btn4, 60);
+	// 	lv_obj_center(labelBtn4);
+	
+	// 	lv_obj_t * labelBtn5;
+	// 	lv_obj_t * btn5 = lv_btn_create(scr1);
+	// 	lv_obj_add_event_cb(btn5, up_handler, LV_EVENT_ALL, NULL);
+	// 	lv_obj_align_to(btn5, btn4, LV_ALIGN_LEFT_MID, -80, -22);
+	// 	labelBtn5 = lv_label_create(btn5);
+	// 	lv_label_set_text(labelBtn5, "[  " LV_SYMBOL_UP);
+	// 	lv_obj_add_style(btn5, &style, 0);
+	// 	lv_obj_set_width(btn5, 60);
+	// 	lv_obj_set_height(btn5, 60);
+	// 	lv_obj_center(labelBtn5);
+	
+	// 	// Cria labels do termostato
+	// 	labelFloor = lv_label_create(scr1);
+	// 	lv_obj_align(labelFloor, LV_ALIGN_LEFT_MID, 35 , -45);
+	// 	lv_obj_set_style_text_font(labelFloor, &dseg70, LV_STATE_DEFAULT);
+	// 	lv_obj_set_style_text_color(labelFloor, lv_color_white(), LV_STATE_DEFAULT);
+	// 	lv_label_set_text_fmt(labelFloor, "%02d", 23);
+	
+	// 	labelSetValue = lv_label_create(scr1);
+	// 	lv_obj_align(labelSetValue, LV_ALIGN_RIGHT_MID, -30 , -45);
+	// 	lv_obj_set_style_text_font(labelSetValue, &dseg50, LV_STATE_DEFAULT);
+	// 	lv_obj_set_style_text_color(labelSetValue, lv_color_white(), LV_STATE_DEFAULT);
+	// 	lv_label_set_text_fmt(labelSetValue, "%02d", 22);
+
+}
+
 /************************************************************************/
 /* TASKS                                                                */
 /************************************************************************/
 
 static void task_update(void *pvParameters) {
 	for (;;)  {
-		lv_scr_load(scr1); // exibe tela 1
+		lv_scr_load(scr2); // exibe tela 1
 		vTaskDelay(500);
 		//lv_scr_load(scr2); // exibe tela 2
 		//vTaskDelay(500);
@@ -276,6 +372,7 @@ static void task_lcd(void *pvParameters) {
 	scr3  = lv_obj_create(NULL);
 	
 	home(scr1);
+	route(scr2);
 
 	for (;;)  {
 		lv_tick_inc(50);
@@ -293,30 +390,13 @@ static void task_rtc(void *pvParameters) {
 	/* Leitura do valor atual do RTC */
 	uint32_t current_hour, current_min, current_sec;
 	rtc_get_time(RTC, &current_hour, &current_min, &current_sec);
-	
-	lv_label_set_text_fmt(labelClock, "%02d:%02d", current_hour, current_min);
-	
-	char toggle_text = 1;
-	char seconds_counter = 0;
+	lv_label_set_text_fmt(labelClock, "%02d:%02d:%02d", current_hour, current_min, current_sec);
 
 	for (;;)  {
 		if (xSemaphoreTake(xSemaphoreRTC, 10000) == pdTRUE){
-			if (seconds_counter == 60) {
-				rtc_get_time(RTC, &current_hour, &current_min, &current_sec);
-				seconds_counter = 0;
-			}
-			if (toggle_text) {
-				lv_label_set_text_fmt(labelClock, "%02d %02d", current_hour, current_min);
-				toggle_text = 0;
-				} else {
-				lv_label_set_text_fmt(labelClock, "%02d:%02d", current_hour, current_min);
-				toggle_text = 1;
-			}
-			seconds_counter++;
-		}
-		
-		
-		
+			rtc_get_time(RTC, &current_hour, &current_min, &current_sec);
+			lv_label_set_text_fmt(labelClock, "%02d:%02d:%02d", current_hour, current_min, current_sec);
+		}	
 	}
 }
 

@@ -2311,13 +2311,28 @@
     <Compile Include="src\config\conf_touch.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\dseg30.c">
+    <Compile Include="src\logo.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\dseg50.c">
+    <Compile Include="src\logo2.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\dseg70.c">
+    <Compile Include="src\primasans10.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\primasans20.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\primasans40.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\primasansbold10.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\primasansbold20.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\primasansbold40.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\touch\touch.c">
