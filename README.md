@@ -15,7 +15,7 @@ Integrantes:
 
 Nome da marca:
 
-![image](https://user-images.githubusercontent.com/15271557/200141390-cd0b2601-97ae-4d4a-92b0-c8d4e66e154f.png)
+![MINGAU](https://user-images.githubusercontent.com/15271557/204890331-465f5df4-5d54-47c5-bfc2-d53616ce84ce.png)
 
 ## Mockup da Interface
 
