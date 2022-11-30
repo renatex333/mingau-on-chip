@@ -185,7 +185,6 @@ void home(lv_obj_t * screen) {
 		static lv_style_t style;
 		//All channels are 0-255
 		lv_style_init(&style);
-		lv_style_set_bg_color(&style, lv_color_make(248,246,240));
 		// lv_style_set_border_width(&style, 5);
 
 
@@ -273,7 +272,6 @@ void route(lv_obj_t * screen) {
 	static lv_style_t style;
 	//All channels are 0-255
 	lv_style_init(&style);
-	lv_style_set_bg_color(&style, lv_color_make(248,246,240));
 	
 	labelClock = lv_label_create(screen);
 	lv_obj_align(labelClock, LV_ALIGN_TOP_LEFT, 10 , 5);
@@ -364,8 +362,18 @@ void route(lv_obj_t * screen) {
 /************************************************************************/
 
 static void task_update(void *pvParameters) {
+	// Criando duas telas
+	scr1  = lv_obj_create(NULL);
+	scr2  = lv_obj_create(NULL);
+	scr3  = lv_obj_create(NULL);
+	lv_obj_set_style_bg_color(scr1, lv_color_white(), LV_PART_MAIN );
+	lv_obj_set_style_bg_color(scr2, lv_color_white(), LV_PART_MAIN );
+	lv_obj_set_style_bg_color(scr3, lv_color_white(), LV_PART_MAIN );
+	home(scr1);
+	route(scr2);
+	
+	lv_scr_load(scr2); // exibe tela 1
 	for (;;)  {
-		lv_scr_load(scr2); // exibe tela 1
 		vTaskDelay(500);
 		//lv_scr_load(scr2); // exibe tela 2
 		//vTaskDelay(500);
@@ -374,18 +382,9 @@ static void task_update(void *pvParameters) {
 	}
 }
 
-
 static void task_lcd(void *pvParameters) {
 	int px, py;
 	
-	// Criando duas telas
-	scr1  = lv_obj_create(NULL);
-	scr2  = lv_obj_create(NULL);
-	scr3  = lv_obj_create(NULL);
-	
-	home(scr1);
-	route(scr2);
-
 	for (;;)  {
 		lv_tick_inc(50);
 		lv_task_handler();
@@ -402,6 +401,7 @@ static void task_rtc(void *pvParameters) {
 	/* Leitura do valor atual do RTC */
 	uint32_t current_hour, current_min, current_sec;
 	rtc_get_time(RTC, &current_hour, &current_min, &current_sec);
+
 	lv_label_set_text_fmt(labelClock, "%02d:%02d:%02d", current_hour, current_min, current_sec);
 
 	for (;;)  {
@@ -420,31 +420,20 @@ static void task_simulador(void *pvParameters) {
 	float vel = VEL_MAX_KMH;
 	float f;
 	int ramp_up = 1;
+	int t;
 
 	while(1){
 		pio_clear(PIOC, PIO_PC31);
 		delay_ms(1);
 		pio_set(PIOC, PIO_PC31);
-		#ifdef RAMP
-		if (ramp_up) {
-			printf("[SIMU] ACELERANDO: %d \n", (int) (10*vel));
-			vel += 0.5;
-			} else {
-			printf("[SIMU] DESACELERANDO: %d \n",  (int) (10*vel));
-			vel -= 0.5;
-		}
-
-		if (vel >= VEL_MAX_KMH)
-		ramp_up = 0;
-		else if (vel <= VEL_MIN_KMH)
-		ramp_up = 1;
-		#ifndef RAMP
+	
+		
 		vel = 5;
 		printf("[SIMU] CONSTANTE: %d \n", (int) (10*vel));
-		#endif
+		
 		f = kmh_to_hz(vel, RAIO);
-		int t = 965*(1.0/f); //UTILIZADO 965 como multiplicador ao invés de 1000
-		//para compensar o atraso gerado pelo Escalonador do freeRTOS
+		t = 965*(1.0/f); // UTILIZADO 965 como multiplicador ao invés de 1000
+												 // para compensar o atraso gerado pelo Escalonador do freeRTOS
 		delay_ms(t);
 	}
 }
@@ -589,19 +578,19 @@ int main(void) {
 	if (xTaskCreate(task_update, "TASK_UPDATE", TASK_LCD_STACK_SIZE, NULL, TASK_LCD_STACK_PRIORITY, NULL) != pdPASS) {
 		printf("Failed to create update task\r\n");
 	}
-
-	/* Create task to control lcd */
+//
+	///* Create task to control lcd */
 	if (xTaskCreate(task_lcd, "TASK_LCD", TASK_LCD_STACK_SIZE, NULL, TASK_LCD_STACK_PRIORITY, NULL) != pdPASS) {
 		printf("Failed to create lcd task\r\n");
 	}
 	
-	/* Create task to control clock rtc */
-	if (xTaskCreate(task_rtc, "TASK_CLOCK_RTC", TASK_LCD_STACK_SIZE, NULL, TASK_LCD_STACK_PRIORITY, NULL) != pdPASS) {
+	///* Create task to control clock rtc */
+	if (xTaskCreate(task_rtc, "TASK_CLOCK_RTC", 1024*2, NULL, TASK_LCD_STACK_PRIORITY, NULL) != pdPASS) {
 		printf("Failed to create rtc clock task\r\n");
 	}
 	
 	/* Cria task que simula giro da roda da bike */
-	if (xTaskCreate(task_simulador, "SIMUL", TASK_SIMULATOR_STACK_SIZE, NULL, TASK_SIMULATOR_STACK_PRIORITY, NULL) != pdPASS) {
+	if (xTaskCreate(task_simulador, "SIMUL", 1024*2, NULL, TASK_SIMULATOR_STACK_PRIORITY, NULL) != pdPASS) {
 		printf("Failed to create lcd task\r\n");
 	}
 	

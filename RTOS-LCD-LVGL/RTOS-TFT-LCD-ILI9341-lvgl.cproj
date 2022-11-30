@@ -2311,9 +2311,6 @@
     <Compile Include="src\config\conf_touch.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\logo.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="src\logo2.h">
       <SubType>compile</SubType>
     </Compile>
