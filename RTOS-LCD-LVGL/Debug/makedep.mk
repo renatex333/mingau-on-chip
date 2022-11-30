@@ -624,11 +624,17 @@ src\ASF\thirdparty\lvgl8\tests\unity\unity.c
 
 src\ASF\thirdparty\lvgl8\tests\unity\unity_support.c
 
-src\dseg30.c
+src\primasans10.c
 
-src\dseg50.c
+src\primasans20.c
 
-src\dseg70.c
+src\primasans40.c
+
+src\primasansbold10.c
+
+src\primasansbold20.c
+
+src\primasansbold40.c
 
 src\touch\touch.c
 
