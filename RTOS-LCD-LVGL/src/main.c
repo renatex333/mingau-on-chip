@@ -9,6 +9,17 @@
 #include "touch/touch.h"
 #include "logo2.h"
 
+// Para simulação
+#include "arm_math.h"
+#define TASK_SIMULATOR_STACK_SIZE (4096 / sizeof(portSTACK_TYPE))
+#define TASK_SIMULATOR_STACK_PRIORITY (tskIDLE_PRIORITY)
+
+#define RAIO 0.508/2
+#define VEL_MAX_KMH  5.0f
+#define VEL_MIN_KMH  0.5f
+// Descomentar linha abaixo para variar velocidade simuladas
+//#define RAMP
+
 /************************************************************************/
 /* Define Struct para RTC                                               */
 /************************************************************************/
@@ -75,6 +86,7 @@ lv_obj_t * labelClock;
 /************************************************************************/
 
 void RTC_init(Rtc *rtc, uint32_t id_rtc, calendar t, uint32_t irq_type);
+float kmh_to_hz(float vel, float raio);
 
 /************************************************************************/
 /* RTOS                                                                 */
@@ -400,6 +412,43 @@ static void task_rtc(void *pvParameters) {
 	}
 }
 
+static void task_simulador(void *pvParameters) {
+
+	pmc_enable_periph_clk(ID_PIOC);
+	pio_set_output(PIOC, PIO_PC31, 1, 0, 0);
+
+	float vel = VEL_MAX_KMH;
+	float f;
+	int ramp_up = 1;
+
+	while(1){
+		pio_clear(PIOC, PIO_PC31);
+		delay_ms(1);
+		pio_set(PIOC, PIO_PC31);
+		#ifdef RAMP
+		if (ramp_up) {
+			printf("[SIMU] ACELERANDO: %d \n", (int) (10*vel));
+			vel += 0.5;
+			} else {
+			printf("[SIMU] DESACELERANDO: %d \n",  (int) (10*vel));
+			vel -= 0.5;
+		}
+
+		if (vel >= VEL_MAX_KMH)
+		ramp_up = 0;
+		else if (vel <= VEL_MIN_KMH)
+		ramp_up = 1;
+		#ifndef RAMP
+		vel = 5;
+		printf("[SIMU] CONSTANTE: %d \n", (int) (10*vel));
+		#endif
+		f = kmh_to_hz(vel, RAIO);
+		int t = 965*(1.0/f); //UTILIZADO 965 como multiplicador ao invés de 1000
+		//para compensar o atraso gerado pelo Escalonador do freeRTOS
+		delay_ms(t);
+	}
+}
+
 /************************************************************************/
 /* configs                                                              */
 /************************************************************************/
@@ -502,6 +551,23 @@ void RTC_init(Rtc *rtc, uint32_t id_rtc, calendar t, uint32_t irq_type) {
 }
 
 /************************************************************************/
+/* Funcoes                                                              */
+/************************************************************************/
+/**
+* aro 20" => 1" == 2,4 cm => 50,8 cm (diametro) => 0.508/2 = 0.254m (raio da roda)
+* w = 2 pi f (m/s)
+* v [km/h] = (w*r) / 3.6 = (2 pi f r) / 3.6
+* f = v / (2 pi r 3.6)
+* Exemplo : 5 km / h = 1.38 m/s
+*           f = 0.87Hz
+*           t = 1/f => 1/0.87 = 1,149s
+*/
+float kmh_to_hz(float vel, float raio) {
+	float f = vel / (2*PI*raio*3.6);
+	return(f);
+}
+
+/************************************************************************/
 /* main                                                                 */
 /************************************************************************/
 int main(void) {
@@ -532,6 +598,11 @@ int main(void) {
 	/* Create task to control clock rtc */
 	if (xTaskCreate(task_rtc, "TASK_CLOCK_RTC", TASK_LCD_STACK_SIZE, NULL, TASK_LCD_STACK_PRIORITY, NULL) != pdPASS) {
 		printf("Failed to create rtc clock task\r\n");
+	}
+	
+	/* Cria task que simula giro da roda da bike */
+	if (xTaskCreate(task_simulador, "SIMUL", TASK_SIMULATOR_STACK_SIZE, NULL, TASK_SIMULATOR_STACK_PRIORITY, NULL) != pdPASS) {
+		printf("Failed to create lcd task\r\n");
 	}
 	
 	/* Start the scheduler. */
