@@ -554,7 +554,7 @@ void RTC_init(Rtc *rtc, uint32_t id_rtc, calendar t, uint32_t irq_type) {
 /* Funcoes                                                              */
 /************************************************************************/
 /**
-* aro 20" => 1" == 2,4 cm => 50,8 cm (diametro) => 0.508/2 = 0.254m (raio da roda)
+* aro 20" => 1" == 2,54 cm => 50,8 cm (diametro) => 0.508/2 = 0.254m (raio da roda)
 * w = 2 pi f (m/s)
 * v [km/h] = (w*r) / 3.6 = (2 pi f r) / 3.6
 * f = v / (2 pi r 3.6)
