@@ -180,6 +180,11 @@ static void down_handler(lv_event_t * e) {
 	}
 }
 
+static void set_value(void * indic, int32_t v)
+{
+	lv_meter_set_indicator_end_value(meter, indic, v);
+}
+
 /**
  * A meter with multiple arcs
  */
@@ -413,7 +418,7 @@ static void task_update(void *pvParameters) {
 	home(scr1);
 	route(scr2);
 	
-	lv_scr_load(scr2); // exibe tela 1
+	lv_scr_load(scr1); // exibe tela 1
 	for (;;)  {
 		vTaskDelay(500);
 		//lv_scr_load(scr2); // exibe tela 2
