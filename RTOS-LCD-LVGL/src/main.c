@@ -371,14 +371,16 @@ static void task_update(void *pvParameters) {
 	lv_obj_set_style_bg_color(scr3, lv_color_white(), LV_PART_MAIN );
 	home(scr1);
 	route(scr2);
+	// settings(scr3);
 	
-	lv_scr_load(scr2); // exibe tela 1
+	//lv_scr_load(scr1); // exibe tela 1
+	//vTaskDelay(500);
+	lv_scr_load(scr2); // exibe tela 2
+	vTaskDelay(500);
+	//lv_scr_load(scr3); // exibe tela 3
+	//vTaskDelay(500);
 	for (;;)  {
 		vTaskDelay(500);
-		//lv_scr_load(scr2); // exibe tela 2
-		//vTaskDelay(500);
-		//lv_scr_load(scr3); // exibe tela 3
-		//vTaskDelay(500);
 	}
 }
 
@@ -426,7 +428,6 @@ static void task_simulador(void *pvParameters) {
 		pio_clear(PIOC, PIO_PC31);
 		delay_ms(1);
 		pio_set(PIOC, PIO_PC31);
-	
 		
 		vel = 5;
 		printf("[SIMU] CONSTANTE: %d \n", (int) (10*vel));
