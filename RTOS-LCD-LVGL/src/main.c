@@ -17,8 +17,14 @@
 #define RAIO 0.508/2
 #define VEL_MAX_KMH  5.0f
 #define VEL_MIN_KMH  0.5f
-// Descomentar linha abaixo para variar velocidade simuladas
-//#define RAMP
+
+/************************************************************************/
+/* Defines										                                          */
+/************************************************************************/
+#define VEL_PIO PIOA
+#define VEL_PIO_ID ID_PIOA
+#define VEL_PIO_IDX 19
+#define VEL_PIO_IDX_MASK (1u << VEL_PIO_IDX)
 
 /************************************************************************/
 /* Define Struct para RTC                                               */
@@ -87,6 +93,7 @@ lv_obj_t * labelClock;
 
 void RTC_init(Rtc *rtc, uint32_t id_rtc, calendar t, uint32_t irq_type);
 float kmh_to_hz(float vel, float raio);
+void vel_data_handler(void);
 
 /************************************************************************/
 /* RTOS                                                                 */
@@ -116,6 +123,10 @@ extern void vApplicationMallocFailedHook(void) {
 
 // Semaphore RTC
 SemaphoreHandle_t xSemaphoreRTC;
+// Semaphore RTT
+SemaphoreHandle_t xSemaphoreRTT;
+// Semaphore VEL
+SemaphoreHandle_t xSemaphoreVEL;
 
 /************************************************************************/
 /* Handlers                                                             */
@@ -139,6 +150,10 @@ void RTC_Handler(void) {
 	rtc_clear_status(RTC, RTC_SCCR_TIMCLR);
 	rtc_clear_status(RTC, RTC_SCCR_CALCLR);
 	rtc_clear_status(RTC, RTC_SCCR_TDERRCLR);
+}
+
+void vel_data_handler(void) {
+	xSemaphoreGiveFromISR(xSemaphoreVEL, 0);
 }
 
 
@@ -439,6 +454,37 @@ static void task_simulador(void *pvParameters) {
 	}
 }
 
+static void task_vel(void *pvParameters) {
+	pmc_enable_periph_clk(VEL_PIO_ID);
+	pio_set_input(VEL_PIO, VEL_PIO_IDX_MASK, PIO_DEFAULT);
+	pio_pull_up(VEL_PIO, VEL_PIO_IDX_MASK, 0);
+	pio_handler_set(VEL_PIO,
+									VEL_PIO_ID,
+									VEL_PIO_IDX_MASK,
+									PIO_IT_FALL_EDGE,
+									vel_data_handler);
+									
+	// Config da interrupção do botão embutido
+	pio_enable_interrupt(VEL_PIO, VEL_PIO_IDX_MASK);
+	pio_get_interrupt_status(VEL_PIO);
+
+	NVIC_EnableIRQ(VEL_PIO_ID);
+	NVIC_SetPriority(VEL_PIO_ID, 4);
+									
+	int vel_data[50];
+	double vel_inst = 0.0;
+	double vel_media = 0.0;
+	double distancia = 0.0;
+	long int n_pulsos = 0;
+	int dT_ms = 0;
+										
+	while(1) {
+		if (xSemaphoreTake(xSemaphoreVEL, 100) == pdTRUE){
+			
+		}
+	}
+}
+
 /************************************************************************/
 /* configs                                                              */
 /************************************************************************/
@@ -572,11 +618,15 @@ int main(void) {
 	configure_touch();
 	configure_lvgl();
 	
-	// Inicializa sem�foro RTC
+	// Inicializa semaforo RTC
 	xSemaphoreRTC = xSemaphoreCreateBinary();
+	// Inicializa semaforo RTT
+	xSemaphoreRTT = xSemaphoreCreateBinary();
+	// Inicializa semaforo VEL
+	xSemaphoreVEL = xSemaphoreCreateBinary();
 	
 	/* Create task to control lcd */
-	if (xTaskCreate(task_update, "TASK_UPDATE", TASK_LCD_STACK_SIZE, NULL, TASK_LCD_STACK_PRIORITY, NULL) != pdPASS) {
+	if (xTaskCreate(task_update, "TASK_UPDATE", 1024*2, NULL, TASK_LCD_STACK_PRIORITY, NULL) != pdPASS) {
 		printf("Failed to create update task\r\n");
 	}
 //
@@ -591,8 +641,13 @@ int main(void) {
 	}
 	
 	/* Cria task que simula giro da roda da bike */
-	if (xTaskCreate(task_simulador, "SIMUL", 1024*2, NULL, TASK_SIMULATOR_STACK_PRIORITY, NULL) != pdPASS) {
-		printf("Failed to create lcd task\r\n");
+	if (xTaskCreate(task_simulador, "SIMUL", 1024, NULL, TASK_SIMULATOR_STACK_PRIORITY, NULL) != pdPASS) {
+		printf("Failed to create simul task\r\n");
+	}
+	
+	/* Cria task que pega dados do giro da roda da bike */
+	if (xTaskCreate(task_vel, "VEL", 1024, NULL, TASK_SIMULATOR_STACK_PRIORITY, NULL) != pdPASS) {
+		printf("Failed to create vel task\r\n");
 	}
 	
 	/* Start the scheduler. */
