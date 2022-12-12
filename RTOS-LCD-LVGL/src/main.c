@@ -494,6 +494,9 @@ static void task_vel(void *pvParameters) {
 	double tempo_total = 0.0;
 	double vel_anterior = 0.0;
 	double aceler = 0.0;
+	
+	// Limpa semaforo antes de realmente começar a task
+	xSemaphoreTake(xSemaphoreVEL, 1000 / portTICK_PERIOD_MS);
 										
 	while(1) {
 		// Timer conta até 5 segundos
@@ -516,11 +519,11 @@ static void task_vel(void *pvParameters) {
 				aceleracao_flag = 0;
 			}
 			
-			printf("Timer %f\n", dt);
-			printf("vel inst %f km/h\n", vel_inst);
-			printf("aceler %f\n", aceler);
-			printf("dist %f km \n", distancia);
-			printf("vel media %f km/h \n", vel_media);
+			//printf("Timer %f\n", dt);
+			//printf("vel inst %f km/h\n", vel_inst);
+			//printf("aceler %f\n", aceler);
+			//printf("dist %f km \n", distancia);
+			//printf("vel media %f km/h \n", vel_media);
 		}
 	}
 }
