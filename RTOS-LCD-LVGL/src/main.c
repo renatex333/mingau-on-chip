@@ -9,6 +9,7 @@
 #include "touch/touch.h"
 #include "logo2.h"
 
+
 // Para simulação
 #include "arm_math.h"
 #define TASK_SIMULATOR_STACK_SIZE (4096 / sizeof(portSTACK_TYPE))
@@ -74,15 +75,15 @@ static lv_color_t buf_1[LV_HOR_RES_MAX * LV_VER_RES_MAX];
 static lv_disp_drv_t disp_drv;          /*A variable to hold the drivers. Must be static or global.*/
 static lv_indev_drv_t indev_drv;
 
-static  lv_obj_t * labelBtn1;
-static  lv_obj_t * labelBtn2;
-static  lv_obj_t * labelBtn3;
-static  lv_obj_t * labelBtn4;
-static  lv_obj_t * labelBtn5;
+lv_obj_t * labelHome;
+lv_obj_t * labelRoute;
+lv_obj_t * labelSettings;
 
-lv_obj_t * meter;
-lv_obj_t * labelFloor;
-lv_obj_t * labelSetValue;
+QueueHandle_t xQueueSCR;
+
+lv_obj_t * labelVelInst;
+lv_obj_t * labelDist;
+
 lv_obj_t * labelClock;
 
 /************************************************************************/
@@ -169,151 +170,120 @@ void vel_data_handler(void) {
 /* lvgl                                                                 */
 /************************************************************************/
 
-static void event_handler1(lv_event_t * e) {
+static void event_handlerHome(lv_event_t * e) {
 	lv_event_code_t code = lv_event_get_code(e);
-
-	if(code == LV_EVENT_CLICKED) {
-		LV_LOG_USER("Clicked");
-	}
-	else if(code == LV_EVENT_VALUE_CHANGED) {
-		LV_LOG_USER("Toggled");
-	}
-}
-
-static void up_handler(lv_event_t * e) {
-	lv_event_code_t code = lv_event_get_code(e);
-	char *c;
-	int temp;
-	if(code == LV_EVENT_CLICKED) {
-		c = lv_label_get_text(labelSetValue);
-		temp = atoi(c);
-		lv_label_set_text_fmt(labelSetValue, "%02d", temp + 1);
-	}
-}
-
-static void down_handler(lv_event_t * e) {
-	lv_event_code_t code = lv_event_get_code(e);
-	char *c;
-	int temp;
-	if(code == LV_EVENT_CLICKED) {
-		c = lv_label_get_text(labelSetValue);
-		temp = atoi(c);
-		lv_label_set_text_fmt(labelSetValue, "%02d", temp - 1);
-	}
-}
-
-static void set_value(void * indic, int32_t v)
-{
-	lv_meter_set_indicator_end_value(meter, indic, v);
-}
-
-/**
- * A meter with multiple arcs
- */
-void meter_widget(lv_obj_t * screen)
-{
-	meter = lv_meter_create(screen);
-	lv_obj_center(meter);
-	lv_obj_set_size(meter, 160, 160);
-	lv_obj_align(meter, LV_ALIGN_CENTER, 0, -45);
-
-	/*Remove the circle from the middle*/
-	lv_obj_remove_style(meter, NULL, LV_PART_INDICATOR);
-
-	/*Add a scale first*/
-	lv_meter_scale_t * scale = lv_meter_add_scale(meter);
 	
-	lv_meter_set_scale_ticks(meter, scale, 7, 3, 6, lv_palette_main(LV_PALETTE_GREY));
-	lv_meter_set_scale_major_ticks(meter, scale, 1, 4, 30, lv_color_hex3(0xeee), 10);
-	lv_meter_set_scale_range(meter, scale, 0, 60, 270, 90);
-
-	/*Add a three arc indicator*/
-	lv_meter_indicator_t * indic1 = lv_meter_add_arc(meter, scale, 20, lv_palette_main(LV_PALETTE_RED), 0);
-
-    /*Create an animation to set the value*/
-    lv_anim_t a;
-    lv_anim_init(&a);
-    lv_anim_set_exec_cb(&a, set_value);
-    lv_anim_set_values(&a, 0, 100);
-    lv_anim_set_repeat_delay(&a, 100);
-    lv_anim_set_playback_delay(&a, 100);
-    lv_anim_set_repeat_count(&a, LV_ANIM_REPEAT_INFINITE);
-
-    lv_anim_set_time(&a, 1000);
-    lv_anim_set_playback_time(&a, 2000);
-    lv_anim_set_var(&a, indic1);
-    lv_anim_start(&a);
+	if(code == LV_EVENT_CLICKED) {
+		int scrid = 0;
+		xQueueSendFromISR(xQueueSCR, &scrid, 0);
+	}
 }
+
+static void event_handlerRoute(lv_event_t * e) {
+	lv_event_code_t code = lv_event_get_code(e);
+	
+
+	if(code == LV_EVENT_CLICKED) {
+		int scrid = 1;
+		xQueueSendFromISR(xQueueSCR, &scrid, 0);
+	}
+}
+
+static void event_handlerSettings(lv_event_t * e) {
+	lv_event_code_t code = lv_event_get_code(e);
+	if(code == LV_EVENT_CLICKED) {
+		int scrid = 2;
+		xQueueSendFromISR(xQueueSCR, &scrid, 0);
+	}
+}
+
+//static void up_handler(lv_event_t * e) {
+	//lv_event_code_t code = lv_event_get_code(e);
+	//char *c;
+	//int temp;
+	//if(code == LV_EVENT_CLICKED) {
+		//c = lv_label_get_text(labelSetValue);
+		//temp = atoi(c);
+		//lv_label_set_text_fmt(labelSetValue, "%02d", temp + 1);
+	//}
+//}
+
+//static void down_handler(lv_event_t * e) {
+	//lv_event_code_t code = lv_event_get_code(e);
+	//char *c;
+	//int temp;
+	//if(code == LV_EVENT_CLICKED) {
+		//c = lv_label_get_text(labelSetValue);
+		//temp = atoi(c);
+		//lv_label_set_text_fmt(labelSetValue, "%02d", temp - 1);
+	//}
+//}
 
 
 void home(lv_obj_t * screen) {
-		// Style (geral)
-		static lv_style_t style;
-		//All channels are 0-255
-		lv_style_init(&style);
-		// lv_style_set_border_width(&style, 5);
-		
-		meter_widget(screen);
+	// Style (geral)
+	static lv_style_t style;
+	//All channels are 0-255
+	lv_style_init(&style);
+	lv_style_set_bg_color(&style, lv_color_white());
+	lv_style_set_border_color(&style, lv_color_white());
+	lv_style_set_shadow_width(&style, 0);
+	
+	labelClock = lv_label_create(screen);
+	lv_obj_align(labelClock, LV_ALIGN_TOP_LEFT, 10 , 5);
+	lv_obj_set_style_text_font(labelClock, &primasansbold20, LV_STATE_DEFAULT);
+	lv_obj_set_style_text_color(labelClock, lv_color_make(123,125,131), LV_STATE_DEFAULT);
+	
+	
+	lv_obj_t * imglogo = lv_img_create(screen);
+	lv_img_set_src(imglogo, &logo2);
+	lv_obj_align(imglogo, LV_ALIGN_TOP_RIGHT, 0, 0);
 
 
+	lv_obj_t * btnHome = lv_btn_create(screen);
+	lv_obj_add_event_cb(btnHome, event_handlerHome, LV_EVENT_ALL, NULL);
+	lv_obj_align(btnHome, LV_ALIGN_BOTTOM_LEFT, 5, -20);
+	labelHome = lv_label_create(btnHome);
+	lv_obj_set_style_text_font(labelHome, &primasansbold10, LV_STATE_DEFAULT);
+	lv_obj_set_style_text_color(labelHome, lv_color_black(), LV_STATE_DEFAULT);
+	lv_label_set_text(labelHome, "HOME");
+	lv_obj_add_style(btnHome, &style, 0);
+	lv_obj_set_width(btnHome, 60);  
+	lv_obj_set_height(btnHome, 50);
+	lv_obj_center(labelHome);
 
+	lv_obj_t * btnRoute = lv_btn_create(screen);
+	lv_obj_add_event_cb(btnRoute, event_handlerRoute, LV_EVENT_ALL, NULL);
+	lv_obj_align(btnRoute, LV_ALIGN_BOTTOM_MID,  5, -20);
+	labelRoute = lv_label_create(btnRoute);
+	lv_obj_set_style_text_font(labelRoute, &primasansbold10, LV_STATE_DEFAULT);
+	lv_obj_set_style_text_color(labelRoute, lv_color_black(), LV_STATE_DEFAULT);
+	lv_label_set_text(labelRoute, "ROUTE");
+	lv_obj_add_style(btnRoute, &style, 0);
+	lv_obj_set_width(btnRoute, 60);  
+	lv_obj_set_height(btnRoute, 50);
+	lv_obj_center(labelRoute);
 
+	lv_obj_t * btnSettings = lv_btn_create(screen);
+	lv_obj_add_event_cb(btnSettings, event_handlerSettings, LV_EVENT_ALL, NULL);
+	lv_obj_align(btnSettings, LV_ALIGN_BOTTOM_RIGHT,  -5, -20);
+	labelSettings = lv_label_create(btnSettings);
+	lv_obj_set_style_text_font(labelSettings, &primasansbold10, LV_STATE_DEFAULT);
+	lv_obj_set_style_text_color(labelSettings, lv_color_black(), LV_STATE_DEFAULT);
+	lv_label_set_text(labelSettings, "SETTINGS");
+	lv_obj_add_style(btnSettings, &style, 0);
+	lv_obj_set_width(btnSettings, 60);  
+	lv_obj_set_height(btnSettings, 50);
+	lv_obj_center(labelSettings);
+	
 		
-	// 	// Cria cada um dos bot�es
-    // lv_obj_t * labelBtn1;
-    // lv_obj_t * btn1 = lv_btn_create(scr1);
-    // lv_obj_add_event_cb(btn1, event_handler1, LV_EVENT_ALL, NULL);
-    // lv_obj_align(btn1, LV_ALIGN_BOTTOM_LEFT, 5, -5);
-    // labelBtn1 = lv_label_create(btn1);
-    // lv_label_set_text(labelBtn1, "[  " LV_SYMBOL_POWER);
-	// 	lv_obj_add_style(btn1, &style, 0);
-	// 	lv_obj_set_width(btn1, 60);  
-	// 	lv_obj_set_height(btn1, 60);
-    // lv_obj_center(labelBtn1);
-		
-	// 	lv_obj_t * labelBtn2;
-	// 	lv_obj_t * btn2 = lv_btn_create(scr1);
-	// 	lv_obj_add_event_cb(btn2, event_handler1, LV_EVENT_ALL, NULL);
-	// 	lv_obj_align_to(btn2, btn1, LV_ALIGN_RIGHT_MID, 40, -22);
-	// 	labelBtn2 = lv_label_create(btn2);
-	// 	lv_label_set_text(labelBtn2, "|  M ");
-	// 	lv_obj_add_style(btn2, &style, 0);
-	// 	lv_obj_set_width(btn2, 60);
-	// 	lv_obj_set_height(btn2, 60);
-	// 	lv_obj_center(labelBtn2);
-		
-	// 	lv_obj_t * labelBtn3;
-	// 	lv_obj_t * btn3 = lv_btn_create(scr1);
-	// 	lv_obj_add_event_cb(btn3, event_handler1, LV_EVENT_ALL, NULL);
-	// 	lv_obj_align_to(btn3, btn2, LV_ALIGN_RIGHT_MID, 40, -22);
-	// 	labelBtn3 = lv_label_create(btn3);
-	// 	lv_label_set_text(labelBtn3, "|  " LV_SYMBOL_SETTINGS "  ]");
-	// 	lv_obj_add_style(btn3, &style, 0);
-	// 	lv_obj_set_width(btn3, 60);
-	// 	lv_obj_set_height(btn3, 60);
-	// 	lv_obj_center(labelBtn3);
-		
-	// 	lv_obj_t * labelBtn4;
-	// 	lv_obj_t * btn4 = lv_btn_create(scr1);
-	// 	lv_obj_add_event_cb(btn4, down_handler, LV_EVENT_ALL, NULL);
-	// 	lv_obj_align(btn4, LV_ALIGN_BOTTOM_RIGHT, -5, -5);
-	// 	labelBtn4 = lv_label_create(btn4);
-	// 	lv_label_set_text(labelBtn4, LV_SYMBOL_DOWN "  ]");
-	// 	lv_obj_add_style(btn4, &style, 0);
-	// 	lv_obj_set_width(btn4, 60);
-	// 	lv_obj_set_height(btn4, 60);
-	// 	lv_obj_center(labelBtn4);
-		
-	// 	lv_obj_t * labelBtn5;
-	// 	lv_obj_t * btn5 = lv_btn_create(scr1);
-	// 	lv_obj_add_event_cb(btn5, up_handler, LV_EVENT_ALL, NULL);
-	// 	lv_obj_align_to(btn5, btn4, LV_ALIGN_LEFT_MID, -80, -22);
-	// 	labelBtn5 = lv_label_create(btn5);
-	// 	lv_label_set_text(labelBtn5, "[  " LV_SYMBOL_UP);
-	// 	lv_obj_add_style(btn5, &style, 0);
-	// 	lv_obj_set_width(btn5, 60);
-	// 	lv_obj_set_height(btn5, 60);
-	// 	lv_obj_center(labelBtn5);
+	//lv_obj_t * imgvel = lv_img_create(screen);
+	//lv_img_set_src(imgvel, &velimg);
+	//lv_obj_align(imgvel, LV_ALIGN_CENTER, 0, 0);
+	
+	//lv_obj_t * imgdist = lv_img_create(screen);
+	//lv_img_set_src(imgdist, &distimg);
+	//lv_obj_align(imgvel, LV_ALIGN_CENTER, 0, 0);
 		
 	// 	// Cria labels do termostato
 	// 	labelFloor = lv_label_create(scr1);
@@ -329,7 +299,7 @@ void home(lv_obj_t * screen) {
 	// 	lv_label_set_text_fmt(labelSetValue, "%02d", 22);
 		
 	// 	labelClock = lv_label_create(scr1);
-	// 	lv_obj_align(labelClock, LV_ALIGN_TOP_RIGHT, -10 , 5);
+	// 	lv_obj_align(labelClock, LV_ALIGN_TOP_RIGHT, -20 , 5);
 	// 	lv_obj_set_style_text_font(labelClock, &dseg30, LV_STATE_DEFAULT);
 	// 	lv_obj_set_style_text_color(labelClock, lv_color_white(), LV_STATE_DEFAULT);
 
@@ -340,19 +310,55 @@ void route(lv_obj_t * screen) {
 	static lv_style_t style;
 	//All channels are 0-255
 	lv_style_init(&style);
+	lv_style_set_bg_color(&style, lv_color_white());
+	lv_style_set_border_color(&style, lv_color_white());
+	lv_style_set_shadow_width(&style, 0);
 	
 	labelClock = lv_label_create(screen);
 	lv_obj_align(labelClock, LV_ALIGN_TOP_LEFT, 10 , 5);
 	lv_obj_set_style_text_font(labelClock, &primasansbold20, LV_STATE_DEFAULT);
 	lv_obj_set_style_text_color(labelClock, lv_color_make(123,125,131), LV_STATE_DEFAULT);
 	
+	
 	lv_obj_t * img = lv_img_create(screen);
 	lv_img_set_src(img, &logo2);
 	lv_obj_align(img, LV_ALIGN_TOP_RIGHT, 0, 0);
+	
+	lv_obj_t * btnHome = lv_btn_create(screen);
+	lv_obj_add_event_cb(btnHome, event_handlerHome, LV_EVENT_ALL, NULL);
+	lv_obj_align(btnHome, LV_ALIGN_BOTTOM_LEFT, 5, -20);
+	labelHome = lv_label_create(btnHome);
+	lv_obj_set_style_text_font(labelHome, &primasansbold10, LV_STATE_DEFAULT);
+	lv_obj_set_style_text_color(labelHome, lv_color_black(), LV_STATE_DEFAULT);
+	lv_label_set_text(labelHome, "HOME");
+	lv_obj_add_style(btnHome, &style, 0);
+	lv_obj_set_width(btnHome, 60);
+	lv_obj_set_height(btnHome, 50);
+	lv_obj_center(labelHome);
 
+	lv_obj_t * btnRoute = lv_btn_create(screen);
+	lv_obj_add_event_cb(btnRoute, event_handlerRoute, LV_EVENT_ALL, NULL);
+	lv_obj_align(btnRoute, LV_ALIGN_BOTTOM_MID,  5, -20);
+	labelRoute = lv_label_create(btnRoute);
+	lv_obj_set_style_text_font(labelRoute, &primasansbold10, LV_STATE_DEFAULT);
+	lv_obj_set_style_text_color(labelRoute, lv_color_black(), LV_STATE_DEFAULT);
+	lv_label_set_text(labelRoute, "ROUTE");
+	lv_obj_add_style(btnRoute, &style, 0);
+	lv_obj_set_width(btnRoute, 60);
+	lv_obj_set_height(btnRoute, 50);
+	lv_obj_center(labelRoute);
 
-
-
+	lv_obj_t * btnSettings = lv_btn_create(screen);
+	lv_obj_add_event_cb(btnSettings, event_handlerSettings, LV_EVENT_ALL, NULL);
+	lv_obj_align(btnSettings, LV_ALIGN_BOTTOM_RIGHT,  -5, -20);
+	labelSettings = lv_label_create(btnSettings);
+	lv_obj_set_style_text_font(labelSettings, &primasansbold10, LV_STATE_DEFAULT);
+	lv_obj_set_style_text_color(labelSettings, lv_color_black(), LV_STATE_DEFAULT);
+	lv_label_set_text(labelSettings, "SETTINGS");
+	lv_obj_add_style(btnSettings, &style, 0);
+	lv_obj_set_width(btnSettings, 60);
+	lv_obj_set_height(btnSettings, 50);
+	lv_obj_center(labelSettings);
 	
 	// 	// Cria cada um dos bot�es
 	// lv_obj_t * labelBtn1;
@@ -425,31 +431,95 @@ void route(lv_obj_t * screen) {
 
 }
 
+void settings(lv_obj_t * screen) {	
+	// Style (geral)
+	static lv_style_t style;
+	//All channels are 0-255
+	lv_style_init(&style);
+	lv_style_set_bg_color(&style, lv_color_white());
+	lv_style_set_border_color(&style, lv_color_white());
+	lv_style_set_shadow_width(&style, 0);
+	
+	labelClock = lv_label_create(screen);
+	lv_obj_align(labelClock, LV_ALIGN_TOP_LEFT, 10 , 5);
+	lv_obj_set_style_text_font(labelClock, &primasansbold20, LV_STATE_DEFAULT);
+	lv_obj_set_style_text_color(labelClock, lv_color_make(123,125,131), LV_STATE_DEFAULT);
+	
+	lv_obj_t * imglogo = lv_img_create(screen);
+	lv_img_set_src(imglogo, &logo2);
+	lv_obj_align(imglogo, LV_ALIGN_TOP_RIGHT, 0, 0);
+	
+	
+	lv_obj_t * btnHome = lv_btn_create(screen);
+	lv_obj_add_event_cb(btnHome, event_handlerHome, LV_EVENT_ALL, NULL);
+	lv_obj_align(btnHome, LV_ALIGN_BOTTOM_LEFT, 5, -20);
+	labelHome = lv_label_create(btnHome);
+	lv_obj_set_style_text_font(labelHome, &primasansbold10, LV_STATE_DEFAULT);
+	lv_obj_set_style_text_color(labelHome, lv_color_black(), LV_STATE_DEFAULT);
+	lv_label_set_text(labelHome, "HOME");
+	lv_obj_add_style(btnHome, &style, 0);
+	lv_obj_set_width(btnHome, 60);
+	lv_obj_set_height(btnHome, 50);
+	lv_obj_center(labelHome);
+
+	lv_obj_t * btnRoute = lv_btn_create(screen);
+	lv_obj_add_event_cb(btnRoute, event_handlerRoute, LV_EVENT_ALL, NULL);
+	lv_obj_align(btnRoute, LV_ALIGN_BOTTOM_MID,  5, -20);
+	labelRoute = lv_label_create(btnRoute);
+	lv_obj_set_style_text_font(labelRoute, &primasansbold10, LV_STATE_DEFAULT);
+	lv_obj_set_style_text_color(labelRoute, lv_color_black(), LV_STATE_DEFAULT);
+	lv_label_set_text(labelRoute, "ROUTE");
+	lv_obj_add_style(btnRoute, &style, 0);
+	lv_obj_set_width(btnRoute, 60);
+	lv_obj_set_height(btnRoute, 50);
+	lv_obj_center(labelRoute);
+
+	lv_obj_t * btnSettings = lv_btn_create(screen);
+	lv_obj_add_event_cb(btnSettings, event_handlerSettings, LV_EVENT_ALL, NULL);
+	lv_obj_align(btnSettings, LV_ALIGN_BOTTOM_RIGHT,  -5, -20);
+	labelSettings = lv_label_create(btnSettings);
+	lv_obj_set_style_text_font(labelSettings, &primasansbold10, LV_STATE_DEFAULT);
+	lv_obj_set_style_text_color(labelSettings, lv_color_black(), LV_STATE_DEFAULT);
+	lv_label_set_text(labelSettings, "SETTINGS");
+	lv_obj_add_style(btnSettings, &style, 0);
+	lv_obj_set_width(btnSettings, 60);
+	lv_obj_set_height(btnSettings, 50);
+	lv_obj_center(labelSettings);
+}
+
 /************************************************************************/
 /* TASKS                                                                */
 /************************************************************************/
 
 static void task_update(void *pvParameters) {
-	// Criando duas telas
+	// Criando duas telas'
 	scr1  = lv_obj_create(NULL);
 	scr2  = lv_obj_create(NULL);
 	scr3  = lv_obj_create(NULL);
+	
+	lv_obj_t * make_scrs[3];
+	make_scrs[0] = scr1;
+	make_scrs[1] = scr2;
+	make_scrs[2] = scr3;
+	
 	lv_obj_set_style_bg_color(scr1, lv_color_white(), LV_PART_MAIN );
 	lv_obj_set_style_bg_color(scr2, lv_color_white(), LV_PART_MAIN );
 	lv_obj_set_style_bg_color(scr3, lv_color_white(), LV_PART_MAIN );
+	
 	home(scr1);
 	route(scr2);
-	// settings(scr3);
-	
-	//lv_scr_load(scr1); // exibe tela 1
-	//vTaskDelay(500);
-	lv_scr_load(scr2); // exibe tela 2
-	vTaskDelay(500);
-	//lv_scr_load(scr3); // exibe tela 3
-	//vTaskDelay(500);
+	settings(scr3);
+
+	int scr = 0;
 
 	for (;;)  {
+		if (xQueueReceive(xQueueSCR, &(scr), 0)) {
+			printf("%d\n",scr);
+		}
+		
+		lv_scr_load(make_scrs[scr]); // exibe tela
 		vTaskDelay(500);
+			
 	}
 }
 
@@ -742,6 +812,9 @@ int main(void) {
 	xSemaphoreRTC = xSemaphoreCreateBinary();
 	// Inicializa semaforo VEL
 	xSemaphoreVEL = xSemaphoreCreateBinary();
+
+	// Inicializa fila de scrs
+	xQueueSCR= xQueueCreate(16, sizeof(int));
 	
 	/* Create task to control lcd */
 	if (xTaskCreate(task_update, "TASK_UPDATE", 1024*2, NULL, TASK_LCD_STACK_PRIORITY, NULL) != pdPASS) {

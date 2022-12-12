@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "touch.h": "c",
+        "vel.h": "c"
+    }
+}
