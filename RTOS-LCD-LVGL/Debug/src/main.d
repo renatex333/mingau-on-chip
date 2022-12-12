@@ -417,7 +417,7 @@ src/main.d src/main.o: ../src/main.c ../src/asf.h \
  ../src/ASF/thirdparty/lvgl8/src/extra/libs/freetype/../../../lvgl.h \
  ../src/ASF/thirdparty/lvgl8/src/extra/libs/rlottie/lv_rlottie.h \
  ../src/ASF/thirdparty/lvgl8/src/extra/libs/rlottie/../../../lvgl.h \
- ../src/touch/touch.h ../src/logo2.h \
+ ../src/touch/touch.h ../src/logo.h ../src/vel_icon.h ../src/timer_icon.h \
  ../src/ASF/thirdparty/CMSIS/Include/arm_math.h \
  ../src/ASF/thirdparty/CMSIS/Include/core_cm7.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\math.h
@@ -1282,7 +1282,11 @@ c:\aps\22b-emb-aps2-mingau\rtos-lcd-lvgl\src\asf\thirdparty\lvgl8\src\core\lv_ob
 
 ../src/touch/touch.h:
 
-../src/logo2.h:
+../src/logo.h:
+
+../src/vel_icon.h:
+
+../src/timer_icon.h:
 
 ../src/ASF/thirdparty/CMSIS/Include/arm_math.h:
 

@@ -7,7 +7,9 @@
 #include "ili9341.h"
 #include "lvgl.h"
 #include "touch/touch.h"
-#include "logo2.h"
+#include "logo.h"
+#include "vel_icon.h"
+#include "timer_icon.h"
 
 // Para simulação
 #include "arm_math.h"
@@ -255,10 +257,6 @@ void home(lv_obj_t * screen) {
 		
 		meter_widget(screen);
 
-
-
-
-		
 	// 	// Cria cada um dos bot�es
     // lv_obj_t * labelBtn1;
     // lv_obj_t * btn1 = lv_btn_create(scr1);
@@ -346,11 +344,33 @@ void route(lv_obj_t * screen) {
 	lv_obj_set_style_text_font(labelClock, &primasansbold20, LV_STATE_DEFAULT);
 	lv_obj_set_style_text_color(labelClock, lv_color_make(123,125,131), LV_STATE_DEFAULT);
 	
-	lv_obj_t * img = lv_img_create(screen);
-	lv_img_set_src(img, &logo2);
-	lv_obj_align(img, LV_ALIGN_TOP_RIGHT, 0, 0);
+	lv_obj_t * img_logo = lv_img_create(screen);
+	lv_img_set_src(img_logo, &logo);
+	lv_obj_align(img_logo, LV_ALIGN_TOP_RIGHT, 0, 0);
+	
+	lv_obj_t * img_vel_icon = lv_img_create(screen);
+	lv_img_set_src(img_vel_icon, &vel_icon);
+	lv_obj_align(img_vel_icon, LV_ALIGN_CENTER, -80, -70);
+	lv_obj_t * vel_label =  lv_label_create(screen);
+	lv_label_set_text(vel_label, "Velocidade média");
+	lv_obj_set_style_text_font(vel_label, &primasansbold10, LV_STATE_DEFAULT);
+	lv_obj_align_to(vel_label, img_vel_icon, LV_ALIGN_RIGHT_MID, 120, -15);
+	lv_obj_t * vel_value_label =  lv_label_create(screen);
+	lv_label_set_text(vel_value_label, "22 KM/H");
+	lv_obj_set_style_text_font(vel_value_label, &primasansbold40, LV_STATE_DEFAULT);
+	lv_obj_align_to(vel_value_label, img_vel_icon, LV_ALIGN_RIGHT_MID, 120, 0);
 
-
+	lv_obj_t * img_timer_icon = lv_img_create(screen);
+	lv_img_set_src(img_timer_icon, &timer_icon);
+	lv_obj_align(img_timer_icon, LV_ALIGN_CENTER, -80, 10);
+	lv_obj_t * timer_label =  lv_label_create(screen);
+	lv_label_set_text(timer_label, "Tempo gasto");
+	lv_obj_set_style_text_font(timer_label, &primasansbold10, LV_STATE_DEFAULT);
+	lv_obj_align_to(timer_label, img_timer_icon, LV_ALIGN_RIGHT_MID, 85, -15);
+	lv_obj_t * timer_value_label =  lv_label_create(screen);
+	lv_label_set_text(timer_value_label, "01:34");
+	lv_obj_set_style_text_font(timer_value_label, &primasansbold40, LV_STATE_DEFAULT);
+	lv_obj_align_to(timer_value_label, img_timer_icon, LV_ALIGN_RIGHT_MID, 120, 0);
 
 
 	
@@ -430,7 +450,7 @@ void route(lv_obj_t * screen) {
 /************************************************************************/
 
 static void task_update(void *pvParameters) {
-	// Criando duas telas
+	// Criando telas
 	scr1  = lv_obj_create(NULL);
 	scr2  = lv_obj_create(NULL);
 	scr3  = lv_obj_create(NULL);
@@ -441,14 +461,12 @@ static void task_update(void *pvParameters) {
 	route(scr2);
 	// settings(scr3);
 	
-	//lv_scr_load(scr1); // exibe tela 1
-	//vTaskDelay(500);
-	lv_scr_load(scr2); // exibe tela 2
-	vTaskDelay(500);
-	//lv_scr_load(scr3); // exibe tela 3
-	//vTaskDelay(500);
-
 	for (;;)  {
+		//lv_scr_load(scr1); // exibe tela 1
+		//vTaskDelay(500);
+		lv_scr_load(scr2); // exibe tela 2
+		//vTaskDelay(500);
+		//lv_scr_load(scr3); // exibe tela 3
 		vTaskDelay(500);
 	}
 }
