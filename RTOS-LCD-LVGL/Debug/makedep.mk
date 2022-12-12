@@ -6,6 +6,10 @@ src\ASF\sam\components\display\ili93xx\ili93xx.c
 
 src\ASF\sam\drivers\rtc\rtc.c
 
+src\ASF\sam\drivers\rtt\rtt.c
+
+src\ASF\sam\drivers\tc\tc.c
+
 src\ASF\thirdparty\lvgl8\examples\anim\lv_example_anim_1.c
 
 src\ASF\thirdparty\lvgl8\examples\anim\lv_example_anim_2.c

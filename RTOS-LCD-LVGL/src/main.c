@@ -26,6 +26,8 @@
 #define VEL_PIO_IDX 19
 #define VEL_PIO_IDX_MASK (1u << VEL_PIO_IDX)
 
+#define VEL_DATA_SIZE 50
+
 /************************************************************************/
 /* Define Struct para RTC                                               */
 /************************************************************************/
@@ -85,13 +87,19 @@ lv_obj_t * labelClock;
 /************************************************************************/
 /* VAR globais                                                          */
 /************************************************************************/
+// Raio da roda da bike em metros
+// Multiplique o tamanho do aro (diâmetro em inches) por 0,0254 e divida por 2 para obter o raio em metro
+//volatile double aro = 20.0;
+volatile double raio = 20.0 * 0.0254 / 2;
 
+volatile int aceleracao_flag = 0;
 
 /************************************************************************/
 /* PROTOTYPES                                                           */
 /************************************************************************/
 
 void RTC_init(Rtc *rtc, uint32_t id_rtc, calendar t, uint32_t irq_type);
+static void RTT_init(float freqPrescale, uint32_t IrqNPulses, uint32_t rttIRQSource);
 float kmh_to_hz(float vel, float raio);
 void vel_data_handler(void);
 
@@ -123,8 +131,6 @@ extern void vApplicationMallocFailedHook(void) {
 
 // Semaphore RTC
 SemaphoreHandle_t xSemaphoreRTC;
-// Semaphore RTT
-SemaphoreHandle_t xSemaphoreRTT;
 // Semaphore VEL
 SemaphoreHandle_t xSemaphoreVEL;
 
@@ -152,6 +158,7 @@ void RTC_Handler(void) {
 	rtc_clear_status(RTC, RTC_SCCR_TDERRCLR);
 }
 
+// Handler para irq das leituras de pulso no pino
 void vel_data_handler(void) {
 	xSemaphoreGiveFromISR(xSemaphoreVEL, 0);
 }
@@ -422,7 +429,7 @@ static void task_rtc(void *pvParameters) {
 	lv_label_set_text_fmt(labelClock, "%02d:%02d:%02d", current_hour, current_min, current_sec);
 
 	for (;;)  {
-		if (xSemaphoreTake(xSemaphoreRTC, 10000) == pdTRUE){
+		if (xSemaphoreTake(xSemaphoreRTC, 1500 / portTICK_PERIOD_MS) == pdTRUE){
 			rtc_get_time(RTC, &current_hour, &current_min, &current_sec);
 			lv_label_set_text_fmt(labelClock, "%02d:%02d:%02d", current_hour, current_min, current_sec);
 		}	
@@ -444,8 +451,16 @@ static void task_simulador(void *pvParameters) {
 		delay_ms(1);
 		pio_set(PIOC, PIO_PC31);
 		
-		vel = 5;
-		printf("[SIMU] CONSTANTE: %d \n", (int) (10*vel));
+		if (ramp_up) {
+			vel += 0.5;
+		} else {
+			vel -= 0.5;
+		}
+
+		if (vel >= VEL_MAX_KMH)
+		ramp_up = 0;
+		else if (vel <= VEL_MIN_KMH)
+		ramp_up = 1;
 		
 		f = kmh_to_hz(vel, RAIO);
 		t = 965*(1.0/f); // UTILIZADO 965 como multiplicador ao invés de 1000
@@ -471,16 +486,41 @@ static void task_vel(void *pvParameters) {
 	NVIC_EnableIRQ(VEL_PIO_ID);
 	NVIC_SetPriority(VEL_PIO_ID, 4);
 									
-	int vel_data[50];
 	double vel_inst = 0.0;
 	double vel_media = 0.0;
 	double distancia = 0.0;
 	long int n_pulsos = 0;
-	int dT_ms = 0;
+	double dt = 0.0;
+	double tempo_total = 0.0;
+	double vel_anterior = 0.0;
+	double aceler = 0.0;
 										
 	while(1) {
-		if (xSemaphoreTake(xSemaphoreVEL, 100) == pdTRUE){
+		// Timer conta até 5 segundos
+		RTT_init(1000, 5000, NULL);
+		if (xSemaphoreTake(xSemaphoreVEL, 5000 / portTICK_PERIOD_MS) == pdTRUE){
+			dt = rtt_read_timer_value(RTT) * portTICK_PERIOD_MS / 1000.00;
+			tempo_total += dt;
+			n_pulsos++;
+			vel_inst = 3.6 * (raio * 2 * PI / dt);
+			aceler = 10 * (vel_inst - vel_anterior) / dt;
+			vel_anterior = vel_inst;
+			distancia = n_pulsos * 2 * PI * raio / 1000;
+			vel_media = distancia / (tempo_total / 3600);
 			
+			if (aceler > 3.0) {
+				aceleracao_flag = 1;
+			} else if (aceler < -3.0) {
+				aceleracao_flag = -1;
+			} else {
+				aceleracao_flag = 0;
+			}
+			
+			printf("Timer %f\n", dt);
+			printf("vel inst %f km/h\n", vel_inst);
+			printf("aceler %f\n", aceler);
+			printf("dist %f km \n", distancia);
+			printf("vel media %f km/h \n", vel_media);
 		}
 	}
 }
@@ -491,7 +531,7 @@ static void task_vel(void *pvParameters) {
 
 static void configure_lcd(void) {
 	/**LCD pin configure on SPI*/
-	pio_configure_pin(LCD_SPI_MISO_PIO, LCD_SPI_MISO_FLAGS);  //
+	pio_configure_pin(LCD_SPI_MISO_PIO, LCD_SPI_MISO_FLAGS);
 	pio_configure_pin(LCD_SPI_MOSI_PIO, LCD_SPI_MOSI_FLAGS);
 	pio_configure_pin(LCD_SPI_SPCK_PIO, LCD_SPI_SPCK_FLAGS);
 	pio_configure_pin(LCD_SPI_NPCS_PIO, LCD_SPI_NPCS_FLAGS);
@@ -586,6 +626,36 @@ void RTC_init(Rtc *rtc, uint32_t id_rtc, calendar t, uint32_t irq_type) {
 	rtc_enable_interrupt(rtc,  irq_type);
 }
 
+static void RTT_init(float freqPrescale, uint32_t IrqNPulses, uint32_t rttIRQSource) {
+
+	uint16_t pllPreScale = (int) (((float) 32768) / freqPrescale);
+	
+	rtt_sel_source(RTT, false);
+	rtt_init(RTT, pllPreScale);
+	
+	if (rttIRQSource & RTT_MR_ALMIEN) {
+		uint32_t ul_previous_time;
+		ul_previous_time = rtt_read_timer_value(RTT);
+		while (ul_previous_time == rtt_read_timer_value(RTT));
+		rtt_write_alarm_time(RTT, IrqNPulses+ul_previous_time);
+	}
+
+	/* config NVIC */
+	NVIC_DisableIRQ(RTT_IRQn);
+	NVIC_ClearPendingIRQ(RTT_IRQn);
+	NVIC_SetPriority(RTT_IRQn, 4);
+	NVIC_EnableIRQ(RTT_IRQn);
+
+	/* Enable RTT interrupt */
+	if (rttIRQSource & (RTT_MR_RTTINCIEN | RTT_MR_ALMIEN))
+	rtt_enable_interrupt(RTT, rttIRQSource);
+	else
+	rtt_disable_interrupt(RTT, RTT_MR_RTTINCIEN | RTT_MR_ALMIEN);
+	
+}
+
+
+
 /************************************************************************/
 /* Funcoes                                                              */
 /************************************************************************/
@@ -620,8 +690,6 @@ int main(void) {
 	
 	// Inicializa semaforo RTC
 	xSemaphoreRTC = xSemaphoreCreateBinary();
-	// Inicializa semaforo RTT
-	xSemaphoreRTT = xSemaphoreCreateBinary();
 	// Inicializa semaforo VEL
 	xSemaphoreVEL = xSemaphoreCreateBinary();
 	
