@@ -417,7 +417,8 @@ src/main.d src/main.o: ../src/main.c ../src/asf.h \
  ../src/ASF/thirdparty/lvgl8/src/extra/libs/freetype/../../../lvgl.h \
  ../src/ASF/thirdparty/lvgl8/src/extra/libs/rlottie/lv_rlottie.h \
  ../src/ASF/thirdparty/lvgl8/src/extra/libs/rlottie/../../../lvgl.h \
- ../src/touch/touch.h ../src/logo2.h \
+ ../src/touch/touch.h ../src/logo2.h ../src/vel_icon.h \
+ ../src/timer_icon.h ../src/route_icon.h \
  ../src/ASF/thirdparty/CMSIS/Include/arm_math.h \
  ../src/ASF/thirdparty/CMSIS/Include/core_cm7.h \
  d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\math.h
@@ -1283,6 +1284,12 @@ d:\program\ files\ (x86)\microchip\ studio\7.0\toolchain\arm\arm-gnu-toolchain\a
 ../src/touch/touch.h:
 
 ../src/logo2.h:
+
+../src/vel_icon.h:
+
+../src/timer_icon.h:
+
+../src/route_icon.h:
 
 ../src/ASF/thirdparty/CMSIS/Include/arm_math.h:
 

@@ -899,6 +899,9 @@
     <Folder Include="src\touch\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="src\vel_icon.h">
+      <SubType>compile</SubType>
+    </Compile>
     <None Include="src\ASF\sam\components\display\ili93xx\ili9325_regs.h">
       <SubType>compile</SubType>
     </None>
@@ -2361,6 +2364,9 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\primasansbold40.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\timer_icon.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\touch\touch.c">

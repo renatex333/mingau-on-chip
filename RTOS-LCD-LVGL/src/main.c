@@ -8,6 +8,9 @@
 #include "lvgl.h"
 #include "touch/touch.h"
 #include "logo2.h"
+#include "vel_icon.h"
+#include "timer_icon.h"
+#include "route_icon.h"
 
 
 // Para simulação
@@ -84,7 +87,13 @@ QueueHandle_t xQueueSCR;
 lv_obj_t * labelVelInst;
 lv_obj_t * labelDist;
 
-lv_obj_t * labelClock;
+lv_obj_t * labelClock1;
+lv_obj_t * labelClock2;
+lv_obj_t * labelClock3;
+
+lv_obj_t * seta_down;
+lv_obj_t * seta_up;
+lv_obj_t * seta_minus;
 
 /************************************************************************/
 /* VAR globais                                                          */
@@ -229,15 +238,63 @@ void home(lv_obj_t * screen) {
 	lv_style_set_border_color(&style, lv_color_white());
 	lv_style_set_shadow_width(&style, 0);
 	
-	labelClock = lv_label_create(screen);
-	lv_obj_align(labelClock, LV_ALIGN_TOP_LEFT, 10 , 5);
-	lv_obj_set_style_text_font(labelClock, &primasansbold20, LV_STATE_DEFAULT);
-	lv_obj_set_style_text_color(labelClock, lv_color_make(123,125,131), LV_STATE_DEFAULT);
+	labelClock1 = lv_label_create(screen);
+	lv_obj_align(labelClock1, LV_ALIGN_TOP_LEFT, 10 , 5);
+	lv_obj_set_style_text_font(labelClock1, &primasansbold20, LV_STATE_DEFAULT);
+	lv_obj_set_style_text_color(labelClock1, lv_color_make(123,125,131), LV_STATE_DEFAULT);
 	
 	
 	lv_obj_t * imglogo = lv_img_create(screen);
 	lv_img_set_src(imglogo, &logo2);
 	lv_obj_align(imglogo, LV_ALIGN_TOP_RIGHT, 0, 0);
+	
+	lv_obj_t * img_vel_icon = lv_img_create(screen);
+	lv_img_set_src(img_vel_icon, &vel_icon);
+	lv_obj_align(img_vel_icon, LV_ALIGN_CENTER, -80, -70);
+	lv_obj_t * vel_label =  lv_label_create(screen);
+	lv_label_set_text(vel_label, "Velocidade inst:");
+	lv_obj_set_style_text_font(vel_label, &primasansbold10, LV_STATE_DEFAULT);
+	lv_obj_align_to(vel_label, img_vel_icon, LV_ALIGN_RIGHT_MID, 110, -15);
+	labelVelInst =  lv_label_create(screen);
+	lv_obj_align_to(labelVelInst, img_vel_icon, LV_ALIGN_RIGHT_MID, 80, 20);
+	lv_obj_set_style_text_font(labelVelInst, &primasansbold20, LV_STATE_DEFAULT);
+	lv_obj_set_style_text_color(labelVelInst, lv_color_black(), LV_STATE_DEFAULT);
+	lv_label_set_text_fmt(labelVelInst, "%02f km/h", 0.0);
+	
+	seta_up = lv_img_create(screen);
+	lv_img_set_src(seta_up, LV_SYMBOL_UP);
+	lv_obj_align_to(seta_up, vel_label, LV_ALIGN_RIGHT_MID, 20, 20);
+	lv_obj_add_style(seta_up, &style, 0);
+	lv_obj_set_width(seta_up, 30);
+	lv_obj_set_height(seta_up, 30);
+	
+	seta_down = lv_img_create(screen);
+	lv_img_set_src(seta_down, LV_SYMBOL_DOWN);
+	lv_obj_align_to(seta_down, vel_label, LV_ALIGN_RIGHT_MID, 20, 20);
+	lv_obj_add_style(seta_down, &style, 0);
+	lv_obj_set_width(seta_down, 30);
+	lv_obj_set_height(seta_down, 30);
+	
+	seta_minus = lv_img_create(screen);
+	lv_img_set_src(seta_minus, LV_SYMBOL_MINUS);
+	lv_obj_align_to(seta_minus, vel_label, LV_ALIGN_RIGHT_MID, 20, 20);
+	lv_obj_add_style(seta_minus, &style, 0);
+	lv_obj_set_width(seta_minus, 30);
+	lv_obj_set_height(seta_minus, 30);
+	
+
+	lv_obj_t * img_dist_icon = lv_img_create(screen);
+	lv_img_set_src(img_dist_icon, &route_icon);
+	lv_obj_align(img_dist_icon, LV_ALIGN_CENTER, -80, 10);
+	lv_obj_t * dist_label =  lv_label_create(screen);
+	lv_label_set_text(dist_label, "Dist:");
+	lv_obj_set_style_text_font(dist_label, &primasansbold10, LV_STATE_DEFAULT);
+	lv_obj_align_to(dist_label, img_dist_icon, LV_ALIGN_RIGHT_MID, 50, -15);	
+	labelDist =  lv_label_create(screen);
+	lv_obj_align_to(labelDist, img_dist_icon, LV_ALIGN_RIGHT_MID, 80, 20);
+	lv_obj_set_style_text_font(labelDist, &primasansbold20, LV_STATE_DEFAULT);
+	lv_obj_set_style_text_color(labelDist, lv_color_black(), LV_STATE_DEFAULT);
+	lv_label_set_text_fmt(labelDist, "%02f km", 0.0);
 
 
 	lv_obj_t * btnHome = lv_btn_create(screen);
@@ -260,7 +317,7 @@ void home(lv_obj_t * screen) {
 	lv_obj_set_style_text_color(labelRoute, lv_color_black(), LV_STATE_DEFAULT);
 	lv_label_set_text(labelRoute, "ROUTE");
 	lv_obj_add_style(btnRoute, &style, 0);
-	lv_obj_set_width(btnRoute, 60);  
+	lv_obj_set_width(btnRoute, 60);
 	lv_obj_set_height(btnRoute, 50);
 	lv_obj_center(labelRoute);
 
@@ -298,10 +355,10 @@ void home(lv_obj_t * screen) {
 	// 	lv_obj_set_style_text_color(labelSetValue, lv_color_white(), LV_STATE_DEFAULT);
 	// 	lv_label_set_text_fmt(labelSetValue, "%02d", 22);
 		
-	// 	labelClock = lv_label_create(scr1);
-	// 	lv_obj_align(labelClock, LV_ALIGN_TOP_RIGHT, -20 , 5);
-	// 	lv_obj_set_style_text_font(labelClock, &dseg30, LV_STATE_DEFAULT);
-	// 	lv_obj_set_style_text_color(labelClock, lv_color_white(), LV_STATE_DEFAULT);
+	// 	labelClock1 = lv_label_create(scr1);
+	// 	lv_obj_align(labelClock1, LV_ALIGN_TOP_RIGHT, -20 , 5);
+	// 	lv_obj_set_style_text_font(labelClock1, &dseg30, LV_STATE_DEFAULT);
+	// 	lv_obj_set_style_text_color(labelClock1, lv_color_white(), LV_STATE_DEFAULT);
 
 }
 
@@ -314,10 +371,10 @@ void route(lv_obj_t * screen) {
 	lv_style_set_border_color(&style, lv_color_white());
 	lv_style_set_shadow_width(&style, 0);
 	
-	labelClock = lv_label_create(screen);
-	lv_obj_align(labelClock, LV_ALIGN_TOP_LEFT, 10 , 5);
-	lv_obj_set_style_text_font(labelClock, &primasansbold20, LV_STATE_DEFAULT);
-	lv_obj_set_style_text_color(labelClock, lv_color_make(123,125,131), LV_STATE_DEFAULT);
+	labelClock2 = lv_label_create(screen);
+	lv_obj_align(labelClock2, LV_ALIGN_TOP_LEFT, 10 , 5);
+	lv_obj_set_style_text_font(labelClock2, &primasansbold20, LV_STATE_DEFAULT);
+	lv_obj_set_style_text_color(labelClock2, lv_color_make(123,125,131), LV_STATE_DEFAULT);
 	
 	
 	lv_obj_t * img = lv_img_create(screen);
@@ -359,6 +416,7 @@ void route(lv_obj_t * screen) {
 	lv_obj_set_width(btnSettings, 60);
 	lv_obj_set_height(btnSettings, 50);
 	lv_obj_center(labelSettings);
+	
 	
 	// 	// Cria cada um dos bot�es
 	// lv_obj_t * labelBtn1;
@@ -440,10 +498,10 @@ void settings(lv_obj_t * screen) {
 	lv_style_set_border_color(&style, lv_color_white());
 	lv_style_set_shadow_width(&style, 0);
 	
-	labelClock = lv_label_create(screen);
-	lv_obj_align(labelClock, LV_ALIGN_TOP_LEFT, 10 , 5);
-	lv_obj_set_style_text_font(labelClock, &primasansbold20, LV_STATE_DEFAULT);
-	lv_obj_set_style_text_color(labelClock, lv_color_make(123,125,131), LV_STATE_DEFAULT);
+	labelClock3 = lv_label_create(screen);
+	lv_obj_align(labelClock3, LV_ALIGN_TOP_LEFT, 10 , 5);
+	lv_obj_set_style_text_font(labelClock3, &primasansbold20, LV_STATE_DEFAULT);
+	lv_obj_set_style_text_color(labelClock3, lv_color_make(123,125,131), LV_STATE_DEFAULT);
 	
 	lv_obj_t * imglogo = lv_img_create(screen);
 	lv_img_set_src(imglogo, &logo2);
@@ -509,12 +567,15 @@ static void task_update(void *pvParameters) {
 	home(scr1);
 	route(scr2);
 	settings(scr3);
+	
+	lv_obj_add_flag(seta_minus, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_flag(seta_down, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_flag(seta_up, LV_OBJ_FLAG_HIDDEN);
 
 	int scr = 0;
 
 	for (;;)  {
 		if (xQueueReceive(xQueueSCR, &(scr), 0)) {
-			printf("%d\n",scr);
 		}
 		
 		lv_scr_load(make_scrs[scr]); // exibe tela
@@ -543,12 +604,16 @@ static void task_rtc(void *pvParameters) {
 	uint32_t current_hour, current_min, current_sec;
 	rtc_get_time(RTC, &current_hour, &current_min, &current_sec);
 
-	lv_label_set_text_fmt(labelClock, "%02d:%02d:%02d", current_hour, current_min, current_sec);
+	lv_label_set_text_fmt(labelClock1, "%02d:%02d:%02d", current_hour, current_min, current_sec);
+	lv_label_set_text_fmt(labelClock2, "%02d:%02d:%02d", current_hour, current_min, current_sec);
+	lv_label_set_text_fmt(labelClock3, "%02d:%02d:%02d", current_hour, current_min, current_sec);
 
 	for (;;)  {
 		if (xSemaphoreTake(xSemaphoreRTC, 1500 / portTICK_PERIOD_MS) == pdTRUE){
 			rtc_get_time(RTC, &current_hour, &current_min, &current_sec);
-			lv_label_set_text_fmt(labelClock, "%02d:%02d:%02d", current_hour, current_min, current_sec);
+			lv_label_set_text_fmt(labelClock1, "%02d:%02d:%02d", current_hour, current_min, current_sec);
+			lv_label_set_text_fmt(labelClock2, "%02d:%02d:%02d", current_hour, current_min, current_sec);
+			lv_label_set_text_fmt(labelClock3, "%02d:%02d:%02d", current_hour, current_min, current_sec);
 		}	
 	}
 }
@@ -614,7 +679,9 @@ static void task_vel(void *pvParameters) {
 	
 	// Limpa semaforo antes de realmente começar a task
 	xSemaphoreTake(xSemaphoreVEL, 1000 / portTICK_PERIOD_MS);
-										
+
+	char *c;
+					
 	while(1) {
 		// Timer conta até 5 segundos
 		RTT_init(1000, 5000, NULL);
@@ -622,24 +689,39 @@ static void task_vel(void *pvParameters) {
 			dt = rtt_read_timer_value(RTT) * portTICK_PERIOD_MS / 1000.00;
 			tempo_total += dt;
 			n_pulsos++;
+			
 			vel_inst = 3.6 * (raio * 2 * PI / dt);
+			lv_label_set_text_fmt(labelVelInst, "%02f km/h", vel_inst);
+			
 			aceler = 10 * (vel_inst - vel_anterior) / dt;
 			vel_anterior = vel_inst;
 			distancia = n_pulsos * 2 * PI * raio / 1000;
+			lv_label_set_text_fmt(labelDist, "%02f KM", distancia);
+			
 			vel_media = distancia / (tempo_total / 3600);
 			
 			if (aceler > 3.0) {
 				aceleracao_flag = 1;
+				lv_obj_clear_flag(seta_up, LV_OBJ_FLAG_HIDDEN);
+				lv_obj_add_flag(seta_minus, LV_OBJ_FLAG_HIDDEN);
+				lv_obj_add_flag(seta_down, LV_OBJ_FLAG_HIDDEN);
+				
 			} else if (aceler < -3.0) {
 				aceleracao_flag = -1;
+				lv_obj_clear_flag(seta_down, LV_OBJ_FLAG_HIDDEN);
+				lv_obj_add_flag(seta_minus, LV_OBJ_FLAG_HIDDEN);
+				lv_obj_add_flag(seta_up, LV_OBJ_FLAG_HIDDEN);
 			} else {
 				aceleracao_flag = 0;
+				lv_obj_clear_flag(seta_minus, LV_OBJ_FLAG_HIDDEN);
+				lv_obj_add_flag(seta_up, LV_OBJ_FLAG_HIDDEN);
+				lv_obj_add_flag(seta_down, LV_OBJ_FLAG_HIDDEN);
 			}
 			
 			//printf("Timer %f\n", dt);
-			//printf("vel inst %f km/h\n", vel_inst);
+			printf("vel inst %f km/h\n", vel_inst);
 			//printf("aceler %f\n", aceler);
-			//printf("dist %f km \n", distancia);
+			printf("dist %f km \n", distancia);
 			//printf("vel media %f km/h \n", vel_media);
 		}
 	}
