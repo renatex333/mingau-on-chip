@@ -101,6 +101,7 @@ lv_obj_t * seta_minus;
 // Raio da roda da bike em metros
 // Multiplique o tamanho do aro (diâmetro em inches) por 0,0254 e divida por 2 para obter o raio em metro
 //volatile double aro = 20.0;
+
 volatile double raio = 20.0 * 0.0254 / 2;
 
 volatile int aceleracao_flag = 0;
@@ -205,25 +206,23 @@ static void event_handlerSettings(lv_event_t * e) {
 		xQueueSendFromISR(xQueueSCR, &scrid, 0);
 	}
 }
-
+//
 //static void up_handler(lv_event_t * e) {
 	//lv_event_code_t code = lv_event_get_code(e);
 	//char *c;
-	//int temp;
 	//if(code == LV_EVENT_CLICKED) {
 		//c = lv_label_get_text(labelSetValue);
-		//temp = atoi(c);
+		//aro = atoi(c);
 		//lv_label_set_text_fmt(labelSetValue, "%02d", temp + 1);
 	//}
 //}
-
+//
 //static void down_handler(lv_event_t * e) {
 	//lv_event_code_t code = lv_event_get_code(e);
 	//char *c;
-	//int temp;
 	//if(code == LV_EVENT_CLICKED) {
-		//c = lv_label_get_text(labelSetValue);
-		//temp = atoi(c);
+		//c = lv_label_get_text(label);
+		//aro = atoi(c);
 		//lv_label_set_text_fmt(labelSetValue, "%02d", temp - 1);
 	//}
 //}
@@ -256,10 +255,10 @@ void home(lv_obj_t * screen) {
 	lv_obj_set_style_text_font(vel_label, &primasansbold10, LV_STATE_DEFAULT);
 	lv_obj_align_to(vel_label, img_vel_icon, LV_ALIGN_RIGHT_MID, 110, -15);
 	labelVelInst =  lv_label_create(screen);
-	lv_obj_align_to(labelVelInst, img_vel_icon, LV_ALIGN_RIGHT_MID, 80, 20);
+	lv_obj_align_to(labelVelInst, vel_label, LV_ALIGN_BOTTOM_MID, 0, 20);
 	lv_obj_set_style_text_font(labelVelInst, &primasansbold20, LV_STATE_DEFAULT);
 	lv_obj_set_style_text_color(labelVelInst, lv_color_black(), LV_STATE_DEFAULT);
-	lv_label_set_text_fmt(labelVelInst, "%02f km/h", 0.0);
+	lv_label_set_text_fmt(labelVelInst, "%.1f", 0.0);
 	
 	seta_up = lv_img_create(screen);
 	lv_img_set_src(seta_up, LV_SYMBOL_UP);
@@ -291,10 +290,10 @@ void home(lv_obj_t * screen) {
 	lv_obj_set_style_text_font(dist_label, &primasansbold10, LV_STATE_DEFAULT);
 	lv_obj_align_to(dist_label, img_dist_icon, LV_ALIGN_RIGHT_MID, 50, -15);	
 	labelDist =  lv_label_create(screen);
-	lv_obj_align_to(labelDist, img_dist_icon, LV_ALIGN_RIGHT_MID, 80, 20);
+	lv_obj_align_to(labelDist, dist_label, LV_ALIGN_BOTTOM_MID, 0, 20);
 	lv_obj_set_style_text_font(labelDist, &primasansbold20, LV_STATE_DEFAULT);
 	lv_obj_set_style_text_color(labelDist, lv_color_black(), LV_STATE_DEFAULT);
-	lv_label_set_text_fmt(labelDist, "%02f km", 0.0);
+	lv_label_set_text_fmt(labelDist, "%.1f", 0.0);
 
 
 	lv_obj_t * btnHome = lv_btn_create(screen);
@@ -507,6 +506,11 @@ void settings(lv_obj_t * screen) {
 	lv_img_set_src(imglogo, &logo2);
 	lv_obj_align(imglogo, LV_ALIGN_TOP_RIGHT, 0, 0);
 	
+	lv_obj_t * aro_label =  lv_label_create(screen);
+	lv_label_set_text(aro_label, "Escolha um aro:");
+	lv_obj_set_style_text_font(aro_label, &primasansbold10, LV_STATE_DEFAULT);
+	lv_obj_align(aro_label, LV_ALIGN_CENTER, 0, -30);
+	
 	
 	lv_obj_t * btnHome = lv_btn_create(screen);
 	lv_obj_add_event_cb(btnHome, event_handlerHome, LV_EVENT_ALL, NULL);
@@ -691,12 +695,12 @@ static void task_vel(void *pvParameters) {
 			n_pulsos++;
 			
 			vel_inst = 3.6 * (raio * 2 * PI / dt);
-			lv_label_set_text_fmt(labelVelInst, "%02f km/h", vel_inst);
+			lv_label_set_text_fmt(labelVelInst, "%.2f", vel_inst);
 			
 			aceler = 10 * (vel_inst - vel_anterior) / dt;
 			vel_anterior = vel_inst;
 			distancia = n_pulsos * 2 * PI * raio / 1000;
-			lv_label_set_text_fmt(labelDist, "%02f KM", distancia);
+			lv_label_set_text_fmt(labelDist, "%.2f", distancia);
 			
 			vel_media = distancia / (tempo_total / 3600);
 			
@@ -720,7 +724,7 @@ static void task_vel(void *pvParameters) {
 			
 			//printf("Timer %f\n", dt);
 			printf("vel inst %f km/h\n", vel_inst);
-			//printf("aceler %f\n", aceler);
+			printf("aceler %f\n", aceler);
 			printf("dist %f km \n", distancia);
 			//printf("vel media %f km/h \n", vel_media);
 		}

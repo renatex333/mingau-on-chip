@@ -899,6 +899,9 @@
     <Folder Include="src\touch\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="src\route_icon.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\vel_icon.h">
       <SubType>compile</SubType>
     </Compile>
