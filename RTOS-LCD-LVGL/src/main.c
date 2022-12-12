@@ -86,6 +86,8 @@ QueueHandle_t xQueueSCR;
 
 lv_obj_t * labelVelInst;
 lv_obj_t * labelDist;
+lv_obj_t * labelAro;
+
 
 lv_obj_t * labelClock1;
 lv_obj_t * labelClock2;
@@ -100,9 +102,10 @@ lv_obj_t * seta_minus;
 /************************************************************************/
 // Raio da roda da bike em metros
 // Multiplique o tamanho do aro (diâmetro em inches) por 0,0254 e divida por 2 para obter o raio em metro
-//volatile double aro = 20.0;
 
-volatile double raio = 20.0 * 0.0254 / 2;
+volatile int aro = 20;
+
+
 
 volatile int aceleracao_flag = 0;
 
@@ -206,26 +209,24 @@ static void event_handlerSettings(lv_event_t * e) {
 		xQueueSendFromISR(xQueueSCR, &scrid, 0);
 	}
 }
-//
-//static void up_handler(lv_event_t * e) {
-	//lv_event_code_t code = lv_event_get_code(e);
-	//char *c;
-	//if(code == LV_EVENT_CLICKED) {
-		//c = lv_label_get_text(labelSetValue);
-		//aro = atoi(c);
-		//lv_label_set_text_fmt(labelSetValue, "%02d", temp + 1);
-	//}
-//}
-//
-//static void down_handler(lv_event_t * e) {
-	//lv_event_code_t code = lv_event_get_code(e);
-	//char *c;
-	//if(code == LV_EVENT_CLICKED) {
-		//c = lv_label_get_text(label);
-		//aro = atoi(c);
-		//lv_label_set_text_fmt(labelSetValue, "%02d", temp - 1);
-	//}
-//}
+
+static void up_handler(lv_event_t * e) {
+	lv_event_code_t code = lv_event_get_code(e);
+
+	if(code == LV_EVENT_CLICKED) {
+		aro += 2;
+		lv_label_set_text_fmt(labelAro, "%02d", aro);
+	}
+}
+
+static void down_handler(lv_event_t * e) {
+	lv_event_code_t code = lv_event_get_code(e);
+
+	if(code == LV_EVENT_CLICKED) {
+		aro -= 2;
+		lv_label_set_text_fmt(labelAro, "%02d", aro);
+	}
+}
 
 
 void home(lv_obj_t * screen) {
@@ -507,9 +508,39 @@ void settings(lv_obj_t * screen) {
 	lv_obj_align(imglogo, LV_ALIGN_TOP_RIGHT, 0, 0);
 	
 	lv_obj_t * aro_label =  lv_label_create(screen);
-	lv_label_set_text(aro_label, "Escolha um aro:");
+	lv_label_set_text(aro_label, "Mude seu aro:");
 	lv_obj_set_style_text_font(aro_label, &primasansbold10, LV_STATE_DEFAULT);
 	lv_obj_align(aro_label, LV_ALIGN_CENTER, 0, -30);
+	labelAro =  lv_label_create(screen);
+	lv_obj_align_to(labelAro, aro_label, LV_ALIGN_BOTTOM_MID, 10, 50);
+	lv_obj_set_style_text_font(labelAro, &primasansbold20, LV_STATE_DEFAULT);
+	lv_obj_set_style_text_color(labelAro, lv_color_black(), LV_STATE_DEFAULT);
+	lv_label_set_text_fmt(labelDist, "%02d", 20);
+	
+	lv_obj_t * labelPls;
+	lv_obj_t * btnpls = lv_btn_create(screen);
+	lv_obj_add_event_cb(btnpls, up_handler, LV_EVENT_ALL, NULL);
+	lv_obj_align_to(btnpls, aro_label, LV_ALIGN_RIGHT_MID, 20, 40);
+	labelPls = lv_label_create(btnpls);
+	lv_label_set_text(labelPls, LV_SYMBOL_UP);
+	lv_obj_add_style(btnpls, &style, 0);
+	lv_obj_set_style_text_color(labelPls,lv_color_black(), LV_STATE_DEFAULT);
+	lv_obj_set_width(btnpls, 30);
+	lv_obj_set_height(btnpls, 30);
+	lv_obj_center(labelPls);
+		
+	
+	lv_obj_t * labelMns;
+	lv_obj_t * btnmns = lv_btn_create(screen);
+	lv_obj_add_event_cb(btnmns, down_handler, LV_EVENT_ALL, NULL);
+	lv_obj_align_to(btnmns, aro_label, LV_ALIGN_LEFT_MID, -20, 40);
+	labelMns = lv_label_create(btnmns);
+	lv_label_set_text(labelMns, LV_SYMBOL_DOWN);
+	lv_obj_add_style(btnmns, &style, 0);
+	lv_obj_set_style_text_color(labelMns,lv_color_black(), LV_STATE_DEFAULT);
+	lv_obj_set_width(btnmns, 30);
+	lv_obj_set_height(btnmns, 30);
+	lv_obj_center(labelMns);
 	
 	
 	lv_obj_t * btnHome = lv_btn_create(screen);
@@ -671,6 +702,7 @@ static void task_vel(void *pvParameters) {
 
 	NVIC_EnableIRQ(VEL_PIO_ID);
 	NVIC_SetPriority(VEL_PIO_ID, 4);
+	
 									
 	double vel_inst = 0.0;
 	double vel_media = 0.0;
@@ -687,6 +719,7 @@ static void task_vel(void *pvParameters) {
 	char *c;
 					
 	while(1) {
+		double raio = (double) aro * 0.0254 / 2;
 		// Timer conta até 5 segundos
 		RTT_init(1000, 5000, NULL);
 		if (xSemaphoreTake(xSemaphoreVEL, 5000 / portTICK_PERIOD_MS) == pdTRUE){
