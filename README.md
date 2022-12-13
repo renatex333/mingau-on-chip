@@ -29,13 +29,13 @@ Nome da marca:
 
 > - Apresentação da interface no LCD + vídeo de explicação [Link](https://youtu.be/LO3ccLeY09c)
 
-[`<img src="https://user-images.githubusercontent.com/15271557/200147332-04b57e7e-c50b-4d34-a533-f72f01113410.png" width="600">`](https://youtu.be/RlPm2haGQgU)
+<a href="https://youtu.be/LO3ccLeY09c"><img src="https://user-images.githubusercontent.com/15271557/200147332-04b57e7e-c50b-4d34-a533-f72f01113410.png" width="600"></a>
 
 ### Segunda Proposta UX - Conceito B
 
 > - Especifica e justifica quais vão ser as fontes (e tamanhos) a serem usadas na interface.
 
-A fonte a ser utilizada será a Prima Sans manter, ou no mínimo se aproximar ao máximo, da identidade visual de outros produtos semelhantes da Garmin. A ideia, além do padrão visual da marca, é também passar uma ideia minimalista, mais rígida e moderna. Desta forma, se mostra ideal para o conforto visual do usuário durante a busca por informações na tela.
+A fonte a ser utilizada será a Prima Sans para manter, ou no mínimo se aproximar ao máximo, da identidade visual de outros produtos semelhantes da Garmin. A ideia, além do padrão visual da marca, é também passar uma ideia minimalista, mais rígida e moderna. Desta forma, se mostra ideal para o conforto visual do usuário durante a busca por informações na tela.
 
 Já em relação às cores escolhidas, será utilizado um esquema complementar de cores, utilizando cores mais neutras para cores de fundo e botões, ao mesmo tempo que utlizaremos cores mais vibrantes de verde e vermelho, com alta saturação, para indicar a aceleração ou desaceleração da bicicleta.
 
@@ -45,14 +45,14 @@ Já em relação às cores escolhidas, será utilizado um esquema complementar d
 
 Gravação da entrevista: [Link](https://youtu.be/BDjTYk73Tqw)
 
+<a href="https://youtu.be/BDjTYk73Tqw"><img src="https://user-images.githubusercontent.com/15271557/200148410-76ad16e1-f939-4559-96ae-5768edee21b5.png" width="600"></a>
+
 > - Grava um vídeo atualizado explicando o que foi sugerido e o que fizeram para melhorar a interface
 > - Apresentar uma foto da interface sendo executada no LCD (imagem estática)
 
 > - Apresentação da interface no LCD + vídeo de explicação [Link](https://youtu.be/RlPm2haGQgU)
 
 Detalhes da segunda iteração da proposta de interface:  
-
-<a href="https://youtu.be/BDjTYk73Tqw"><img src="https://user-images.githubusercontent.com/15271557/200148410-76ad16e1-f939-4559-96ae-5768edee21b5.png" width="600"></a>
 
 Conversamos com o Luiz do FabLab para nos ajudar validando o primeiro Mockup e trazendo novas propostas de iteração da interface. Segundo ele, a solução proposta é viável e boa, no entanto o botão de trajetória poderia ficar na primeira página para facilitar seu acesso.
 
