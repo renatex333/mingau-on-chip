@@ -59,3 +59,11 @@ Conversamos com o Luiz do FabLab para nos ajudar validando o primeiro Mockup e t
 Então a ideia foi adotada e, desta forma, surgiu a proposta para a seguinte iteração:
 
 <img src="https://user-images.githubusercontent.com/15271557/200144057-32e77fe8-571f-44be-9135-238ea481a0b8.png" width="300"/>
+
+### Projeto Final
+
+O resultado final do projeto é demonstrado nos seguintes vídeos:
+
+Descrição das features da tela: [Link](https://www.youtube.com/shorts/4SOKId1LtBI)
+
+Apresentação da entrega final: [Link](https://www.youtube.com/watch?v=fa1Gd-swDpY&ab_channel=teteubarros)
