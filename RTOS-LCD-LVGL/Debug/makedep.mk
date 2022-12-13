@@ -4,6 +4,8 @@
 
 src\primasans10.c
 
+src\primasansbold20.c
+
 src\primasansbold30.c
 
 src\ASF\sam\components\display\ili93xx\ili93xx.c
@@ -637,8 +639,6 @@ src\primasans20.c
 src\primasans40.c
 
 src\primasansbold10.c
-
-src\primasansbold20.c
 
 src\primasansbold40.c
 

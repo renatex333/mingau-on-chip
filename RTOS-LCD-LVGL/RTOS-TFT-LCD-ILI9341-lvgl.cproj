@@ -902,6 +902,9 @@
     <Compile Include="src\primasans10.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\primasansbold20.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\primasansbold30.c">
       <SubType>compile</SubType>
     </Compile>
@@ -2364,9 +2367,6 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\primasansbold10.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\primasansbold20.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\primasansbold40.c">

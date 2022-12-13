@@ -250,15 +250,22 @@ void home(lv_obj_t * screen) {
 	lv_obj_t * img_vel_icon = lv_img_create(screen);
 	lv_img_set_src(img_vel_icon, &vel_icon);
 	lv_obj_align(img_vel_icon, LV_ALIGN_CENTER, -80, -70);
+	
 	lv_obj_t * vel_label =  lv_label_create(screen);
 	lv_label_set_text(vel_label, "Velocidade instantânea");
 	lv_obj_set_style_text_font(vel_label, &primasansbold10, LV_STATE_DEFAULT);
 	lv_obj_align_to(vel_label, img_vel_icon, LV_ALIGN_RIGHT_MID, 140, -15);
+	
 	labelVelInst =  lv_label_create(screen);
-	lv_obj_align_to(labelVelInst, img_vel_icon, LV_ALIGN_RIGHT_MID, 40, 20);
+	lv_obj_align_to(labelVelInst, img_vel_icon, LV_ALIGN_RIGHT_MID, 55, 20);
 	lv_obj_set_style_text_font(labelVelInst, &primasansbold30, LV_STATE_DEFAULT);
 	lv_obj_set_style_text_color(labelVelInst, lv_color_black(), LV_STATE_DEFAULT);
 	lv_label_set_text_fmt(labelVelInst, "%.1f", 0.0);
+	
+	lv_obj_t * vel_unit_label =  lv_label_create(screen);
+	lv_label_set_text(vel_unit_label, "KM/h");
+	lv_obj_set_style_text_font(vel_unit_label, &primasansbold20, LV_STATE_DEFAULT);
+	lv_obj_align_to(vel_unit_label, labelVelInst, LV_ALIGN_RIGHT_MID, 80, 0);
 	
 	seta_up = lv_img_create(screen);
 	lv_img_set_src(seta_up, LV_SYMBOL_UP);
@@ -284,16 +291,22 @@ void home(lv_obj_t * screen) {
 	lv_obj_t * img_dist_icon = lv_img_create(screen);
 	lv_img_set_src(img_dist_icon, &route_icon);
 	lv_obj_align(img_dist_icon, LV_ALIGN_CENTER, -80, 10);
+	
 	lv_obj_t * dist_label =  lv_label_create(screen);
-	lv_label_set_text(dist_label, "Distância");
+	lv_label_set_text(dist_label, "Distância percorrida");
 	lv_obj_set_style_text_font(dist_label, &primasansbold10, LV_STATE_DEFAULT);
-	lv_obj_align_to(dist_label, img_dist_icon, LV_ALIGN_RIGHT_MID, 70, -15);	
+	lv_obj_align_to(dist_label, img_dist_icon, LV_ALIGN_RIGHT_MID, 120, -15);	
+	
 	labelDist =  lv_label_create(screen);
-	lv_obj_align_to(labelDist, img_dist_icon, LV_ALIGN_RIGHT_MID, 40, 20);
-
+	lv_obj_align_to(labelDist, img_dist_icon, LV_ALIGN_RIGHT_MID, 45, 20);
 	lv_obj_set_style_text_font(labelDist, &primasansbold30, LV_STATE_DEFAULT);
 	lv_obj_set_style_text_color(labelDist, lv_color_black(), LV_STATE_DEFAULT);
 	lv_label_set_text_fmt(labelDist, "%.1f", 0.0);
+	
+	lv_obj_t * dist_unit_label =  lv_label_create(screen);
+	lv_label_set_text(dist_unit_label, "KM");
+	lv_obj_set_style_text_font(dist_unit_label, &primasansbold20, LV_STATE_DEFAULT);
+	lv_obj_align_to(dist_unit_label, labelDist, LV_ALIGN_RIGHT_MID, 60, 0);
 
 	lv_obj_t * btnHome = lv_btn_create(screen);
 	lv_obj_add_event_cb(btnHome, event_handlerHome, LV_EVENT_ALL, NULL);
@@ -363,6 +376,7 @@ void route(lv_obj_t * screen) {
 	lv_obj_t * btnHome = lv_btn_create(screen);
 	lv_obj_add_event_cb(btnHome, event_handlerHome, LV_EVENT_ALL, NULL);
 	lv_obj_align(btnHome, LV_ALIGN_BOTTOM_LEFT, 5, -20);
+	
 	labelHome = lv_label_create(btnHome);
 	lv_obj_set_style_text_font(labelHome, &primasansbold10, LV_STATE_DEFAULT);
 	lv_obj_set_style_text_color(labelHome, lv_color_black(), LV_STATE_DEFAULT);
@@ -375,6 +389,7 @@ void route(lv_obj_t * screen) {
 	lv_obj_t * btnRoute = lv_btn_create(screen);
 	lv_obj_add_event_cb(btnRoute, event_handlerRoute, LV_EVENT_ALL, NULL);
 	lv_obj_align(btnRoute, LV_ALIGN_BOTTOM_MID,  5, -20);
+	
 	labelRoute = lv_label_create(btnRoute);
 	lv_obj_set_style_text_font(labelRoute, &primasansbold10, LV_STATE_DEFAULT);
 	lv_obj_set_style_text_color(labelRoute, lv_color_black(), LV_STATE_DEFAULT);
@@ -387,6 +402,7 @@ void route(lv_obj_t * screen) {
 	lv_obj_t * btnSettings = lv_btn_create(screen);
 	lv_obj_add_event_cb(btnSettings, event_handlerSettings, LV_EVENT_ALL, NULL);
 	lv_obj_align(btnSettings, LV_ALIGN_BOTTOM_RIGHT,  -5, -20);
+	
 	labelSettings = lv_label_create(btnSettings);
 	lv_obj_set_style_text_font(labelSettings, &primasansbold10, LV_STATE_DEFAULT);
 	lv_obj_set_style_text_color(labelSettings, lv_color_black(), LV_STATE_DEFAULT);
@@ -399,22 +415,30 @@ void route(lv_obj_t * screen) {
 	lv_obj_t * img_vel_icon = lv_img_create(screen);
 	lv_img_set_src(img_vel_icon, &vel_icon);
 	lv_obj_align(img_vel_icon, LV_ALIGN_CENTER, -80, -70);
+	
 	lv_obj_t * vel_label =  lv_label_create(screen);
 	lv_label_set_text(vel_label, "Velocidade média");
 	lv_obj_set_style_text_font(vel_label, &primasansbold10, LV_STATE_DEFAULT);
 	lv_obj_align_to(vel_label, img_vel_icon, LV_ALIGN_RIGHT_MID, 120, -15);
+	
 	labelVelMed =  lv_label_create(screen);
 	lv_obj_set_style_text_font(labelVelMed, &primasansbold30, LV_STATE_DEFAULT);
-	lv_obj_align_to(labelVelMed, img_vel_icon, LV_ALIGN_RIGHT_MID, 80, 20);
-
+	lv_obj_align_to(labelVelMed, img_vel_icon, LV_ALIGN_RIGHT_MID, 20, 20);
+	
+	lv_obj_t * vel_unit_label =  lv_label_create(screen);
+	lv_label_set_text(vel_unit_label, "KM/h");
+	lv_obj_set_style_text_font(vel_unit_label, &primasansbold20, LV_STATE_DEFAULT);
+	lv_obj_align_to(vel_unit_label, labelVelMed, LV_ALIGN_RIGHT_MID, 120, 0);
 
 	lv_obj_t * img_timer_icon = lv_img_create(screen);
 	lv_img_set_src(img_timer_icon, &timer_icon);
 	lv_obj_align(img_timer_icon, LV_ALIGN_CENTER, -80, 10);
+	
 	lv_obj_t * timer_label =  lv_label_create(screen);
 	lv_label_set_text(timer_label, "Tempo gasto");
 	lv_obj_set_style_text_font(timer_label, &primasansbold10, LV_STATE_DEFAULT);
 	lv_obj_align_to(timer_label, img_timer_icon, LV_ALIGN_RIGHT_MID, 85, -15);
+	
 	labelTimer =  lv_label_create(screen);
 	lv_obj_set_style_text_font(labelTimer, &primasansbold30, LV_STATE_DEFAULT);
 	lv_obj_align_to(labelTimer, img_timer_icon, LV_ALIGN_RIGHT_MID, 20, 20);
@@ -563,7 +587,7 @@ static void task_lcd(void *pvParameters) {
 
 static void task_rtc(void *pvParameters) {
 	/** Configura RTC */
-	calendar rtc_initial = {2022, 11, 18, 46, 15, 46, 1};
+	calendar rtc_initial = {2022, 12, 13, 49, 15, 46, 0};
 	/* configura alarme do RTC para cada 1 segundo */
 	RTC_init(RTC, ID_RTC, rtc_initial, RTC_IER_SECEN);
 	
@@ -635,15 +659,20 @@ static void task_vel(void *pvParameters) {
 	NVIC_EnableIRQ(VEL_PIO_ID);
 	NVIC_SetPriority(VEL_PIO_ID, 4);
 	
-									
+	/* Leitura do valor atual do RTC para contar o tempo gasto */
+	uint32_t current_hour, current_min, current_sec, last_hour, last_min;
+	rtc_get_time(RTC, &last_hour, &last_min, &current_sec);
+				
 	double vel_inst = 0.0;
 	double vel_media = 0.0;
 	double distancia = 0.0;
 	long int n_pulsos = 0;
 	double dt = 0.0;
-	long int tempo_total = 0.0;
+	double tempo_total = 0.0;
 	double vel_anterior = 0.0;
 	double aceler = 0.0;
+	uint32_t horas = 0;
+	uint32_t minutos = 0;
 	
 	// Limpa semaforo antes de realmente começar a task
 	xSemaphoreTake(xSemaphoreVEL, 1000 / portTICK_PERIOD_MS);
@@ -655,7 +684,7 @@ static void task_vel(void *pvParameters) {
 		if (xSemaphoreTake(xSemaphoreVEL, 5000 / portTICK_PERIOD_MS) == pdTRUE){
 			// Guarda tempo que demorou para receber o pulso na variável dt (em segundos)
 			dt = rtt_read_timer_value(RTT) * portTICK_PERIOD_MS / 1000.0;
-			tempo_total += (int) dt;
+			tempo_total += dt;
 			// Incrementa a quantidade de pulsos medidos
 			n_pulsos++;
 			// Cálculo da velocidade instantânea
@@ -667,11 +696,19 @@ static void task_vel(void *pvParameters) {
 			distancia = n_pulsos * 2 * PI * raio / 1000;
 			// Cálculo da velocidade média
 			vel_media = distancia / (tempo_total / 3600);
+			// Obtém hora atual para fazer cálculo do tempo gasto no trajeto
+			rtc_get_time(RTC, &current_hour, &current_min, &current_sec);
+			if (current_min != last_min) {
+				horas = current_hour - last_hour;
+				minutos = current_min - last_min;
+				last_hour = current_hour;
+				last_min = current_min;
+			}
 			
-			lv_label_set_text_fmt(labelVelInst, "%.2f", vel_inst);
-			lv_label_set_text_fmt(labelDist, "%.2f", distancia);
-			lv_label_set_text_fmt(labelVelMed, "%.2f", vel_media);
-			lv_label_set_text_fmt(labelTimer, "%02d:%02d", (tempo_total / 3600), (tempo_total % 3600));
+			lv_label_set_text_fmt(labelVelInst, "%.1f", vel_inst);
+			lv_label_set_text_fmt(labelDist, "%.1f", distancia/1000);
+			lv_label_set_text_fmt(labelVelMed, "%.1f", vel_media);
+			lv_label_set_text_fmt(labelTimer, "%02d:%02d", horas, minutos);
 			
 			if (aceler > 3.0) {
 				aceleracao_flag = 1;
@@ -697,9 +734,9 @@ static void task_vel(void *pvParameters) {
 			}
 			
 			//printf("Timer %f\n", dt);
-			printf("vel inst %f km/h\n", vel_inst);
-			printf("aceler %f\n", aceler);
-			printf("dist %f km \n", distancia);
+			//printf("vel inst %f km/h\n", vel_inst);
+			//printf("aceler %f\n", aceler);
+			//printf("dist %f km \n", distancia);
 			//printf("vel media %f km/h \n", vel_media);
 		}
 	}

@@ -1,0 +1,6 @@
+Fontes tamanho 40: 0123456789/ -HKMh
+Fonte bold tamanho 30: :0123456789\/ -HhKkMm.,;
+Fonteregular tamanho 20: 0123456789 :-
+Fonte bold tamanho 20: 0123456789 :-KkMmHh/\.
+Fonte regular tamanho 10: AaBbCcDdEeéGgHhIiLlMmNnOoRrSsTtUuVv0123456789 :-/
+Fonte bold tamanho 10: AaBbCcDdEeéGgHhIiLlMmNnOoPpRrSsTtUuVv0123456789 :-/
