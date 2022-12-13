@@ -11,6 +11,7 @@
 #include "vel_icon.h"
 #include "timer_icon.h"
 #include "route_icon.h"
+#include "telafundo.h"
 
 
 // Para simulação
@@ -238,6 +239,9 @@ void home(lv_obj_t * screen) {
 	lv_style_set_border_color(&style, lv_color_white());
 	lv_style_set_shadow_width(&style, 0);
 	
+	lv_obj_t * tela_fundo = lv_img_create(screen);
+	lv_img_set_src(tela_fundo, &telafundo);
+	
 	labelClock1 = lv_label_create(screen);
 	lv_obj_align(labelClock1, LV_ALIGN_TOP_LEFT, 10 , 5);
 	lv_obj_set_style_text_font(labelClock1, &primasansbold20, LV_STATE_DEFAULT);
@@ -317,19 +321,19 @@ void home(lv_obj_t * screen) {
 	lv_label_set_text(labelHome, "HOME");
 	lv_obj_add_style(btnHome, &style, 0);
 	lv_obj_set_width(btnHome, 60);  
-	lv_obj_set_height(btnHome, 50);
+	lv_obj_set_height(btnHome, 30);
 	lv_obj_center(labelHome);
 
 	lv_obj_t * btnRoute = lv_btn_create(screen);
 	lv_obj_add_event_cb(btnRoute, event_handlerRoute, LV_EVENT_ALL, NULL);
-	lv_obj_align(btnRoute, LV_ALIGN_BOTTOM_MID,  5, -20);
+	lv_obj_align(btnRoute, LV_ALIGN_BOTTOM_MID,  0, -20);
 	labelRoute = lv_label_create(btnRoute);
 	lv_obj_set_style_text_font(labelRoute, &primasansbold10, LV_STATE_DEFAULT);
 	lv_obj_set_style_text_color(labelRoute, lv_color_black(), LV_STATE_DEFAULT);
 	lv_label_set_text(labelRoute, "ROUTE");
 	lv_obj_add_style(btnRoute, &style, 0);
 	lv_obj_set_width(btnRoute, 60);
-	lv_obj_set_height(btnRoute, 50);
+	lv_obj_set_height(btnRoute, 30);
 	lv_obj_center(labelRoute);
 
 	lv_obj_t * btnSettings = lv_btn_create(screen);
@@ -341,17 +345,8 @@ void home(lv_obj_t * screen) {
 	lv_label_set_text(labelSettings, "SETTINGS");
 	lv_obj_add_style(btnSettings, &style, 0);
 	lv_obj_set_width(btnSettings, 60);  
-	lv_obj_set_height(btnSettings, 50);
+	lv_obj_set_height(btnSettings, 30);
 	lv_obj_center(labelSettings);
-	
-		
-	//lv_obj_t * imgvel = lv_img_create(screen);
-	//lv_img_set_src(imgvel, &velimg);
-	//lv_obj_align(imgvel, LV_ALIGN_CENTER, 0, 0);
-	
-	//lv_obj_t * imgdist = lv_img_create(screen);
-	//lv_img_set_src(imgdist, &distimg);
-	//lv_obj_align(imgvel, LV_ALIGN_CENTER, 0, 0);
 	
 }
 
@@ -363,6 +358,9 @@ void route(lv_obj_t * screen) {
 	lv_style_set_bg_color(&style, lv_color_white());
 	lv_style_set_border_color(&style, lv_color_white());
 	lv_style_set_shadow_width(&style, 0);
+	
+	lv_obj_t * tela_fundo = lv_img_create(screen);
+	lv_img_set_src(tela_fundo, &telafundo);
 	
 	labelClock2 = lv_label_create(screen);
 	lv_obj_align(labelClock2, LV_ALIGN_TOP_LEFT, 10 , 5);
@@ -383,20 +381,19 @@ void route(lv_obj_t * screen) {
 	lv_label_set_text(labelHome, "HOME");
 	lv_obj_add_style(btnHome, &style, 0);
 	lv_obj_set_width(btnHome, 60);
-	lv_obj_set_height(btnHome, 50);
+	lv_obj_set_height(btnHome, 30);
 	lv_obj_center(labelHome);
 
 	lv_obj_t * btnRoute = lv_btn_create(screen);
 	lv_obj_add_event_cb(btnRoute, event_handlerRoute, LV_EVENT_ALL, NULL);
-	lv_obj_align(btnRoute, LV_ALIGN_BOTTOM_MID,  5, -20);
-	
+	lv_obj_align(btnRoute, LV_ALIGN_BOTTOM_MID,  0, -20);
 	labelRoute = lv_label_create(btnRoute);
 	lv_obj_set_style_text_font(labelRoute, &primasansbold10, LV_STATE_DEFAULT);
 	lv_obj_set_style_text_color(labelRoute, lv_color_black(), LV_STATE_DEFAULT);
 	lv_label_set_text(labelRoute, "ROUTE");
 	lv_obj_add_style(btnRoute, &style, 0);
 	lv_obj_set_width(btnRoute, 60);
-	lv_obj_set_height(btnRoute, 50);
+	lv_obj_set_height(btnRoute, 30);
 	lv_obj_center(labelRoute);
 
 	lv_obj_t * btnSettings = lv_btn_create(screen);
@@ -409,7 +406,7 @@ void route(lv_obj_t * screen) {
 	lv_label_set_text(labelSettings, "SETTINGS");
 	lv_obj_add_style(btnSettings, &style, 0);
 	lv_obj_set_width(btnSettings, 60);
-	lv_obj_set_height(btnSettings, 50);
+	lv_obj_set_height(btnSettings, 30);
 	lv_obj_center(labelSettings);
 	
 	lv_obj_t * img_vel_icon = lv_img_create(screen);
@@ -453,6 +450,9 @@ void settings(lv_obj_t * screen) {
 	lv_style_set_bg_color(&style, lv_color_white());
 	lv_style_set_border_color(&style, lv_color_white());
 	lv_style_set_shadow_width(&style, 0);
+	
+	lv_obj_t * tela_fundo = lv_img_create(screen);
+	lv_img_set_src(tela_fundo, &telafundo);
 	
 	labelClock3 = lv_label_create(screen);
 	lv_obj_align(labelClock3, LV_ALIGN_TOP_LEFT, 10 , 5);
@@ -508,19 +508,19 @@ void settings(lv_obj_t * screen) {
 	lv_label_set_text(labelHome, "HOME");
 	lv_obj_add_style(btnHome, &style, 0);
 	lv_obj_set_width(btnHome, 60);
-	lv_obj_set_height(btnHome, 50);
+	lv_obj_set_height(btnHome, 30);
 	lv_obj_center(labelHome);
 
 	lv_obj_t * btnRoute = lv_btn_create(screen);
 	lv_obj_add_event_cb(btnRoute, event_handlerRoute, LV_EVENT_ALL, NULL);
-	lv_obj_align(btnRoute, LV_ALIGN_BOTTOM_MID,  5, -20);
+	lv_obj_align(btnRoute, LV_ALIGN_BOTTOM_MID,  0, -20);
 	labelRoute = lv_label_create(btnRoute);
 	lv_obj_set_style_text_font(labelRoute, &primasansbold10, LV_STATE_DEFAULT);
 	lv_obj_set_style_text_color(labelRoute, lv_color_black(), LV_STATE_DEFAULT);
 	lv_label_set_text(labelRoute, "ROUTE");
 	lv_obj_add_style(btnRoute, &style, 0);
 	lv_obj_set_width(btnRoute, 60);
-	lv_obj_set_height(btnRoute, 50);
+	lv_obj_set_height(btnRoute, 30);
 	lv_obj_center(labelRoute);
 
 	lv_obj_t * btnSettings = lv_btn_create(screen);
@@ -532,7 +532,7 @@ void settings(lv_obj_t * screen) {
 	lv_label_set_text(labelSettings, "SETTINGS");
 	lv_obj_add_style(btnSettings, &style, 0);
 	lv_obj_set_width(btnSettings, 60);
-	lv_obj_set_height(btnSettings, 50);
+	lv_obj_set_height(btnSettings, 30);
 	lv_obj_center(labelSettings);
 	
 }
