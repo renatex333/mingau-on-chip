@@ -52,7 +52,7 @@ Gravação da entrevista: [Link](https://youtu.be/BDjTYk73Tqw)
 
 Detalhes da segunda iteração da proposta de interface:  
 
-[<img src="https://user-images.githubusercontent.com/15271557/200148410-76ad16e1-f939-4559-96ae-5768edee21b5.png" width="600">](https://youtu.be/BDjTYk73Tqw)
+<a href="https://youtu.be/BDjTYk73Tqw"><img src="https://user-images.githubusercontent.com/15271557/200148410-76ad16e1-f939-4559-96ae-5768edee21b5.png" width="600"></a>
 
 Conversamos com o Luiz do FabLab para nos ajudar validando o primeiro Mockup e trazendo novas propostas de iteração da interface. Segundo ele, a solução proposta é viável e boa, no entanto o botão de trajetória poderia ficar na primeira página para facilitar seu acesso.
 
