@@ -2,6 +2,10 @@
 # Automatically-generated file. Do not edit or delete the file
 ################################################################################
 
+src\primasans10.c
+
+src\primasansbold30.c
+
 src\ASF\sam\components\display\ili93xx\ili93xx.c
 
 src\ASF\sam\drivers\rtc\rtc.c
@@ -627,8 +631,6 @@ src\ASF\thirdparty\lvgl8\tests\src\test_fonts\font_3.c
 src\ASF\thirdparty\lvgl8\tests\unity\unity.c
 
 src\ASF\thirdparty\lvgl8\tests\unity\unity_support.c
-
-src\primasans10.c
 
 src\primasans20.c
 

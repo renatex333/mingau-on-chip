@@ -7,7 +7,7 @@
 #include "ili9341.h"
 #include "lvgl.h"
 #include "touch/touch.h"
-#include "logo2.h"
+#include "logo.h"
 #include "vel_icon.h"
 #include "timer_icon.h"
 #include "route_icon.h"
@@ -29,8 +29,6 @@
 #define VEL_PIO_ID ID_PIOA
 #define VEL_PIO_IDX 19
 #define VEL_PIO_IDX_MASK (1u << VEL_PIO_IDX)
-
-#define VEL_DATA_SIZE 50
 
 /************************************************************************/
 /* Define Struct para RTC                                               */
@@ -61,6 +59,7 @@ LV_FONT_DECLARE(primasans10);
 LV_FONT_DECLARE(primasansbold10);
 LV_FONT_DECLARE(primasans20);
 LV_FONT_DECLARE(primasansbold20);
+LV_FONT_DECLARE(primasansbold30);
 LV_FONT_DECLARE(primasans40);
 LV_FONT_DECLARE(primasansbold40);
 
@@ -82,11 +81,11 @@ lv_obj_t * labelHome;
 lv_obj_t * labelRoute;
 lv_obj_t * labelSettings;
 
-QueueHandle_t xQueueSCR;
-
 lv_obj_t * labelVelInst;
+lv_obj_t * labelVelMed;
 lv_obj_t * labelDist;
 lv_obj_t * labelAro;
+lv_obj_t * labelTimer;
 
 
 lv_obj_t * labelClock1;
@@ -105,8 +104,6 @@ lv_obj_t * seta_minus;
 
 volatile int aro = 20;
 
-
-
 volatile int aceleracao_flag = 0;
 
 /************************************************************************/
@@ -121,6 +118,13 @@ void vel_data_handler(void);
 /************************************************************************/
 /* RTOS                                                                 */
 /************************************************************************/
+
+// Semaphore RTC
+SemaphoreHandle_t xSemaphoreRTC;
+// Semaphore VEL
+SemaphoreHandle_t xSemaphoreVEL;
+// Queue da Screen
+QueueHandle_t xQueueSCR;
 
 #define TASK_LCD_STACK_SIZE                (1024*6/sizeof(portSTACK_TYPE))
 #define TASK_LCD_STACK_PRIORITY            (tskIDLE_PRIORITY)
@@ -143,11 +147,6 @@ extern void vApplicationTickHook(void) { }
 extern void vApplicationMallocFailedHook(void) {
 	configASSERT( ( volatile void * ) NULL );
 }
-
-// Semaphore RTC
-SemaphoreHandle_t xSemaphoreRTC;
-// Semaphore VEL
-SemaphoreHandle_t xSemaphoreVEL;
 
 /************************************************************************/
 /* Handlers                                                             */
@@ -204,6 +203,7 @@ static void event_handlerRoute(lv_event_t * e) {
 
 static void event_handlerSettings(lv_event_t * e) {
 	lv_event_code_t code = lv_event_get_code(e);
+	
 	if(code == LV_EVENT_CLICKED) {
 		int scrid = 2;
 		xQueueSendFromISR(xQueueSCR, &scrid, 0);
@@ -212,7 +212,7 @@ static void event_handlerSettings(lv_event_t * e) {
 
 static void up_handler(lv_event_t * e) {
 	lv_event_code_t code = lv_event_get_code(e);
-
+	
 	if(code == LV_EVENT_CLICKED) {
 		aro += 2;
 		lv_label_set_text_fmt(labelAro, "%02d", aro);
@@ -243,21 +243,20 @@ void home(lv_obj_t * screen) {
 	lv_obj_set_style_text_font(labelClock1, &primasansbold20, LV_STATE_DEFAULT);
 	lv_obj_set_style_text_color(labelClock1, lv_color_make(123,125,131), LV_STATE_DEFAULT);
 	
-	
-	lv_obj_t * imglogo = lv_img_create(screen);
-	lv_img_set_src(imglogo, &logo2);
-	lv_obj_align(imglogo, LV_ALIGN_TOP_RIGHT, 0, 0);
+	lv_obj_t * img_logo = lv_img_create(screen);
+	lv_img_set_src(img_logo, &logo);
+	lv_obj_align(img_logo, LV_ALIGN_TOP_RIGHT, 0, 0);
 	
 	lv_obj_t * img_vel_icon = lv_img_create(screen);
 	lv_img_set_src(img_vel_icon, &vel_icon);
 	lv_obj_align(img_vel_icon, LV_ALIGN_CENTER, -80, -70);
 	lv_obj_t * vel_label =  lv_label_create(screen);
-	lv_label_set_text(vel_label, "Velocidade inst:");
+	lv_label_set_text(vel_label, "Velocidade instantânea");
 	lv_obj_set_style_text_font(vel_label, &primasansbold10, LV_STATE_DEFAULT);
-	lv_obj_align_to(vel_label, img_vel_icon, LV_ALIGN_RIGHT_MID, 110, -15);
+	lv_obj_align_to(vel_label, img_vel_icon, LV_ALIGN_RIGHT_MID, 140, -15);
 	labelVelInst =  lv_label_create(screen);
-	lv_obj_align_to(labelVelInst, vel_label, LV_ALIGN_BOTTOM_MID, 0, 20);
-	lv_obj_set_style_text_font(labelVelInst, &primasansbold20, LV_STATE_DEFAULT);
+	lv_obj_align_to(labelVelInst, img_vel_icon, LV_ALIGN_RIGHT_MID, 40, 20);
+	lv_obj_set_style_text_font(labelVelInst, &primasansbold30, LV_STATE_DEFAULT);
 	lv_obj_set_style_text_color(labelVelInst, lv_color_black(), LV_STATE_DEFAULT);
 	lv_label_set_text_fmt(labelVelInst, "%.1f", 0.0);
 	
@@ -282,20 +281,19 @@ void home(lv_obj_t * screen) {
 	lv_obj_set_width(seta_minus, 30);
 	lv_obj_set_height(seta_minus, 30);
 	
-
 	lv_obj_t * img_dist_icon = lv_img_create(screen);
 	lv_img_set_src(img_dist_icon, &route_icon);
 	lv_obj_align(img_dist_icon, LV_ALIGN_CENTER, -80, 10);
 	lv_obj_t * dist_label =  lv_label_create(screen);
-	lv_label_set_text(dist_label, "Dist:");
+	lv_label_set_text(dist_label, "Distância");
 	lv_obj_set_style_text_font(dist_label, &primasansbold10, LV_STATE_DEFAULT);
-	lv_obj_align_to(dist_label, img_dist_icon, LV_ALIGN_RIGHT_MID, 50, -15);	
+	lv_obj_align_to(dist_label, img_dist_icon, LV_ALIGN_RIGHT_MID, 70, -15);	
 	labelDist =  lv_label_create(screen);
-	lv_obj_align_to(labelDist, dist_label, LV_ALIGN_BOTTOM_MID, 0, 20);
-	lv_obj_set_style_text_font(labelDist, &primasansbold20, LV_STATE_DEFAULT);
+	lv_obj_align_to(labelDist, img_dist_icon, LV_ALIGN_RIGHT_MID, 40, 20);
+
+	lv_obj_set_style_text_font(labelDist, &primasansbold30, LV_STATE_DEFAULT);
 	lv_obj_set_style_text_color(labelDist, lv_color_black(), LV_STATE_DEFAULT);
 	lv_label_set_text_fmt(labelDist, "%.1f", 0.0);
-
 
 	lv_obj_t * btnHome = lv_btn_create(screen);
 	lv_obj_add_event_cb(btnHome, event_handlerHome, LV_EVENT_ALL, NULL);
@@ -341,25 +339,7 @@ void home(lv_obj_t * screen) {
 	//lv_obj_t * imgdist = lv_img_create(screen);
 	//lv_img_set_src(imgdist, &distimg);
 	//lv_obj_align(imgvel, LV_ALIGN_CENTER, 0, 0);
-		
-	// 	// Cria labels do termostato
-	// 	labelFloor = lv_label_create(scr1);
-	// 	lv_obj_align(labelFloor, LV_ALIGN_LEFT_MID, 35 , -45);
-	// 	lv_obj_set_style_text_font(labelFloor, &dseg70, LV_STATE_DEFAULT);
-	// 	lv_obj_set_style_text_color(labelFloor, lv_color_white(), LV_STATE_DEFAULT);
-	// 	lv_label_set_text_fmt(labelFloor, "%02d", 23);
-		
-	// 	labelSetValue = lv_label_create(scr1);
-	// 	lv_obj_align(labelSetValue, LV_ALIGN_RIGHT_MID, -30 , -45);
-	// 	lv_obj_set_style_text_font(labelSetValue, &dseg50, LV_STATE_DEFAULT);
-	// 	lv_obj_set_style_text_color(labelSetValue, lv_color_white(), LV_STATE_DEFAULT);
-	// 	lv_label_set_text_fmt(labelSetValue, "%02d", 22);
-		
-	// 	labelClock1 = lv_label_create(scr1);
-	// 	lv_obj_align(labelClock1, LV_ALIGN_TOP_RIGHT, -20 , 5);
-	// 	lv_obj_set_style_text_font(labelClock1, &dseg30, LV_STATE_DEFAULT);
-	// 	lv_obj_set_style_text_color(labelClock1, lv_color_white(), LV_STATE_DEFAULT);
-
+	
 }
 
 void route(lv_obj_t * screen) {
@@ -376,10 +356,9 @@ void route(lv_obj_t * screen) {
 	lv_obj_set_style_text_font(labelClock2, &primasansbold20, LV_STATE_DEFAULT);
 	lv_obj_set_style_text_color(labelClock2, lv_color_make(123,125,131), LV_STATE_DEFAULT);
 	
-	
-	lv_obj_t * img = lv_img_create(screen);
-	lv_img_set_src(img, &logo2);
-	lv_obj_align(img, LV_ALIGN_TOP_RIGHT, 0, 0);
+	lv_obj_t * img_logo = lv_img_create(screen);
+	lv_img_set_src(img_logo, &logo);
+	lv_obj_align(img_logo, LV_ALIGN_TOP_RIGHT, 0, 0);
 	
 	lv_obj_t * btnHome = lv_btn_create(screen);
 	lv_obj_add_event_cb(btnHome, event_handlerHome, LV_EVENT_ALL, NULL);
@@ -417,75 +396,28 @@ void route(lv_obj_t * screen) {
 	lv_obj_set_height(btnSettings, 50);
 	lv_obj_center(labelSettings);
 	
-	
-	// 	// Cria cada um dos bot�es
-	// lv_obj_t * labelBtn1;
-	// lv_obj_t * btn1 = lv_btn_create(scr1);
-	// lv_obj_add_event_cb(btn1, event_handler1, LV_EVENT_ALL, NULL);
-	// lv_obj_align(btn1, LV_ALIGN_BOTTOM_LEFT, 5, -5);
-	// labelBtn1 = lv_label_create(btn1);
-	// lv_label_set_text(labelBtn1, "[  " LV_SYMBOL_POWER);
-	// 	lv_obj_add_style(btn1, &style, 0);
-	// 	lv_obj_set_width(btn1, 60);
-	// 	lv_obj_set_height(btn1, 60);
-	// lv_obj_center(labelBtn1);
-	
-	// 	lv_obj_t * labelBtn2;
-	// 	lv_obj_t * btn2 = lv_btn_create(scr1);
-	// 	lv_obj_add_event_cb(btn2, event_handler1, LV_EVENT_ALL, NULL);
-	// 	lv_obj_align_to(btn2, btn1, LV_ALIGN_RIGHT_MID, 40, -22);
-	// 	labelBtn2 = lv_label_create(btn2);
-	// 	lv_label_set_text(labelBtn2, "|  M ");
-	// 	lv_obj_add_style(btn2, &style, 0);
-	// 	lv_obj_set_width(btn2, 60);
-	// 	lv_obj_set_height(btn2, 60);
-	// 	lv_obj_center(labelBtn2);
-	
-	// 	lv_obj_t * labelBtn3;
-	// 	lv_obj_t * btn3 = lv_btn_create(scr1);
-	// 	lv_obj_add_event_cb(btn3, event_handler1, LV_EVENT_ALL, NULL);
-	// 	lv_obj_align_to(btn3, btn2, LV_ALIGN_RIGHT_MID, 40, -22);
-	// 	labelBtn3 = lv_label_create(btn3);
-	// 	lv_label_set_text(labelBtn3, "|  " LV_SYMBOL_SETTINGS "  ]");
-	// 	lv_obj_add_style(btn3, &style, 0);
-	// 	lv_obj_set_width(btn3, 60);
-	// 	lv_obj_set_height(btn3, 60);
-	// 	lv_obj_center(labelBtn3);
-	
-	// 	lv_obj_t * labelBtn4;
-	// 	lv_obj_t * btn4 = lv_btn_create(scr1);
-	// 	lv_obj_add_event_cb(btn4, down_handler, LV_EVENT_ALL, NULL);
-	// 	lv_obj_align(btn4, LV_ALIGN_BOTTOM_RIGHT, -5, -5);
-	// 	labelBtn4 = lv_label_create(btn4);
-	// 	lv_label_set_text(labelBtn4, LV_SYMBOL_DOWN "  ]");
-	// 	lv_obj_add_style(btn4, &style, 0);
-	// 	lv_obj_set_width(btn4, 60);
-	// 	lv_obj_set_height(btn4, 60);
-	// 	lv_obj_center(labelBtn4);
-	
-	// 	lv_obj_t * labelBtn5;
-	// 	lv_obj_t * btn5 = lv_btn_create(scr1);
-	// 	lv_obj_add_event_cb(btn5, up_handler, LV_EVENT_ALL, NULL);
-	// 	lv_obj_align_to(btn5, btn4, LV_ALIGN_LEFT_MID, -80, -22);
-	// 	labelBtn5 = lv_label_create(btn5);
-	// 	lv_label_set_text(labelBtn5, "[  " LV_SYMBOL_UP);
-	// 	lv_obj_add_style(btn5, &style, 0);
-	// 	lv_obj_set_width(btn5, 60);
-	// 	lv_obj_set_height(btn5, 60);
-	// 	lv_obj_center(labelBtn5);
-	
-	// 	// Cria labels do termostato
-	// 	labelFloor = lv_label_create(scr1);
-	// 	lv_obj_align(labelFloor, LV_ALIGN_LEFT_MID, 35 , -45);
-	// 	lv_obj_set_style_text_font(labelFloor, &dseg70, LV_STATE_DEFAULT);
-	// 	lv_obj_set_style_text_color(labelFloor, lv_color_white(), LV_STATE_DEFAULT);
-	// 	lv_label_set_text_fmt(labelFloor, "%02d", 23);
-	
-	// 	labelSetValue = lv_label_create(scr1);
-	// 	lv_obj_align(labelSetValue, LV_ALIGN_RIGHT_MID, -30 , -45);
-	// 	lv_obj_set_style_text_font(labelSetValue, &dseg50, LV_STATE_DEFAULT);
-	// 	lv_obj_set_style_text_color(labelSetValue, lv_color_white(), LV_STATE_DEFAULT);
-	// 	lv_label_set_text_fmt(labelSetValue, "%02d", 22);
+	lv_obj_t * img_vel_icon = lv_img_create(screen);
+	lv_img_set_src(img_vel_icon, &vel_icon);
+	lv_obj_align(img_vel_icon, LV_ALIGN_CENTER, -80, -70);
+	lv_obj_t * vel_label =  lv_label_create(screen);
+	lv_label_set_text(vel_label, "Velocidade média");
+	lv_obj_set_style_text_font(vel_label, &primasansbold10, LV_STATE_DEFAULT);
+	lv_obj_align_to(vel_label, img_vel_icon, LV_ALIGN_RIGHT_MID, 120, -15);
+	labelVelMed =  lv_label_create(screen);
+	lv_obj_set_style_text_font(labelVelMed, &primasansbold30, LV_STATE_DEFAULT);
+	lv_obj_align_to(labelVelMed, img_vel_icon, LV_ALIGN_RIGHT_MID, 80, 20);
+
+
+	lv_obj_t * img_timer_icon = lv_img_create(screen);
+	lv_img_set_src(img_timer_icon, &timer_icon);
+	lv_obj_align(img_timer_icon, LV_ALIGN_CENTER, -80, 10);
+	lv_obj_t * timer_label =  lv_label_create(screen);
+	lv_label_set_text(timer_label, "Tempo gasto");
+	lv_obj_set_style_text_font(timer_label, &primasansbold10, LV_STATE_DEFAULT);
+	lv_obj_align_to(timer_label, img_timer_icon, LV_ALIGN_RIGHT_MID, 85, -15);
+	labelTimer =  lv_label_create(screen);
+	lv_obj_set_style_text_font(labelTimer, &primasansbold30, LV_STATE_DEFAULT);
+	lv_obj_align_to(labelTimer, img_timer_icon, LV_ALIGN_RIGHT_MID, 20, 20);
 
 }
 
@@ -503,9 +435,9 @@ void settings(lv_obj_t * screen) {
 	lv_obj_set_style_text_font(labelClock3, &primasansbold20, LV_STATE_DEFAULT);
 	lv_obj_set_style_text_color(labelClock3, lv_color_make(123,125,131), LV_STATE_DEFAULT);
 	
-	lv_obj_t * imglogo = lv_img_create(screen);
-	lv_img_set_src(imglogo, &logo2);
-	lv_obj_align(imglogo, LV_ALIGN_TOP_RIGHT, 0, 0);
+	lv_obj_t * img_logo = lv_img_create(screen);
+	lv_img_set_src(img_logo, &logo);
+	lv_obj_align(img_logo, LV_ALIGN_TOP_RIGHT, 0, 0);
 	
 	lv_obj_t * aro_label =  lv_label_create(screen);
 	lv_label_set_text(aro_label, "Mude seu aro:");
@@ -513,9 +445,9 @@ void settings(lv_obj_t * screen) {
 	lv_obj_align(aro_label, LV_ALIGN_CENTER, 0, -30);
 	labelAro =  lv_label_create(screen);
 	lv_obj_align_to(labelAro, aro_label, LV_ALIGN_BOTTOM_MID, 10, 50);
-	lv_obj_set_style_text_font(labelAro, &primasansbold20, LV_STATE_DEFAULT);
+	lv_obj_set_style_text_font(labelAro, &primasansbold30, LV_STATE_DEFAULT);
 	lv_obj_set_style_text_color(labelAro, lv_color_black(), LV_STATE_DEFAULT);
-	lv_label_set_text_fmt(labelDist, "%02d", 20);
+	lv_label_set_text_fmt(labelAro, "%02d", aro);
 	
 	lv_obj_t * labelPls;
 	lv_obj_t * btnpls = lv_btn_create(screen);
@@ -578,6 +510,7 @@ void settings(lv_obj_t * screen) {
 	lv_obj_set_width(btnSettings, 60);
 	lv_obj_set_height(btnSettings, 50);
 	lv_obj_center(labelSettings);
+	
 }
 
 /************************************************************************/
@@ -585,7 +518,7 @@ void settings(lv_obj_t * screen) {
 /************************************************************************/
 
 static void task_update(void *pvParameters) {
-	// Criando duas telas'
+	// Cria as 3 telas
 	scr1  = lv_obj_create(NULL);
 	scr2  = lv_obj_create(NULL);
 	scr3  = lv_obj_create(NULL);
@@ -610,9 +543,9 @@ static void task_update(void *pvParameters) {
 	int scr = 0;
 
 	for (;;)  {
-		if (xQueueReceive(xQueueSCR, &(scr), 0)) {
+		if (xQueueReceive(xQueueSCR, &(scr), (TickType_t) 0)) {
+			
 		}
-		
 		lv_scr_load(make_scrs[scr]); // exibe tela
 		vTaskDelay(500);
 			
@@ -621,7 +554,6 @@ static void task_update(void *pvParameters) {
 
 static void task_lcd(void *pvParameters) {
 	int px, py;
-	
 	for (;;)  {
 		lv_tick_inc(50);
 		lv_task_handler();
@@ -644,7 +576,7 @@ static void task_rtc(void *pvParameters) {
 	lv_label_set_text_fmt(labelClock3, "%02d:%02d:%02d", current_hour, current_min, current_sec);
 
 	for (;;)  {
-		if (xSemaphoreTake(xSemaphoreRTC, 1500 / portTICK_PERIOD_MS) == pdTRUE){
+		if (xSemaphoreTake(xSemaphoreRTC, 5000 / portTICK_PERIOD_MS) == pdTRUE){
 			rtc_get_time(RTC, &current_hour, &current_min, &current_sec);
 			lv_label_set_text_fmt(labelClock1, "%02d:%02d:%02d", current_hour, current_min, current_sec);
 			lv_label_set_text_fmt(labelClock2, "%02d:%02d:%02d", current_hour, current_min, current_sec);
@@ -709,50 +641,59 @@ static void task_vel(void *pvParameters) {
 	double distancia = 0.0;
 	long int n_pulsos = 0;
 	double dt = 0.0;
-	double tempo_total = 0.0;
+	long int tempo_total = 0.0;
 	double vel_anterior = 0.0;
 	double aceler = 0.0;
 	
 	// Limpa semaforo antes de realmente começar a task
 	xSemaphoreTake(xSemaphoreVEL, 1000 / portTICK_PERIOD_MS);
-
-	char *c;
 					
 	while(1) {
-		double raio = (double) aro * 0.0254 / 2;
+		double raio = (double) aro * 0.0254 / 2.0;
 		// Timer conta até 5 segundos
 		RTT_init(1000, 5000, NULL);
 		if (xSemaphoreTake(xSemaphoreVEL, 5000 / portTICK_PERIOD_MS) == pdTRUE){
-			dt = rtt_read_timer_value(RTT) * portTICK_PERIOD_MS / 1000.00;
-			tempo_total += dt;
+			// Guarda tempo que demorou para receber o pulso na variável dt (em segundos)
+			dt = rtt_read_timer_value(RTT) * portTICK_PERIOD_MS / 1000.0;
+			tempo_total += (int) dt;
+			// Incrementa a quantidade de pulsos medidos
 			n_pulsos++;
-			
+			// Cálculo da velocidade instantânea
 			vel_inst = 3.6 * (raio * 2 * PI / dt);
-			lv_label_set_text_fmt(labelVelInst, "%.2f", vel_inst);
-			
+			// Cálculo da aceleração (derivação discreta)
 			aceler = 10 * (vel_inst - vel_anterior) / dt;
 			vel_anterior = vel_inst;
+			// Cálculo da distância percorrida total
 			distancia = n_pulsos * 2 * PI * raio / 1000;
-			lv_label_set_text_fmt(labelDist, "%.2f", distancia);
-			
+			// Cálculo da velocidade média
 			vel_media = distancia / (tempo_total / 3600);
+			
+			lv_label_set_text_fmt(labelVelInst, "%.2f", vel_inst);
+			lv_label_set_text_fmt(labelDist, "%.2f", distancia);
+			lv_label_set_text_fmt(labelVelMed, "%.2f", vel_media);
+			lv_label_set_text_fmt(labelTimer, "%02d:%02d", (tempo_total / 3600), (tempo_total % 3600));
 			
 			if (aceler > 3.0) {
 				aceleracao_flag = 1;
+				
 				lv_obj_clear_flag(seta_up, LV_OBJ_FLAG_HIDDEN);
 				lv_obj_add_flag(seta_minus, LV_OBJ_FLAG_HIDDEN);
 				lv_obj_add_flag(seta_down, LV_OBJ_FLAG_HIDDEN);
 				
 			} else if (aceler < -3.0) {
 				aceleracao_flag = -1;
+				
 				lv_obj_clear_flag(seta_down, LV_OBJ_FLAG_HIDDEN);
 				lv_obj_add_flag(seta_minus, LV_OBJ_FLAG_HIDDEN);
 				lv_obj_add_flag(seta_up, LV_OBJ_FLAG_HIDDEN);
+				
 			} else {
 				aceleracao_flag = 0;
+				
 				lv_obj_clear_flag(seta_minus, LV_OBJ_FLAG_HIDDEN);
 				lv_obj_add_flag(seta_up, LV_OBJ_FLAG_HIDDEN);
 				lv_obj_add_flag(seta_down, LV_OBJ_FLAG_HIDDEN);
+				
 			}
 			
 			//printf("Timer %f\n", dt);
@@ -933,7 +874,10 @@ int main(void) {
 	xSemaphoreVEL = xSemaphoreCreateBinary();
 
 	// Inicializa fila de scrs
-	xQueueSCR= xQueueCreate(16, sizeof(int));
+	xQueueSCR = xQueueCreate(16, sizeof(int));
+	if (xQueueSCR == NULL) {
+		printf("Erro ao criar fila de screen \n");
+	}
 	
 	/* Create task to control lcd */
 	if (xTaskCreate(task_update, "TASK_UPDATE", 1024*2, NULL, TASK_LCD_STACK_PRIORITY, NULL) != pdPASS) {

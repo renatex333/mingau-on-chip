@@ -899,6 +899,12 @@
     <Folder Include="src\touch\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="src\primasans10.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\primasansbold30.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\route_icon.h">
       <SubType>compile</SubType>
     </Compile>
@@ -2348,10 +2354,7 @@
     <Compile Include="src\config\conf_touch.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\logo2.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\primasans10.c">
+    <Compile Include="src\logo.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\primasans20.c">
