@@ -591,21 +591,44 @@ static void task_rtc(void *pvParameters) {
 	/* configura alarme do RTC para cada 1 segundo */
 	RTC_init(RTC, ID_RTC, rtc_initial, RTC_IER_SECEN);
 	
-	/* Leitura do valor atual do RTC */
-	uint32_t current_hour, current_min, current_sec;
+	/* Leitura do valor atual do RTC */	
+	uint32_t current_hour, current_min, current_sec, start_hour, start_min, last_min;
 	rtc_get_time(RTC, &current_hour, &current_min, &current_sec);
+	start_hour = current_hour;
+	start_min = current_min;
+	last_min = start_min;
+	
+	// Para contar o tempo de trajeto
+	uint32_t horas = 0;
+	uint32_t minutos = 0;
+	int tempo_gasto_minutos = 0;
 
+	// Atualiza LCD com os valores
 	lv_label_set_text_fmt(labelClock1, "%02d:%02d:%02d", current_hour, current_min, current_sec);
 	lv_label_set_text_fmt(labelClock2, "%02d:%02d:%02d", current_hour, current_min, current_sec);
 	lv_label_set_text_fmt(labelClock3, "%02d:%02d:%02d", current_hour, current_min, current_sec);
+	lv_label_set_text_fmt(labelTimer, "%02d:%02d", horas, minutos);
 
 	for (;;)  {
+		rtc_get_time(RTC, &current_hour, &current_min, &current_sec);
+		
 		if (xSemaphoreTake(xSemaphoreRTC, 5000 / portTICK_PERIOD_MS) == pdTRUE){
-			rtc_get_time(RTC, &current_hour, &current_min, &current_sec);
 			lv_label_set_text_fmt(labelClock1, "%02d:%02d:%02d", current_hour, current_min, current_sec);
 			lv_label_set_text_fmt(labelClock2, "%02d:%02d:%02d", current_hour, current_min, current_sec);
 			lv_label_set_text_fmt(labelClock3, "%02d:%02d:%02d", current_hour, current_min, current_sec);
 		}	
+		
+		if (current_min != last_min) {
+			// Calcula tempo gasto no trajeto com base no tempo inicial
+			last_min = current_min;
+			printf("Bucanha1 %d\n", current_min);
+			printf("Bucanha 2 %d\n", start_min);
+			printf("BUCANHA MASTER %d\n", current_min - start_min);
+			tempo_gasto_minutos = 60 * (current_hour - start_hour) + (current_min - start_min);
+			horas = tempo_gasto_minutos / 60;
+			minutos = tempo_gasto_minutos % 60;
+			lv_label_set_text_fmt(labelTimer, "%02d:%02d", horas, minutos);
+		}
 	}
 }
 
@@ -647,11 +670,11 @@ static void task_vel(void *pvParameters) {
 	pio_set_input(VEL_PIO, VEL_PIO_IDX_MASK, PIO_DEFAULT);
 	pio_pull_up(VEL_PIO, VEL_PIO_IDX_MASK, 0);
 	pio_handler_set(VEL_PIO,
-									VEL_PIO_ID,
-									VEL_PIO_IDX_MASK,
-									PIO_IT_FALL_EDGE,
-									vel_data_handler);
-									
+	VEL_PIO_ID,
+	VEL_PIO_IDX_MASK,
+	PIO_IT_FALL_EDGE,
+	vel_data_handler);
+	
 	// Config da interrupção do botão embutido
 	pio_enable_interrupt(VEL_PIO, VEL_PIO_IDX_MASK);
 	pio_get_interrupt_status(VEL_PIO);
@@ -659,10 +682,9 @@ static void task_vel(void *pvParameters) {
 	NVIC_EnableIRQ(VEL_PIO_ID);
 	NVIC_SetPriority(VEL_PIO_ID, 4);
 	
-	/* Leitura do valor atual do RTC para contar o tempo gasto */
-	uint32_t current_hour, current_min, current_sec, last_hour, last_min;
-	rtc_get_time(RTC, &last_hour, &last_min, &current_sec);
-				
+	// Limpa semaforo antes de realmente começar a task
+	xSemaphoreTake(xSemaphoreVEL, 1000 / portTICK_PERIOD_MS);
+	
 	double vel_inst = 0.0;
 	double vel_media = 0.0;
 	double distancia = 0.0;
@@ -671,12 +693,7 @@ static void task_vel(void *pvParameters) {
 	double tempo_total = 0.0;
 	double vel_anterior = 0.0;
 	double aceler = 0.0;
-	uint32_t horas = 0;
-	uint32_t minutos = 0;
 	
-	// Limpa semaforo antes de realmente começar a task
-	xSemaphoreTake(xSemaphoreVEL, 1000 / portTICK_PERIOD_MS);
-					
 	while(1) {
 		double raio = (double) aro * 0.0254 / 2.0;
 		// Timer conta até 5 segundos
@@ -696,19 +713,10 @@ static void task_vel(void *pvParameters) {
 			distancia = n_pulsos * 2 * PI * raio / 1000;
 			// Cálculo da velocidade média
 			vel_media = distancia / (tempo_total / 3600);
-			// Obtém hora atual para fazer cálculo do tempo gasto no trajeto
-			rtc_get_time(RTC, &current_hour, &current_min, &current_sec);
-			if (current_min != last_min) {
-				horas = current_hour - last_hour;
-				minutos = current_min - last_min;
-				last_hour = current_hour;
-				last_min = current_min;
-			}
 			
 			lv_label_set_text_fmt(labelVelInst, "%.1f", vel_inst);
 			lv_label_set_text_fmt(labelDist, "%.1f", distancia/1000);
 			lv_label_set_text_fmt(labelVelMed, "%.1f", vel_media);
-			lv_label_set_text_fmt(labelTimer, "%02d:%02d", horas, minutos);
 			
 			if (aceler > 3.0) {
 				aceleracao_flag = 1;
@@ -717,14 +725,14 @@ static void task_vel(void *pvParameters) {
 				lv_obj_add_flag(seta_minus, LV_OBJ_FLAG_HIDDEN);
 				lv_obj_add_flag(seta_down, LV_OBJ_FLAG_HIDDEN);
 				
-			} else if (aceler < -3.0) {
+				} else if (aceler < -3.0) {
 				aceleracao_flag = -1;
 				
 				lv_obj_clear_flag(seta_down, LV_OBJ_FLAG_HIDDEN);
 				lv_obj_add_flag(seta_minus, LV_OBJ_FLAG_HIDDEN);
 				lv_obj_add_flag(seta_up, LV_OBJ_FLAG_HIDDEN);
 				
-			} else {
+				} else {
 				aceleracao_flag = 0;
 				
 				lv_obj_clear_flag(seta_minus, LV_OBJ_FLAG_HIDDEN);
