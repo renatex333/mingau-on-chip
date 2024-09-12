@@ -1,4 +1,5 @@
-# 22b - APS2 - Embarcados
+# Projeto Mingau
+Autores: Matheus Barros e Renato Laffranchi Falcão
 
 O marketing de uma empresa de equipamentos esportivos quer criar um novo ciclocomputador e você foi escolhido como desenvolvedor autônomo, dado seu background técnico e de UX, para criar um protótipo e validar a ideia.
 
@@ -7,11 +8,6 @@ Mais detalhes no site da disciplina:
 - https://insper.github.io/ComputacaoEmbarcada/navigation/APS/APS-2-Bike/Descricao/
 
 ## Detalhes
-
-Integrantes:
-
-- Matheus Barros
-- Renato Falcão
 
 Nome da marca:
 
@@ -31,7 +27,7 @@ Nome da marca:
 
 <a href="https://youtu.be/LO3ccLeY09c"><img src="https://user-images.githubusercontent.com/15271557/200147332-04b57e7e-c50b-4d34-a533-f72f01113410.png" width="600"></a>
 
-### Segunda Proposta UX - Conceito B
+### Segunda Proposta UX
 
 > - Especifica e justifica quais vão ser as fontes (e tamanhos) a serem usadas na interface.
 
